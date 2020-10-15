@@ -1,0 +1,17 @@
+header {
+	text-align: center;
+	text-decoration: underline;
+}
+main {
+	text-align: center;
+}
+div.container {
+	position: relative;
+	text-align: center;
+}
+div.left {
+	position: absolute;
+	top: 65%;
+	left: 37%;
+	transform: translate( -50%, -50%);
+}
