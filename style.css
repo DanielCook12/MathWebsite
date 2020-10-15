@@ -15,3 +15,9 @@ div.left {
 	left: 37%;
 	transform: translate( -50%, -50%);
 }
+div.right {
+	position: absolute;
+	top: 65%;
+	left: 63%;
+	transform: translate( -50%, -50%);
+}
