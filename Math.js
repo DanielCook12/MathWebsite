@@ -1,12 +1,12 @@
 var c = document.getElementById("canvas");
 var d = c.getContext("2d");
-var shapes = [0];
-var shapesX = [10];
-var shapesY = [10];
-var shapesVY = [2];
-var shapesVX = [0];
-var shapesH = [50];
-var shapesW = [50];
+var shapes = [0, 0];
+var shapesX = [10, 100];
+var shapesY = [10, 10];
+var shapesVY = [2, 0];
+var shapesVX = [0, 0];
+var shapesH = [50, 75];
+var shapesW = [50, 35];
 var selected = -1;
 var mx = 0;
 var my = 0;
@@ -52,7 +52,7 @@ function render() {
 	//Render Shapes
 	d.fillStyle = "#008800";
 	for (var i = 0; i<shapes.length; i++) {
-		d.fillRect(shapesX[i], shapesY[i], 50, 50);
+		d.fillRect(shapesX[i], shapesY[i], shapesW[i], shapesH[i]);
 	}
 }
 
@@ -83,12 +83,12 @@ function update() {
 			shapesX[i] = 1000 - shapesW[i];
 		}
 		shapesVY[i] += 1;
-		if (shapesY[i] >= 210 - shapesH[i] && shapesY[i] <= 230 - shapesH[i] && shapesVY[i] > 0) {
+		if (shapesY[i] >= 210 - shapesH[i] && shapesY[i] <= 230 - shapesH[i] && shapesVY[i] > 0 && (shapesX[i] > 560 - shapesW[i] || shapesX[i] < 440) && shapesX[i] > 40 - shapesW[i] && shapesX[i] < 960) {
 			shapesVY[i] = 0;
 			shapesY[i] = 210 - shapesH[i];
-		} else if (shapesY[i] >= 500 - shapesH[i]) {
+		} else if (shapesY[i] >= 460 - shapesH[i]) {
 			shapesVY[i] = 0;
-			shapesY[i] = 500 - shapesH[i];
+			shapesY[i] = 460 - shapesH[i];
 		}
 		if (selected == i) {
 			shapesX[i] = mx - (shapesW[i]/2);
