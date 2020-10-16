@@ -62,9 +62,12 @@ function update() {
 		if (shapesVX[i] != 0) {
 			shapesVX[i] -= 0.1;
 		}
-		if (shapesY[i] >= 210 - shapesH[i]) {
+		if (shapesY[i] >= 210 - shapesH[i] && shapesY[i] <= 230 - shapesH[i]) {
 			shapesVY[i] = 0;
 			shapesY[i] = 210 - shapesH[i];
+		} else if (shapesY[i] >= 500 - shapesH[i]) {
+			shapesVY[i] = 0;
+			shapesY[i] = 500 - shapesH[i];
 		}
 		if (selected == i) {
 			shapesX[i] = mx;
