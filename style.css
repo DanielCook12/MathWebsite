@@ -8,15 +8,10 @@ main {
 }
 
 div.left {
-	position: absolute;
-	top: 65%;
-	left: 0%;
+	margin: 1em;
 }
 div.right {
-	position: absolute;
-	top: 65%;
-	left: 63%;
-	transform: translate( -50%, -50%);
+	margin: 1em;
 }
 input.mathinput {
 	background-color: white;
