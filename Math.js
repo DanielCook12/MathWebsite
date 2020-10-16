@@ -48,6 +48,7 @@ function render() {
 	d.fillRect(560, 210, 400, 20);
 	
 	//Render Shapes
+	d.fillStyle = "#008800";
 	for (var i = 0; i<shapes.length; i++) {
 		d.fillRect(shapesX[i], shapesY[i], 50, 50);
 	}
@@ -58,7 +59,7 @@ function update() {
 	for (var i = 0; i < shapes.length; i++) {
 		shapesX[i] += shapesVX[i];
 		shapesY[i] += shapesVY[i];
-		shapesVY[i] += 0.25;
+		shapesVY[i] += 0.45;
 		if (shapesVX[i] != 0) {
 			shapesVX[i] -= 0.1;
 		}
@@ -70,9 +71,8 @@ function update() {
 			shapesY[i] = 500 - shapesH[i];
 		}
 		if (selected == i) {
-			shapesX[i] = mx;
-			shapesY[i] = my;
-			console.log(mx);
+			shapesX[i] = mx - (shapesW[i]/2);
+			shapesY[i] = my - (shapesH[i]/2);
 		}
 	}
 }
