@@ -1,5 +1,3 @@
-// Friction is a Work in Progress
-
 var c = document.getElementById("canvas");
 var d = c.getContext("2d");
 var shapes = [0];
@@ -63,11 +61,28 @@ function update() {
 	for (var i = 0; i < shapes.length; i++) {
 		shapesX[i] += shapesVX[i];
 		shapesY[i] += shapesVY[i];
-		shapesVY[i] += 0.45;
-		if (shapesVX[i] != 0) {
-			shapesVX[i] -= 0.3;
+		
+		if (shapesVX[i] != 0 && shapesVY[i] == 0) {
+			if (shapesVX[i] > 0) {
+				shapesVX[i] -= 1;
+			} else {
+				shapesVX[i] += 1;
+			}
+			shapesVX[i] = Math.floor(shapesVX[i]*2)/2;
+		} else if (shapesVX[i] != 0) {
+			if (shapesVX[i] > 0) {
+				shapesVX[i] -= 0.1;
+			} else {
+				shapesVX[i] += 0.1;
+			}
 			shapesVX[i] = Math.floor(shapesVX[i]*2)/2;
 		}
+		if (shapesX[i] < 0) {
+			shapesX[i] = 0;
+		} else if (shapesX[i] > 1000 - shapesW[i]) {
+			shapesX[i] = 1000 - shapesW[i];
+		}
+		shapesVY[i] += 0.45;
 		if (shapesY[i] >= 210 - shapesH[i] && shapesY[i] <= 230 - shapesH[i]) {
 			shapesVY[i] = 0;
 			shapesY[i] = 210 - shapesH[i];
@@ -87,7 +102,7 @@ document.addEventListener('mousemove', function(event) {
 	my = event.offsetY;
 	var mxNow = mx;
 	var myNow = my;
-	setTimeout(function() {prevMx = mxNow; prevMy = myNow}, 100);
+	setTimeout(function() {prevMx = mxNow; prevMy = myNow}, 200);
 });
 
 document.addEventListener('click', function(event) {
@@ -100,8 +115,8 @@ document.addEventListener('click', function(event) {
 			}
 		}
 	} else {
-		shapesVX[selected] = (mx - prevMx)/3;
-		shapesVY[selected] = (my - prevMy)/3;
+		shapesVX[selected] = (mx - prevMx)/6;
+		shapesVY[selected] = (my - prevMy)/6;
 		selected = -1;
 	}
 });
