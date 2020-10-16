@@ -1,5 +1,5 @@
-c = document.getElementById("canvas");
-d = c.getContext("2d");
+var c = document.getElementById("canvas");
+var d = c.getContext("2d");
 var shapes = [0];
 var shapesX = [10];
 var shapesY = [10];
