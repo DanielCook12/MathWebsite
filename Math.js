@@ -82,8 +82,8 @@ function update() {
 		} else if (shapesX[i] > 1000 - shapesW[i]) {
 			shapesX[i] = 1000 - shapesW[i];
 		}
-		shapesVY[i] += 0.45;
-		if (shapesY[i] >= 210 - shapesH[i] && shapesY[i] <= 230 - shapesH[i]) {
+		shapesVY[i] += 1;
+		if (shapesY[i] >= 210 - shapesH[i] && shapesY[i] <= 230 - shapesH[i] && shapesVY[i] > 0) {
 			shapesVY[i] = 0;
 			shapesY[i] = 210 - shapesH[i];
 		} else if (shapesY[i] >= 500 - shapesH[i]) {
