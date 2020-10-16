@@ -3,17 +3,14 @@ header {
 	text-decoration: underline;
 }
 main {
-	text-align: center;
-}
-div.container {
 	position: relative;
 	text-align: center;
 }
+
 div.left {
 	position: absolute;
 	top: 65%;
-	left: 37%;
-	transform: translate( -50%, -50%);
+	left: 0%;
 }
 div.right {
 	position: absolute;
@@ -23,6 +20,15 @@ div.right {
 }
 input.mathinput {
 	background-color: white;
-	border: 0.2em solid black;
+	border: 3px solid black;
 	border-radius: 1em;
+	width: 325px;
+	height:50px;
+	font-size:25px;
+	padding-left:10px;
+}
+#canvas {
+	border: 1px solid black;
+	border-radius:20px;
+	float:right;
 }
