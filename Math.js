@@ -1,3 +1,5 @@
+// Friction is a Work in Progress
+
 var c = document.getElementById("canvas");
 var d = c.getContext("2d");
 var shapes = [0];
@@ -10,6 +12,8 @@ var shapesW = [50];
 var selected = -1;
 var mx = 0;
 var my = 0;
+var prevMx = 0;
+var prevMy = 0;
 
 setInterval(function() {
 	render();
@@ -61,7 +65,8 @@ function update() {
 		shapesY[i] += shapesVY[i];
 		shapesVY[i] += 0.45;
 		if (shapesVX[i] != 0) {
-			shapesVX[i] -= 0.1;
+			shapesVX[i] -= 0.3;
+			shapesVX[i] = Math.floor(shapesVX[i]*2)/2;
 		}
 		if (shapesY[i] >= 210 - shapesH[i] && shapesY[i] <= 230 - shapesH[i]) {
 			shapesVY[i] = 0;
@@ -80,6 +85,9 @@ function update() {
 document.addEventListener('mousemove', function(event) {
 	mx = event.offsetX;
 	my = event.offsetY;
+	var mxNow = mx;
+	var myNow = my;
+	setTimeout(function() {prevMx = mxNow; prevMy = myNow}, 100);
 });
 
 document.addEventListener('click', function(event) {
@@ -92,6 +100,8 @@ document.addEventListener('click', function(event) {
 			}
 		}
 	} else {
+		shapesVX[selected] = (mx - prevMx)/3;
+		shapesVY[selected] = (my - prevMy)/3;
 		selected = -1;
 	}
 });
