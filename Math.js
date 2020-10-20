@@ -81,6 +81,18 @@ function update() {
 			shapesX[i] = 0;
 		} else if (shapesX[i] > 1000 - shapesW[i]) {
 			shapesX[i] = 1000 - shapesW[i];
+		} else if (shapesVX[i] != 0) {
+			for (var j = 0; j < shapes.length; j++) {
+				if (shapesVX[j] === 0 && j != i) {
+					if (shapesX[i] + shapesW[i] >= shapesX[j] && shapesX[i] + shapesW[i] <= shapesX[j] + shapesW[j] && (shapesY[i] + shapesH[i] >= shapesY[j] && shapesY[i] <= shapesY[j] + shapesH[j])) {
+						shapesVX[i] = 0;
+						shapesX[i] = shapesX[j] - shapesW[i];
+					} else if (shapesX[i] >= shapesX[j] && shapesX[i] <= shapesX[j] + shapesW[j] && (shapesY[i] + shapesH[i] >= shapesY[j] && shapesY[i] <= shapesY[j] + shapesH[j])) {
+						shapesVX[i] = 0;
+						shapesX[i] = shapesX[j] + shapesW[j];
+					}
+				}
+			}
 		}
 		shapesVY[i] += 1;
 		if (shapesY[i] >= 210 - shapesH[i] && shapesY[i] <= 230 - shapesH[i] && shapesVY[i] > 0 && (shapesX[i] > 560 - shapesW[i] || shapesX[i] < 440) && shapesX[i] > 40 - shapesW[i] && shapesX[i] < 960) {
@@ -89,6 +101,15 @@ function update() {
 		} else if (shapesY[i] >= 460 - shapesH[i]) {
 			shapesVY[i] = 0;
 			shapesY[i] = 460 - shapesH[i];
+		} else if (shapesVY[i] > 0) {
+			for (var j = 0; j < shapes.length; j++) {
+				if (shapesVY[j] === 0 && j != i && shapesY[j] >= shapesY[i] + (shapesH[i]*6/10)) {
+					if (shapesY[i] + shapesH[i] >= shapesY[j] && shapesY[i] + shapesH[i] <= shapesY[j] + shapesH[j] && (shapesX[i] + shapesW[i] >= shapesX[j] && shapesX[i] <= shapesX[j] + shapesW[j])) {
+						shapesVY[i] = 0;
+						shapesY[i] = shapesY[j] - shapesH[i];
+					}
+				}
+			}
 		}
 		if (selected == i) {
 			shapesX[i] = mx - (shapesW[i]/2);
