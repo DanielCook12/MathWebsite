@@ -7,6 +7,7 @@ var shapesVY = [2, 0];
 var shapesVX = [0, 0];
 var shapesH = [50, 75];
 var shapesW = [50, 35];
+var shapesText = ["", ""];
 var selected = -1;
 var mx = 0;
 var my = 0;
@@ -16,14 +17,26 @@ var prevMy = 0;
 function send() {
 	var leftinput = document.getElementById("leftinput").value;
 	var rightinput = document.getElementById("rightinput").value;
-	if (leftinput === "") {
-		var leftinput = "No Value Inserted"
+	if (leftinput != "") {
+		shapes.push(1);
+		shapesX.push(200);
+		shapesY.push(100);
+		shapesVX.push(0);
+		shapesVY.push(0);
+		shapesH.push(30);
+		shapesW.push(leftinput.length * 15);
+		shapesText.push(leftinput);
 	}
-	if (rightinput === "") {
-		var rightinput = "No Value Inserted"
+	if (rightinput != "") {
+		shapes.push(1);
+		shapesX.push(600);
+		shapesY.push(100);
+		shapesVX.push(0);
+		shapesVY.push(0);
+		shapesH.push(30);
+		shapesW.push(rightinput.length * 15);
+		shapesText.push(rightinput);
 	}
-	alert(leftinput)
-	alert(rightinput)
 }
 
 setInterval(function() {
@@ -65,7 +78,13 @@ function render() {
 	//Render Shapes
 	d.fillStyle = "#008800";
 	for (var i = 0; i<shapes.length; i++) {
-		d.fillRect(shapesX[i], shapesY[i], shapesW[i], shapesH[i]);
+		if (shapes[i] === 0) {
+			d.fillRect(shapesX[i], shapesY[i], shapesW[i], shapesH[i]);
+		} else if (shapes[i] === 1) {
+			d.font = "30px Arial";
+			d.fillStyle = "#000000";
+			d.fillText(shapesText[i], shapesX[i], shapesY[i] + shapesH[i]);
+		}
 	}
 }
 
@@ -74,7 +93,7 @@ function update() {
 	for (var i = 0; i < shapes.length; i++) {
 		shapesX[i] += shapesVX[i];
 		shapesY[i] += shapesVY[i];
-
+		
 		if (shapesVX[i] != 0 && shapesVY[i] == 0) {
 			if (shapesVX[i] > 0) {
 				shapesVX[i] -= 1;
@@ -139,7 +158,7 @@ document.addEventListener('mousemove', function(event) {
 	setTimeout(function() {prevMx = mxNow; prevMy = myNow}, 200);
 });
 
-document.addEventListener('mousedown', function(event) {
+document.addEventListener('click', function(event) {
 	mx = event.offsetX;
 	my = event.offsetY;
 	if (selected == -1) {
