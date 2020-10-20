@@ -13,6 +13,19 @@ var my = 0;
 var prevMx = 0;
 var prevMy = 0;
 
+function send() {
+	var leftinput = document.getElementById("leftinput").value;
+	var rightinput = document.getElementById("rightinput").value;
+	if (leftinput === "") {
+		var leftinput = "No Value Inserted"
+	}
+	if (rightinput === "") {
+		var rightinput = "No Value Inserted"
+	}
+	alert(leftinput)
+	alert(rightinput)
+}
+
 setInterval(function() {
 	render();
 	update();
@@ -21,10 +34,10 @@ setInterval(function() {
 function render() {
 	//clear screen
 	d.clearRect(0, 0, 1000, 700);
-	
+
 	// Render Scale
 	d.fillStyle = "#000000";
-	
+
 	// Main Triangle
 	d.beginPath();
 	d.moveTo(500, 250);
@@ -32,23 +45,23 @@ function render() {
 	d.lineTo(675, 450);
 	d.lineTo(500, 250);
 	d.fill();
-	
+
 	// Axel/Circle
 	d.beginPath();
 	d.arc(500, 250, 40, 0, Math.PI*2);
 	d.fill();
-	
+
 	// Main Board of balancing
 	d.fillRect(225, 242.5, 550, 15);
 	d.fillRect(225, 230, 20, 15);
 	d.fillRect(755, 230, 20, 15);
-	
+
 	//Left Scale
 	d.fillRect(40, 210, 400, 20);
-	
+
 	//Right Scale
 	d.fillRect(560, 210, 400, 20);
-	
+
 	//Render Shapes
 	d.fillStyle = "#008800";
 	for (var i = 0; i<shapes.length; i++) {
@@ -61,7 +74,7 @@ function update() {
 	for (var i = 0; i < shapes.length; i++) {
 		shapesX[i] += shapesVX[i];
 		shapesY[i] += shapesVY[i];
-		
+
 		if (shapesVX[i] != 0 && shapesVY[i] == 0) {
 			if (shapesVX[i] > 0) {
 				shapesVX[i] -= 1;
