@@ -97,10 +97,10 @@ function update() {
 		} else if (shapesVX[i] != 0) {
 			for (var j = 0; j < shapes.length; j++) {
 				if (shapesVX[j] === 0 && j != i) {
-					if (shapesX[i] + shapesW[i] >= shapesX[j] && shapesX[i] + shapesW[i] <= shapesX[j] + shapesW[j] && (shapesY[i] + shapesH[i] >= shapesY[j] && shapesY[i] <= shapesY[j] + shapesH[j])) {
+					if (shapesX[i] + shapesW[i] >= shapesX[j] && shapesX[i] + shapesW[i] <= shapesX[j] + shapesW[j] && (shapesY[i] + shapesH[i] >= shapesY[j] + (shapesH[j] * 0.7) && shapesY[i] <= shapesY[j] + shapesH[j])) {
 						shapesVX[i] = 0;
 						shapesX[i] = shapesX[j] - shapesW[i];
-					} else if (shapesX[i] >= shapesX[j] && shapesX[i] <= shapesX[j] + shapesW[j] && (shapesY[i] + shapesH[i] >= shapesY[j] && shapesY[i] <= shapesY[j] + shapesH[j])) {
+					} else if (shapesX[i] >= shapesX[j] && shapesX[i] <= shapesX[j] + shapesW[j] && (shapesY[i] + shapesH[i] >= shapesY[j] + (shapesH[j] * 0.7) && shapesY[i] <= shapesY[j] + shapesH[j])) {
 						shapesVX[i] = 0;
 						shapesX[i] = shapesX[j] + shapesW[j];
 					}
