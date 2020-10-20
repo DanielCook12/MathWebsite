@@ -74,7 +74,7 @@ function update() {
 	for (var i = 0; i < shapes.length; i++) {
 		shapesX[i] += shapesVX[i];
 		shapesY[i] += shapesVY[i];
-		
+
 		if (shapesVX[i] != 0 && shapesVY[i] == 0) {
 			if (shapesVX[i] > 0) {
 				shapesVX[i] -= 1;
@@ -139,7 +139,7 @@ document.addEventListener('mousemove', function(event) {
 	setTimeout(function() {prevMx = mxNow; prevMy = myNow}, 200);
 });
 
-document.addEventListener('click', function(event) {
+document.addEventListener('mousedown', function(event) {
 	mx = event.offsetX;
 	my = event.offsetY;
 	if (selected == -1) {
