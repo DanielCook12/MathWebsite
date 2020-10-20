@@ -10,19 +10,23 @@
 		<h1>The Math Balance</h1>
 	</header>
 	<main>
+		<form id="inputForm" onsubmit="return false;">
 			<div class="left">
-				<input type="text" class="mathinput" placeholder="Left Input"></input>
+				<input type="text" class="mathinput" id="leftinput" placeholder="Left Input"></input>
 			</div>
 			<div class="right">
-				<input type="text" class="mathinput" placeholder="Right Input"></input>
+				<input type="text" class="mathinput" id="rightinput" placeholder="Right Input"></input>
 			</div>
+			<div class="submit">
+				<button type="submit" class="submit" onclick="send();">Submit</button>
+			</div>
+		</form>
 			<canvas id="canvas" width="1000px" height="500px"></canvas>
 			<script src="Math.js"></script>
 
-
 	</main>
 	<footer>
-		
+
 	</footer>
 </body>
 </html>
