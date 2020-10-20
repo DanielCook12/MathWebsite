@@ -74,7 +74,7 @@ function update() {
 	for (var i = 0; i < shapes.length; i++) {
 		shapesX[i] += shapesVX[i];
 		shapesY[i] += shapesVY[i];
-
+		
 		if (shapesVX[i] != 0 && shapesVY[i] == 0) {
 			if (shapesVX[i] > 0) {
 				shapesVX[i] -= 1;
