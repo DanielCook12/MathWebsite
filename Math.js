@@ -89,6 +89,15 @@ function update() {
 		} else if (shapesY[i] >= 460 - shapesH[i]) {
 			shapesVY[i] = 0;
 			shapesY[i] = 460 - shapesH[i];
+		} else if (shapesVY[i] > 0) {
+			for (var j = 0; j < shapes.length; j++) {
+				if (shapesVY[j] === 0 && j != i) {
+					if (shapesY[i] + shapesH[i] >= shapesY[j] && shapesY[i] + shapesH[i] <= shapesY[j] + shapesH[j] && (shapesX[i] + shapesW[i] >= shapesX[j] && shapesX[i] <= shapesX[j] + shapesW[j])) {
+						shapesVY[i] = 0;
+						shapesY[i] = shapesY[j] - shapesH[i];
+					}
+				}
+			}
 		}
 		if (selected == i) {
 			shapesX[i] = mx - (shapesW[i]/2);
