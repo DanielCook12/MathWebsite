@@ -14,7 +14,24 @@ div.left {
 div.right {
 	margin: 0.5em;
 	text-align:left;
-
+}
+div.submit {
+	margin: 0.5em;
+	text-align:left;
+}
+button.submit {
+	background-color: white;
+	border: 3px solid black;
+	border-radius: 1em;
+	width: 300px;
+	height: 50px;
+	font-size:25px;
+	padding-left:10px;
+	transition: background-color 0.65s,height 0.65s;
+}
+button.submit:hover {
+	background-color: lightgray;
+	height: 100px;
 }
 input.mathinput {
 	background-color: white;
@@ -26,7 +43,7 @@ input.mathinput {
 	padding-left:10px;
 }
 #canvas {
-	border: 1px solid black;
+	border: 8px solid black;
 	border-radius:20px;
 	position:fixed;
 	top:70px;
