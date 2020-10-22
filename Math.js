@@ -72,7 +72,7 @@ function send() {
 		shapesH.push(30);
 		shapesW.push(leftinput.length * 15);
 		shapesText.push(leftinput);
-		
+
 	}
 	if (rightinput != "") {
 		shapes.push(1);
@@ -84,6 +84,12 @@ function send() {
 		shapesW.push(rightinput.length * 15);
 		shapesText.push(rightinput);
 	}
+	if (leftinput == rightinput) {
+		document.getElementById("status").style.backgroundColor = "green";
+		document.getElementById("status").innerHTML = "Equal";
+	} else {
+		document.getElementById("status").style.backgroundColor = "red";
+		document.getElementById("status").innerHTML = "Not Equal";
 }
 
 setInterval(function() {
@@ -147,7 +153,7 @@ function update() {
 	for (var i = 0; i < shapes.length; i++) {
 		shapesX[i] += shapesVX[i];
 		shapesY[i] += shapesVY[i];
-		
+
 		if (shapesVX[i] != 0 && shapesVY[i] == 0) {
 			if (shapesVX[i] > 0) {
 				shapesVX[i] -= 1;
