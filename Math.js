@@ -13,6 +13,52 @@ var mx = 0;
 var my = 0;
 var prevMx = 0;
 var prevMy = 0;
+var scale = 0;
+var shapesValue = [0, 0];
+var shapesType = ["none", "none"];
+
+function contains(array, value) {
+	for (var i = 0; i < array.length; i++) {
+		if (array[i] === value) {
+			return i;
+		}
+	}
+	return false;
+}
+
+function findTypeFromString(array, start, end) {
+	var returnV = [];
+	if (start != null) {
+		for (var i = start; i < end; i++) {
+			if (array[i] == "0" || array[i] == "1" || array[i] == "2" || array[i] == "3" || array[i] == "4" || array[i] == "5" || array[i] == "6" || array[i] == "7" || array[i] == "8" || array[i] == "9") {
+				returnV[i] = "num";
+			} else if (array[i] == "+" || array[i] == "-" || array[i] == "*" || array[i] == "/" || array[i] == "^") {
+				returnV[i] = "op";
+			} else if (array[i] == "(" || array[i] == ")" || array[i] == "{" || array[i] == "}" || array[i] == "[" || array [i] == "]") {
+				returnV[i] = "group";
+			} else if (array[i] == "a" || array[i] == "b" || array[i] == "c" || array[i] == "d" || array[i] == "e" || array[i] == "f" || array[i] == "g" || array[i] == "h" || array[i] == "i" || array[i] == "j" || array[i] == "k" || array[i] == "l" || array[i] == "m" || array[i] == "n" || array[i] == "o" || array[i] == "p" || array[i] == "q" || array[i] == "r" || array[i] == "s" || array[i] == "t" || array[i] == "u" || array[i] == "v" || array[i] == "w" || array[i] == "x" || array[i] == "y" || array[i] == "z") {
+				returnV[i] = "letter";
+			} else {
+				returnV[i] = "unknown"
+			}
+		}
+	} else {
+		for (var i = 0; i < array.length; i++) {
+			if (array[i] == "0" || array[i] == "1" || array[i] == "2" || array[i] == "3" || array[i] == "4" || array[i] == "5" || array[i] == "6" || array[i] == "7" || array[i] == "8" || array[i] == "9") {
+				returnV[i] = "num";
+			} else if (array[i] == "+" || array[i] == "-" || array[i] == "*" || array[i] == "/" || array[i] == "^") {
+				returnV[i] = "op";
+			} else if (array[i] == "(" || array[i] == ")" || array[i] == "{" || array[i] == "}" || array[i] == "[" || array [i] == "]") {
+				returnV[i] = "group";
+			} else if (array[i] == "a" || array[i] == "b" || array[i] == "c" || array[i] == "d" || array[i] == "e" || array[i] == "f" || array[i] == "g" || array[i] == "h" || array[i] == "i" || array[i] == "j" || array[i] == "k" || array[i] == "l" || array[i] == "m" || array[i] == "n" || array[i] == "o" || array[i] == "p" || array[i] == "q" || array[i] == "r" || array[i] == "s" || array[i] == "t" || array[i] == "u" || array[i] == "v" || array[i] == "w" || array[i] == "x" || array[i] == "y" || array[i] == "z") {
+				returnV[i] = "letter";
+			} else {
+				returnV[i] = "unknown"
+			}
+		}
+	}
+}
+
 
 function send() {
 	var leftinput = document.getElementById("leftinput").value;
@@ -26,6 +72,7 @@ function send() {
 		shapesH.push(30);
 		shapesW.push(leftinput.length * 15);
 		shapesText.push(leftinput);
+		
 	}
 	if (rightinput != "") {
 		shapes.push(1);
@@ -36,13 +83,6 @@ function send() {
 		shapesH.push(30);
 		shapesW.push(rightinput.length * 15);
 		shapesText.push(rightinput);
-	}
-	if (leftinput == rightinput) {
-		document.getElementById("status").style.backgroundColor = "green";
-		document.getElementById("status").innerHTML = "Equal";
-	} else {
-		document.getElementById("status").style.backgroundColor = "red";
-		document.getElementById("status").innerHTML = "Not Equal";
 	}
 }
 
@@ -72,9 +112,16 @@ function render() {
 	d.fill();
 
 	// Main Board of balancing
-	d.fillRect(225, 242.5, 550, 15);
-	d.fillRect(225, 230, 20, 15);
-	d.fillRect(755, 230, 20, 15);
+	d.beginPath();
+	d.moveTo(225, 230);
+	d.lineTo(225, 257.5);
+	d.lineTo(775, 257.5);
+	d.lineTo(775, 230);
+	d.lineTo(755, 230);
+	d.lineTo(755, 242.5);
+	d.lineTo(245, 242.5);
+	d.lineTo(245, 230);
+	d.fill();
 
 	//Left Scale
 	d.fillRect(40, 210, 400, 20);
@@ -100,7 +147,7 @@ function update() {
 	for (var i = 0; i < shapes.length; i++) {
 		shapesX[i] += shapesVX[i];
 		shapesY[i] += shapesVY[i];
-
+		
 		if (shapesVX[i] != 0 && shapesVY[i] == 0) {
 			if (shapesVX[i] > 0) {
 				shapesVX[i] -= 1;
@@ -165,7 +212,7 @@ document.addEventListener('mousemove', function(event) {
 	setTimeout(function() {prevMx = mxNow; prevMy = myNow}, 200);
 });
 
-document.addEventListener('mousedown', function(event) {
+document.addEventListener('click', function(event) {
 	mx = event.offsetX;
 	my = event.offsetY;
 	if (selected == -1) {
