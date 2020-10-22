@@ -17,48 +17,90 @@ var scale = 0;
 var shapesValue = [0, 0];
 var shapesType = ["none", "none"];
 
-function contains(array, value) {
-	for (var i = 0; i < array.length; i++) {
-		if (array[i] === value) {
+function contains(string, value) {
+	for (var i = 0; i < string.length; i++) {
+		if (string.charAt(i) === value) {
 			return i;
 		}
 	}
 	return false;
 }
 
-function findTypeFromString(array, start, end) {
+function findTypeFromString(string, start, end) {
 	var returnV = [];
 	if (start != null) {
 		for (var i = start; i < end; i++) {
-			if (array[i] == "0" || array[i] == "1" || array[i] == "2" || array[i] == "3" || array[i] == "4" || array[i] == "5" || array[i] == "6" || array[i] == "7" || array[i] == "8" || array[i] == "9") {
+			if (string.charAt(i) == "0" || string.charAt(i) == "1" || string.charAt(i) == "2" || string.charAt(i) == "3" || string.charAt(i) == "4" || string.charAt(i) == "5" || string.charAt(i) == "6" || string.charAt(i) == "7" || string.charAt(i) == "8" || string.charAt(i) == "9") {
 				returnV[i] = "num";
-			} else if (array[i] == "+" || array[i] == "-" || array[i] == "*" || array[i] == "/" || array[i] == "^") {
+			} else if (string.charAt(i) == "+" || string.charAt(i) == "-" || string.charAt(i) == "*" || string.charAt(i) == "/" || string.charAt(i) == "^") {
 				returnV[i] = "op";
-			} else if (array[i] == "(" || array[i] == ")" || array[i] == "{" || array[i] == "}" || array[i] == "[" || array [i] == "]") {
+			} else if (string.charAt(i) == "(" || string.charAt(i) == ")" || string.charAt(i) == "{" || string.charAt(i) == "}" || string.charAt(i) == "[" || array [i] == "]") {
 				returnV[i] = "group";
-			} else if (array[i] == "a" || array[i] == "b" || array[i] == "c" || array[i] == "d" || array[i] == "e" || array[i] == "f" || array[i] == "g" || array[i] == "h" || array[i] == "i" || array[i] == "j" || array[i] == "k" || array[i] == "l" || array[i] == "m" || array[i] == "n" || array[i] == "o" || array[i] == "p" || array[i] == "q" || array[i] == "r" || array[i] == "s" || array[i] == "t" || array[i] == "u" || array[i] == "v" || array[i] == "w" || array[i] == "x" || array[i] == "y" || array[i] == "z") {
+			} else if (string.charAt(i) == "a" || string.charAt(i) == "b" || string.charAt(i) == "c" || string.charAt(i) == "d" || string.charAt(i) == "e" || string.charAt(i) == "f" || string.charAt(i) == "g" || string.charAt(i) == "h" || string.charAt(i) == "i" || string.charAt(i) == "j" || string.charAt(i) == "k" || string.charAt(i) == "l" || string.charAt(i) == "m" || string.charAt(i) == "n" || string.charAt(i) == "o" || string.charAt(i) == "p" || string.charAt(i) == "q" || string.charAt(i) == "r" || string.charAt(i) == "s" || string.charAt(i) == "t" || string.charAt(i) == "u" || string.charAt(i) == "v" || string.charAt(i) == "w" || string.charAt(i) == "x" || string.charAt(i) == "y" || string.charAt(i) == "z") {
 				returnV[i] = "letter";
 			} else {
 				returnV[i] = "unknown"
 			}
 		}
 	} else {
-		for (var i = 0; i < array.length; i++) {
-			if (array[i] == "0" || array[i] == "1" || array[i] == "2" || array[i] == "3" || array[i] == "4" || array[i] == "5" || array[i] == "6" || array[i] == "7" || array[i] == "8" || array[i] == "9") {
+		for (var i = 0; i < string.length; i++) {
+			if (string.charAt(i) == "0" || string.charAt(i) == "1" || string.charAt(i) == "2" || string.charAt(i) == "3" || string.charAt(i) == "4" || string.charAt(i) == "5" || string.charAt(i) == "6" || string.charAt(i) == "7" || string.charAt(i) == "8" || string.charAt(i) == "9") {
 				returnV[i] = "num";
-			} else if (array[i] == "+" || array[i] == "-" || array[i] == "*" || array[i] == "/" || array[i] == "^") {
+			} else if (string.charAt(i) == "+" || string.charAt(i) == "-" || string.charAt(i) == "*" || string.charAt(i) == "/" || string.charAt(i) == "^") {
 				returnV[i] = "op";
-			} else if (array[i] == "(" || array[i] == ")" || array[i] == "{" || array[i] == "}" || array[i] == "[" || array [i] == "]") {
+			} else if (string.charAt(i) == "(" || string.charAt(i) == ")" || string.charAt(i) == "{" || string.charAt(i) == "}" || string.charAt(i) == "[" || string.charAt(i) == "]") {
 				returnV[i] = "group";
-			} else if (array[i] == "a" || array[i] == "b" || array[i] == "c" || array[i] == "d" || array[i] == "e" || array[i] == "f" || array[i] == "g" || array[i] == "h" || array[i] == "i" || array[i] == "j" || array[i] == "k" || array[i] == "l" || array[i] == "m" || array[i] == "n" || array[i] == "o" || array[i] == "p" || array[i] == "q" || array[i] == "r" || array[i] == "s" || array[i] == "t" || array[i] == "u" || array[i] == "v" || array[i] == "w" || array[i] == "x" || array[i] == "y" || array[i] == "z") {
+			} else if (string.charAt(i) == "a" || string.charAt(i) == "b" || string.charAt(i) == "c" || string.charAt(i) == "d" || string.charAt(i) == "e" || string.charAt(i) == "f" || string.charAt(i) == "g" || string.charAt(i) == "h" || string.charAt(i) == "i" || string.charAt(i) == "j" || string.charAt(i) == "k" || string.charAt(i) == "l" || string.charAt(i) == "m" || string.charAt(i) == "n" || string.charAt(i) == "o" || string.charAt(i) == "p" || string.charAt(i) == "q" || string.charAt(i) == "r" || string.charAt(i) == "s" || string.charAt(i) == "t" || string.charAt(i) == "u" || string.charAt(i) == "v" || string.charAt(i) == "w" || string.charAt(i) == "x" || string.charAt(i) == "y" || string.charAt(i) == "z") {
 				returnV[i] = "letter";
 			} else {
 				returnV[i] = "unknown"
 			}
 		}
 	}
+	return returnV;
 }
 
+function findValueOfString(string) {
+	var val = findTypeFromString(string);
+	var terms = [0];
+	var termsType = ["constant"];
+	var operators = [];
+	for (var i = 0; i < string.length; i++) {
+		if (val[i] === "num") {
+			terms[terms.length-1] *= 10;
+			console.log("num");
+			terms[terms.length-1] += parseInt(string.charAt(i));
+		} else if (val[i] === "op" || val[i] === "group") {
+			terms.push(0);
+			console.log("sym");
+			termsType.push("constant");
+			operators.push(string.charAt(i));
+		} else if (val[i] === "letter") {
+			console.log("var");
+			termsType[termsType.length-1] = string.charAt(i);
+		}
+	}
+	if (terms.length > 1) {
+		for (var i = 0; i < terms.length; i++) {
+			for (var j = 0; j < terms.length; j++) {
+				if (j != i && termsType[i] === termsType[j] && (val[i] === "letter" || val[i] === "num")) {
+					if (operators[i] === "+") {
+						terms[i] += terms[j];
+					} else if (operators[i] === "-") { 
+						terms[i] -= terms[j];
+					} else if (operators[i] === "*") {
+						terms[i] *= terms[j];
+					} else if (operators[i] === "/") {
+						terms[i] /= terms[j];
+					}
+					terms.splice(j, 1);
+					termsType.splice(j, 1);
+				}
+			}
+		}
+	}
+	console.log(terms);
+}
 
 function send() {
 	var leftinput = document.getElementById("leftinput").value;
@@ -72,7 +114,11 @@ function send() {
 		shapesH.push(30);
 		shapesW.push(leftinput.length * 15);
 		shapesText.push(leftinput);
-
+		if (contains(leftinput, '"')) {
+			shapesValue.push(0);
+		} else {
+			shapesValue.push(findValueOfString(leftinput));
+		}
 	}
 	if (rightinput != "") {
 		shapes.push(1);
@@ -84,7 +130,7 @@ function send() {
 		shapesW.push(rightinput.length * 15);
 		shapesText.push(rightinput);
 	}
-	if (eval(leftinput) == eval(rightinput)) {
+	if (leftinput == rightinput) {
 		document.getElementById("status").style.backgroundColor = "green";
 		document.getElementById("status").innerHTML = "Equal";
 	} else {
