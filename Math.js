@@ -90,6 +90,7 @@ function send() {
 	} else {
 		document.getElementById("status").style.backgroundColor = "red";
 		document.getElementById("status").innerHTML = "Not Equal";
+	}
 }
 
 setInterval(function() {
