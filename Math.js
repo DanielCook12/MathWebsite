@@ -84,7 +84,7 @@ function send() {
 		shapesW.push(rightinput.length * 15);
 		shapesText.push(rightinput);
 	}
-	if (leftinput == rightinput) {
+	if (eval(leftinput) == eval(rightinput)) {
 		document.getElementById("status").style.backgroundColor = "green";
 		document.getElementById("status").innerHTML = "Equal";
 	} else {
