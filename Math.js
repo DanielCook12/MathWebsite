@@ -86,7 +86,7 @@ function findValueOfString(string) {
 				if (j != i && termsType[i] === termsType[j] && (val[i] === "letter" || val[i] === "num")) {
 					if (operators[i] === "+") {
 						terms[i] += terms[j];
-					} else if (operators[i] === "-") { 
+					} else if (operators[i] === "-") {
 						terms[i] -= terms[j];
 					} else if (operators[i] === "*") {
 						terms[i] *= terms[j];
@@ -130,7 +130,7 @@ function send() {
 		shapesW.push(rightinput.length * 15);
 		shapesText.push(rightinput);
 	}
-	if (leftinput == rightinput) {
+	if (eval(leftinput) == eval(rightinput)) {
 		document.getElementById("status").style.backgroundColor = "green";
 		document.getElementById("status").innerHTML = "Equal";
 	} else {
@@ -265,7 +265,7 @@ document.addEventListener('mousemove', function(event) {
 	setTimeout(function() {prevMx = mxNow; prevMy = myNow}, 200);
 });
 
-document.addEventListener('click', function(event) {
+document.addEventListener('mousedown', function(event) {
 	mx = event.offsetX;
 	my = event.offsetY;
 	if (selected == -1) {
