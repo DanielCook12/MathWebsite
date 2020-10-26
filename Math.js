@@ -101,7 +101,9 @@ function findValueOfString(string) {
 	}
 	console.log(terms);
 }
-
+function clearCanvas() {
+	console.log("clearCanvas() has been called")
+}
 function send() {
 	var leftinput = document.getElementById("leftinput").value;
 	var rightinput = document.getElementById("rightinput").value;
@@ -138,7 +140,6 @@ function send() {
 		document.getElementById("status").innerHTML = "Not Equal";
 	}
 }
-
 setInterval(function() {
 	render();
 	update();
