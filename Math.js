@@ -15,7 +15,12 @@ var prevMx = 0;
 var prevMy = 0;
 var scale = 0;
 var shapesValue = [0, 0];
+var shapesValueType = ["constant", "constant"];
 var shapesType = ["none", "none"];
+var rightWeight = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+var leftWeight = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+var weightVars = ["constant"];
+var timer = 0;
 
 function contains(string, value) {
 	for (var i = 0; i < string.length; i++) {
@@ -65,12 +70,13 @@ function findValueOfString(string) {
 	var terms = [0];
 	var termsType = ["constant"];
 	var operators = [];
+	//var groups = [];
 	for (var i = 0; i < string.length; i++) {
 		if (val[i] === "num") {
 			terms[terms.length-1] *= 10;
 			console.log("num");
 			terms[terms.length-1] += parseInt(string.charAt(i));
-		} else if (val[i] === "op" || val[i] === "group") {
+		} else if (val[i] === "op") {
 			terms.push(0);
 			console.log("sym");
 			termsType.push("constant");
@@ -86,7 +92,7 @@ function findValueOfString(string) {
 				if (j != i && termsType[i] === termsType[j] && (val[i] === "letter" || val[i] === "num")) {
 					if (operators[i] === "+") {
 						terms[i] += terms[j];
-					} else if (operators[i] === "-") {
+					} else if (operators[i] === "-") { 
 						terms[i] -= terms[j];
 					} else if (operators[i] === "*") {
 						terms[i] *= terms[j];
@@ -100,10 +106,54 @@ function findValueOfString(string) {
 		}
 	}
 	console.log(terms);
+	console.log(termsType);
+	return terms[0];
 }
-function clearCanvas() {
-	console.log("clearCanvas() has been called")
+
+
+function findTypeOfString(string) {
+	var val = findTypeFromString(string);
+	var terms = [0];
+	var termsType = ["constant"];
+	var operators = [];
+	//var groups = [];
+	for (var i = 0; i < string.length; i++) {
+		if (val[i] === "num") {
+			terms[terms.length-1] *= 10;
+			console.log("num");
+			terms[terms.length-1] += parseInt(string.charAt(i));
+		} else if (val[i] === "op") {
+			terms.push(0);
+			console.log("sym");
+			termsType.push("constant");
+			operators.push(string.charAt(i));
+		} else if (val[i] === "letter") {
+			console.log("var");
+			termsType[termsType.length-1] = string.charAt(i);
+		}
+	}
+	if (terms.length > 1) {
+		for (var i = 0; i < terms.length; i++) {
+			for (var j = 0; j < terms.length; j++) {
+				if (j != i && termsType[i] === termsType[j] && (val[i] === "letter" || val[i] === "num")) {
+					if (operators[i] === "+") {
+						terms[i] += terms[j];
+					} else if (operators[i] === "-") { 
+						terms[i] -= terms[j];
+					} else if (operators[i] === "*") {
+						terms[i] *= terms[j];
+					} else if (operators[i] === "/") {
+						terms[i] /= terms[j];
+					}
+					terms.splice(j, 1);
+					termsType.splice(j, 1);
+				}
+			}
+		}
+	}
+	return termsType[0];
 }
+
 function send() {
 	var leftinput = document.getElementById("leftinput").value;
 	var rightinput = document.getElementById("rightinput").value;
@@ -120,7 +170,10 @@ function send() {
 			shapesValue.push(0);
 		} else {
 			shapesValue.push(findValueOfString(leftinput));
+			shapesValueType.push(findTypeOfString(leftinput));
 		}
+		console.log(shapesValue[shapesValue.length-1]);
+		console.log(shapesValueType[shapesValue.length-1]);
 	}
 	if (rightinput != "") {
 		shapes.push(1);
@@ -131,6 +184,12 @@ function send() {
 		shapesH.push(30);
 		shapesW.push(rightinput.length * 15);
 		shapesText.push(rightinput);
+		if (contains(rightinput, '"')) {
+			shapesValue.push(0);
+		} else {
+			shapesValue.push(findValueOfString(rightinput));
+			shapesValueType.push(findTypeOfString(rightinput));
+		}
 	}
 	if (eval(leftinput) == eval(rightinput)) {
 		document.getElementById("status").style.backgroundColor = "green";
@@ -140,6 +199,7 @@ function send() {
 		document.getElementById("status").innerHTML = "Not Equal";
 	}
 }
+
 setInterval(function() {
 	render();
 	update();
@@ -255,6 +315,55 @@ function update() {
 			shapesX[i] = mx - (shapesW[i]/2);
 			shapesY[i] = my - (shapesH[i]/2);
 		}
+	}
+	
+	
+	// Detect how much is on each side of the scale
+
+	timer++;
+	if (timer === 25) {
+		timer = 0;
+		leftweight = [0];
+		rightweight = [0];
+		weightVars = ["constant"];
+		for (var i = 0; i < shapesValue.length; i++) {
+			var valueTypeNum = -1;
+			for (var j = 0; j < shapesType.length; j++) {
+				if (shapesValueType[i] === weightVars[j]) {
+					valueTypeNum = j;
+				}
+			}
+			if (valueTypeNum === -1) {
+				valueTypeNum = weightVars.length;
+				weightVars.push(shapesValueType[i]);
+			}
+			if (shapesY[i] <= 210 && shapesY[i] >= 100) {
+				if (shapesX[i] < 500) {
+					if (valueTypeNum < leftweight.length) {
+						leftweight[valueTypeNum] += parseInt(shapesValue[i]);
+					} else {
+						leftweight.push(parseInt(shapesValue[i]));
+					}
+				} else {
+					if (valueTypeNum < leftweight.length) {
+						rightweight[valueTypeNum] += parseInt(shapesValue[i]);
+					} else {
+						rightweight.push(parseInt(shapesValue[i]));
+					}			
+				}
+			}
+		}
+		var equal = true;
+		for (var i = 0; i < leftweight.length; i++) {
+			if (leftweight[i] != rightweight[i]) {
+				equal = false;
+			}
+		} 
+		if (equal) {
+			console.log(equal);
+		}
+		console.log(leftweight);
+		console.log(rightweight);
 	}
 }
 
