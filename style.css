@@ -30,11 +30,12 @@ p.status {
 	margin-top: 0px;
 	border: 3px solid black;
 	border-radius: 1em;
-	background-color: green;
-	color: White;
+	background-color: black;
+	color: white;
 	width: 600px;
 	height: 50px;
 	font-size: 2.5em;
+	transition: background-color 0.65s, color 0.65s;
 }
 button.submit {
 	background-color: white;

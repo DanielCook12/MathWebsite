@@ -98,7 +98,7 @@ function findValueOfString(string) {
 				if (j != i && termsType[i] === termsType[j] && (val[i] === "letter" || val[i] === "num")) {
 					if (operators[i] === "+") {
 						terms[i] += terms[j];
-					} else if (operators[i] === "-") { 
+					} else if (operators[i] === "-") {
 						terms[i] -= terms[j];
 					} else if (operators[i] === "*") {
 						terms[i] *= terms[j];
@@ -144,7 +144,7 @@ function findTypeOfString(string) {
 				if (j != i && termsType[i] === termsType[j] && (val[i] === "letter" || val[i] === "num")) {
 					if (operators[i] === "+") {
 						terms[i] += terms[j];
-					} else if (operators[i] === "-") { 
+					} else if (operators[i] === "-") {
 						terms[i] -= terms[j];
 					} else if (operators[i] === "*") {
 						terms[i] *= terms[j];
@@ -199,9 +199,11 @@ function send() {
 	}
 	if (eval(leftinput) == eval(rightinput)) {
 		document.getElementById("status").style.backgroundColor = "green";
+		document.getElementById("status").style.color = "white";
 		document.getElementById("status").innerHTML = "Equal";
 	} else {
 		document.getElementById("status").style.backgroundColor = "red";
+		document.getElementById("status").style.color = "white";
 		document.getElementById("status").innerHTML = "Not Equal";
 	}
 }
@@ -325,8 +327,8 @@ function update() {
 			shapesY[i] = my - (shapesH[i]/2);
 		}
 	}
-	
-	
+
+
 	// Detect how much is on each side of the scale
 
 	// Timer is used to only run the code every 25 times the code reaches this point for better performance.
@@ -352,7 +354,7 @@ function update() {
 				valueTypeNum = weightVars.length;
 				weightVars.push(shapesValueType[i]);
 			}
-			
+
 			// Add the value into the leftweight or rightweight arrays.
 			if (shapesY[i] <= 210+scaleHeight && shapesY[i] >= 140 + scaleHeight) {
 				if (shapesX[i] < 500) {
@@ -372,11 +374,11 @@ function update() {
 				} else {
 					while (rightweight.length < weightVars.length-1) {
 						rightweight.push(0);
-					}	
+					}
 					rightweight.push(parseInt(shapesValue[i]));
-				}			
+				}
 			}
-			
+
 		}
 		// Detect if the sides are equal
 		equal = false;
@@ -395,7 +397,7 @@ function update() {
 			if (leftweight[i] != rightweight[i]) {
 				differences.push(leftweight[i] - rightweight[i]);
 			}
-		} 
+		}
 		console.log(differences);
 		var difference = 0;
 		for (var i = 0; i < differences.length; i++) {
