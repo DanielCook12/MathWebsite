@@ -328,7 +328,7 @@ function update() {
 		weightVars = ["constant"];
 		for (var i = 0; i < shapesValue.length; i++) {
 			var valueTypeNum = -1;
-			for (var j = 0; j < shapesType.length; j++) {
+			for (var j = 0; j < weightVars.length; j++) {
 				if (shapesValueType[i] === weightVars[j]) {
 					valueTypeNum = j;
 				}
@@ -342,12 +342,18 @@ function update() {
 					if (valueTypeNum < leftweight.length) {
 						leftweight[valueTypeNum] += parseInt(shapesValue[i]);
 					} else {
+						while (leftweight.length < weightVars.length-1) {
+							leftweight.push(0);
+						}
 						leftweight.push(parseInt(shapesValue[i]));
 					}
 				} else {
-					if (valueTypeNum < leftweight.length) {
+					if (valueTypeNum < rightweight.length) {
 						rightweight[valueTypeNum] += parseInt(shapesValue[i]);
 					} else {
+						while (rightweight.length < weightVars.length-1) {
+							rightweight.push(0);
+						}
 						rightweight.push(parseInt(shapesValue[i]));
 					}			
 				}
@@ -359,9 +365,7 @@ function update() {
 				equal = false;
 			}
 		} 
-		if (equal) {
-			console.log(equal);
-		}
+		console.log("Equal: " + equal);
 		console.log(leftweight);
 		console.log(rightweight);
 	}
