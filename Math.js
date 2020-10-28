@@ -21,11 +21,6 @@ var rightWeight = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 var leftWeight = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 var weightVars = ["constant"];
 var timer = 0;
-var equal = true;
-var left = false;
-var right = false;
-var farLeft = false;
-var farRight = false;
 
 function contains(string, value) {
 	for (var i = 0; i < string.length; i++) {
@@ -325,31 +320,23 @@ function update() {
 	
 	// Detect how much is on each side of the scale
 
-	// Timer is used to only run the code every 25 times the code reaches this point for better performance.
 	timer++;
 	if (timer === 25) {
 		timer = 0;
-		// Reset variables to put what is necessary in them.
 		leftweight = [0];
 		rightweight = [0];
 		weightVars = ["constant"];
-		//For each shape
 		for (var i = 0; i < shapesValue.length; i++) {
 			var valueTypeNum = -1;
-			// For each variable used
 			for (var j = 0; j < weightVars.length; j++) {
-				//If the variable of the shape is the same as j, set teh variable type number to j
 				if (shapesValueType[i] === weightVars[j]) {
 					valueTypeNum = j;
 				}
 			}
-			// If it is a previously unused variable, add it to weightVars
 			if (valueTypeNum === -1) {
 				valueTypeNum = weightVars.length;
 				weightVars.push(shapesValueType[i]);
 			}
-			
-			// Add the value into the leftweight or rightweight arrays.
 			if (shapesY[i] <= 210 && shapesY[i] >= 100) {
 				if (shapesX[i] < 500) {
 					if (valueTypeNum < leftweight.length) {
@@ -372,45 +359,13 @@ function update() {
 				}
 			}
 		}
-		// Detect if the sides are equal
-		equal = false;
-		left = false;
-		right = false;
-		farRight = false;
-		farLeft = false;
-		var differences = [];
-		while (leftweight.length > rightweight.length) {
-			rightweight.push(0);
-		}
-		while (rightweight.length > leftweight.length) {
-			leftweight.push(0);
-		}
+		var equal = true;
 		for (var i = 0; i < leftweight.length; i++) {
 			if (leftweight[i] != rightweight[i]) {
-				differences.push(leftweight[i] - rightweight[i]);
+				equal = false;
 			}
 		} 
-		console.log(differences);
-		var difference = 0;
-		for (var i = 0; i < differences.length; i++) {
-			difference += differences[i];
-		}
-		if (difference < 0 && difference >= -50) {
-			right = true;
-			console.log("right");
-		} else if (difference > 0 && difference < 50) {
-			left = true;
-			console.log("left");
-		} else if (difference === 0) {
-			equal = true;
-			console.log("Equal");
-		} else if (difference <= -50) {
-			farRight = true;
-			console.log("far right");
-		} else if (difference >= 50) {
-			farLeft = true;
-			console.log("far Left");
-		}
+		console.log("Equal: " + equal);
 		console.log(leftweight);
 		console.log(rightweight);
 	}
