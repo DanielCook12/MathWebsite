@@ -354,7 +354,7 @@ function update() {
 			}
 			
 			// Add the value into the leftweight or rightweight arrays.
-			if (shapesY[i] <= 210+scaleHeight && shapesY[i] >= 100) {
+			if (shapesY[i] <= 210+scaleHeight && shapesY[i] >= 140 + scaleHeight) {
 				if (shapesX[i] < 500) {
 					if (valueTypeNum < leftweight.length) {
 						leftweight[valueTypeNum] += parseInt(shapesValue[i]);
@@ -366,7 +366,7 @@ function update() {
 					}
 				}
 			}
-			if (shapesY[i] <= 210 - scaleHeight && shapesY[i] >= 100 && shapesX[i] >=500) {
+			if (shapesY[i] <= 210 - scaleHeight && shapesY[i] >= 140-scaleHeight && shapesX[i] >=500) {
 				if (valueTypeNum < rightweight.length) {
 					rightweight[valueTypeNum] += parseInt(shapesValue[i]);
 				} else {
