@@ -26,6 +26,7 @@ var left = false;
 var right = false;
 var farLeft = false;
 var farRight = false;
+var scaleHeight = 0;
 
 function contains(string, value) {
 	for (var i = 0; i < string.length; i++) {
@@ -232,21 +233,21 @@ function render() {
 
 	// Main Board of balancing
 	d.beginPath();
-	d.moveTo(225, 230);
-	d.lineTo(225, 257.5);
-	d.lineTo(775, 257.5);
-	d.lineTo(775, 230);
-	d.lineTo(755, 230);
-	d.lineTo(755, 242.5);
-	d.lineTo(245, 242.5);
-	d.lineTo(245, 230);
+	d.moveTo(225, 230+scaleHeight);
+	d.lineTo(225, 257.5+scaleHeight);
+	d.lineTo(775, 257.5-scaleHeight);
+	d.lineTo(775, 230-scaleHeight);
+	d.lineTo(755, 230-scaleHeight);
+	d.lineTo(755, 242.5-scaleHeight);
+	d.lineTo(245, 242.5+scaleHeight);
+	d.lineTo(245, 230+scaleHeight);
 	d.fill();
 
 	//Left Scale
-	d.fillRect(40, 210, 400, 20);
+	d.fillRect(40, 210 + scaleHeight, 400, 20);
 
 	//Right Scale
-	d.fillRect(560, 210, 400, 20);
+	d.fillRect(560, 210 - scaleHeight, 400, 20);
 
 	//Render Shapes
 	d.fillStyle = "#008800";
@@ -300,9 +301,12 @@ function update() {
 			}
 		}
 		shapesVY[i] += 1;
-		if (shapesY[i] >= 210 - shapesH[i] && shapesY[i] <= 230 - shapesH[i] && shapesVY[i] > 0 && (shapesX[i] > 560 - shapesW[i] || shapesX[i] < 440) && shapesX[i] > 40 - shapesW[i] && shapesX[i] < 960) {
+		if (shapesY[i] >= 210 - shapesH[i] + scaleHeight && shapesY[i] <= 230 - shapesH[i] + scaleHeight && shapesVY[i] > 0 && (shapesX[i] < 440) && shapesX[i] > 40 - shapesW[i]) {
 			shapesVY[i] = 0;
-			shapesY[i] = 210 - shapesH[i];
+			shapesY[i] = 210 - shapesH[i] + scaleHeight;
+		} else if (shapesY[i] >= 210 - shapesH[i] - scaleHeight && shapesY[i] <= 230 - shapesH[i] - scaleHeight && shapesVY[i] > 0 && (shapesX[i] > 560) && shapesX[i] < 960) {
+			shapesVY[i] = 0;
+			shapesY[i] = 210 - shapesH[i] - scaleHeight;
 		} else if (shapesY[i] >= 460 - shapesH[i]) {
 			shapesVY[i] = 0;
 			shapesY[i] = 460 - shapesH[i];
@@ -350,7 +354,7 @@ function update() {
 			}
 			
 			// Add the value into the leftweight or rightweight arrays.
-			if (shapesY[i] <= 210 && shapesY[i] >= 100) {
+			if (shapesY[i] <= 210+scaleHeight && shapesY[i] >= 100) {
 				if (shapesX[i] < 500) {
 					if (valueTypeNum < leftweight.length) {
 						leftweight[valueTypeNum] += parseInt(shapesValue[i]);
@@ -360,17 +364,19 @@ function update() {
 						}
 						leftweight.push(parseInt(shapesValue[i]));
 					}
-				} else {
-					if (valueTypeNum < rightweight.length) {
-						rightweight[valueTypeNum] += parseInt(shapesValue[i]);
-					} else {
-						while (rightweight.length < weightVars.length-1) {
-							rightweight.push(0);
-						}
-						rightweight.push(parseInt(shapesValue[i]));
-					}			
 				}
 			}
+			if (shapesY[i] <= 210 - scaleHeight && shapesY[i] >= 100 && shapesX[i] >=500) {
+				if (valueTypeNum < rightweight.length) {
+					rightweight[valueTypeNum] += parseInt(shapesValue[i]);
+				} else {
+					while (rightweight.length < weightVars.length-1) {
+						rightweight.push(0);
+					}	
+					rightweight.push(parseInt(shapesValue[i]));
+				}			
+			}
+			
 		}
 		// Detect if the sides are equal
 		equal = false;
@@ -398,18 +404,24 @@ function update() {
 		if (difference < 0 && difference >= -50) {
 			right = true;
 			console.log("right");
+			scaleHeight = -10;
 		} else if (difference > 0 && difference < 50) {
 			left = true;
 			console.log("left");
+			scaleHeight = 10;
+
 		} else if (difference === 0) {
 			equal = true;
 			console.log("Equal");
+			scaleHeight = 0;
 		} else if (difference <= -50) {
 			farRight = true;
 			console.log("far right");
+			scaleHeight = -25;
 		} else if (difference >= 50) {
 			farLeft = true;
 			console.log("far Left");
+			scaleHeight = 25;
 		}
 		console.log(leftweight);
 		console.log(rightweight);
