@@ -32,7 +32,7 @@ p.status {
 	border-radius: 1em;
 	background-color: green;
 	color: White;
-	width: 300px;
+	width: 600px;
 	height: 50px;
 	font-size: 2.5em;
 }
@@ -40,7 +40,7 @@ button.submit {
 	background-color: white;
 	border: 3px solid black;
 	border-radius: 1em;
-	width: 300px;
+	width: 600px;
 	height: 50px;
 	font-size:25px;
 	padding-left:10px;
@@ -54,7 +54,7 @@ button.clear {
 	background-color: white;
 	border: 3px solid black;
 	border-radius: 1em;
-	width: 300px;
+	width: 600px;
 	height: 50px;
 	font-size:25px;
 	padding-left:10px;
@@ -68,7 +68,7 @@ input.mathinput {
 	background-color: white;
 	border: 3px solid black;
 	border-radius: 1em;
-	width: 300px;
+	width: 600px;
 	height: 50px;
 	font-size:25px;
 	padding-left:10px;
@@ -97,6 +97,6 @@ p.footer {
 	border: 8px solid black;
 	border-radius:20px;
 	position:fixed;
-	top:70px;
-	right:10px;
+	top: 80px;
+	right: 10px;
 }
