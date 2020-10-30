@@ -17,6 +17,7 @@ var scale = 0;
 var shapesValue = [0, 0];
 var shapesValueType = ["constant", "constant"];
 var shapesType = ["none", "none"];
+var shapesEx = ["0", "0"];
 var rightWeight = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 var leftWeight = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 var weightVars = ["constant"];
@@ -43,6 +44,8 @@ function findTypeFromString(string, start, end) {
 		for (var i = start; i < end; i++) {
 			if (string.charAt(i) == "0" || string.charAt(i) == "1" || string.charAt(i) == "2" || string.charAt(i) == "3" || string.charAt(i) == "4" || string.charAt(i) == "5" || string.charAt(i) == "6" || string.charAt(i) == "7" || string.charAt(i) == "8" || string.charAt(i) == "9") {
 				returnV[i] = "num";
+			} else if (string.charAt(i) == "^" && (string.charAt(i-1) == "a" || string.charAt(i-1) == "b" || string.charAt(i-1) == "c" || string.charAt(i-1) == "d" || string.charAt(i-1) == "e" || string.charAt(i-1) == "f" || string.charAt(i-1) == "g" || string.charAt(i-1) == "h" || string.charAt(i-1) == "i" || string.charAt(i-1) == "j" || string.charAt(i-1) == "k" || string.charAt(i-1) == "l" || string.charAt(i-1) == "m" || string.charAt(i-1) == "n" || string.charAt(i-1) == "o" || string.charAt(i-1) == "p" || string.charAt(i-1) == "q" || string.charAt(i-1) == "r" || string.charAt(i-1) == "s" || string.charAt(i-1) == "t" || string.charAt(i-1) == "u" || string.charAt(i-1) == "v" || string.charAt(i-1) == "w" || string.charAt(i-1) == "x" || string.charAt(i-1) == "y" || string.charAt(i-1) == "z")) {
+				returnV[i] = "exponet";
 			} else if (string.charAt(i) == "+" || string.charAt(i) == "-" || string.charAt(i) == "*" || string.charAt(i) == "/" || string.charAt(i) == "^") {
 				returnV[i] = "op";
 			} else if (string.charAt(i) == "(" || string.charAt(i) == ")" || string.charAt(i) == "{" || string.charAt(i) == "}" || string.charAt(i) == "[" || array [i] == "]") {
@@ -57,6 +60,8 @@ function findTypeFromString(string, start, end) {
 		for (var i = 0; i < string.length; i++) {
 			if (string.charAt(i) == "0" || string.charAt(i) == "1" || string.charAt(i) == "2" || string.charAt(i) == "3" || string.charAt(i) == "4" || string.charAt(i) == "5" || string.charAt(i) == "6" || string.charAt(i) == "7" || string.charAt(i) == "8" || string.charAt(i) == "9") {
 				returnV[i] = "num";
+			} else if (string.charAt(i) == "^" && (string.charAt(i-1) == "a" || string.charAt(i-1) == "b" || string.charAt(i-1) == "c" || string.charAt(i-1) == "d" || string.charAt(i-1) == "e" || string.charAt(i-1) == "f" || string.charAt(i-1) == "g" || string.charAt(i-1) == "h" || string.charAt(i-1) == "i" || string.charAt(i-1) == "j" || string.charAt(i-1) == "k" || string.charAt(i-1) == "l" || string.charAt(i-1) == "m" || string.charAt(i-1) == "n" || string.charAt(i-1) == "o" || string.charAt(i-1) == "p" || string.charAt(i-1) == "q" || string.charAt(i-1) == "r" || string.charAt(i-1) == "s" || string.charAt(i-1) == "t" || string.charAt(i-1) == "u" || string.charAt(i-1) == "v" || string.charAt(i-1) == "w" || string.charAt(i-1) == "x" || string.charAt(i-1) == "y" || string.charAt(i-1) == "z")) {
+				returnV[i] = "exponet";
 			} else if (string.charAt(i) == "+" || string.charAt(i) == "-" || string.charAt(i) == "*" || string.charAt(i) == "/" || string.charAt(i) == "^") {
 				returnV[i] = "op";
 			} else if (string.charAt(i) == "(" || string.charAt(i) == ")" || string.charAt(i) == "{" || string.charAt(i) == "}" || string.charAt(i) == "[" || string.charAt(i) == "]") {
@@ -77,9 +82,9 @@ function findValueOfString(string) {
 	var termsType = ["constant"];
 	var operators = [];
 	var negative = [1];
-	//var groups = [];
+	var exponets = [0];
 	for (var i = 0; i < string.length; i++) {
-		if (val[i] === "num") {
+		if (val[i] === "num" && val[i-1] != "exponet") {
 			terms[terms.length-1] *= 10;
 			console.log("num");
 			terms[terms.length-1] += parseInt(string.charAt(i));
@@ -88,12 +93,16 @@ function findValueOfString(string) {
 		} else if (val[i] === "op") {
 			terms.push(0);
 			negative.push(1);
+			exponets.push(0);
 			console.log("sym");
 			termsType.push("constant");
 			operators.push(string.charAt(i));
 		} else if (val[i] === "letter") {
 			console.log("var");
 			termsType[termsType.length-1] = string.charAt(i);
+		} else if (val[i] === "exponet") {
+			console.log("exponet");
+			exponets[exponets.length-1] = string.charAt(i+1);
 		}
 	}
 	
@@ -104,7 +113,7 @@ function findValueOfString(string) {
 		for (var i = 0; i < terms.length; i++) {
 			for (var j = 0; j < terms.length; j++) {
 				if (j != i && termsType[i] === termsType[j] && (val[i] === "letter" || val[i] === "num")) {
-					if (operators[i] === "+") {
+					if (operators[i] === "+" || "-") {
 						terms[i] += terms[j];
 					}/* else if (operators[i] === "-") { 
 						terms[i] -= terms[j];
@@ -121,7 +130,7 @@ function findValueOfString(string) {
 	}
 	console.log(terms);
 	console.log(termsType);
-	return terms[0];
+	return [terms[0], exponets[0]];
 }
 
 
@@ -129,14 +138,16 @@ function findTypeOfString(string) {
 	var val = findTypeFromString(string);
 	var terms = [0];
 	var termsType = ["constant"];
+	var negative = [1];
+	var exponets = [0]
 	var operators = [];
 	for (var i = 0; i < string.length; i++) {
-		if (val[i] === "num") {
+		if (val[i] === "num" && val[i-1] != "exponet") {
 			terms[terms.length-1] *= 10;
 			console.log("num");
 			terms[terms.length-1] += parseInt(string.charAt(i));
 		} else if (string.charAt(i) == "-") {
-				terms[terms.length-1] *= -1;
+			negative[negative.length-1] = -1;
 		} else if (val[i] === "op") {
 			terms.push(0);
 			console.log("sym");
@@ -146,13 +157,21 @@ function findTypeOfString(string) {
 		} else if (val[i] === "letter") {
 			console.log("var");
 			termsType[termsType.length-1] = string.charAt(i);
+		} else if (val[i] === "exponet") {
+			console.log("exponet");
+			exponets[exponets.length-1] = string.charAt(i);
 		}
 	}
+	
+	for (var i = 0; i < terms.length; i++) {
+		terms[i] *= negative[i];
+	}
+	
 	if (terms.length > 1) {
 		for (var i = 0; i < terms.length; i++) {
 			for (var j = 0; j < terms.length; j++) {
 				if (j != i && termsType[i] === termsType[j] && (val[i] === "letter" || val[i] === "num")) {
-					if (operators[i] === "+") {
+					if (operators[i] === "+" || "-") {
 						terms[i] += terms[j];
 					}/* else if (operators[i] === "-") { 
 						terms[i] -= terms[j];
@@ -185,11 +204,21 @@ function send() {
 		if (contains(leftinput, '"')) {
 			shapesValue.push(0);
 		} else {
-			shapesValue.push(findValueOfString(leftinput));
-			shapesValueType.push(findTypeOfString(leftinput));
+			shapesValue.push(findValueOfString(leftinput)[0]);
+			shapesEx.push(findValueOfString(leftinput)[1]);
+			if (shapesEx[shapes.length-1] != 0) {
+				shapesValueType.push(findTypeOfString(leftinput) + "^" + shapesEx[shapesEx.length-1]);
+			} else {
+				shapesValueType.push(findTypeOfString(leftinput));
+			}
+			console.log(shapesValueType[shapes.length-1])
+			if (shapesValue[shapes.length-1] == 0 && shapesValueType != "constant") {
+				shapesValue[shapes.length-1] = 1;
+			}
 		}
 		console.log(shapesValue[shapesValue.length-1]);
 		console.log(shapesValueType[shapesValue.length-1]);
+		
 	}
 	if (rightinput != "") {
 		shapes.push(1);
@@ -203,17 +232,26 @@ function send() {
 		if (contains(rightinput, '"')) {
 			shapesValue.push(0);
 		} else {
-			shapesValue.push(findValueOfString(rightinput));
-			shapesValueType.push(findTypeOfString(rightinput));
+			shapesValue.push(findValueOfString(rightinput)[0]);
+			shapesEx.push(findValueOfString(rightinput)[1]);
+			if (shapesEx[shapes.length-1] != 0) {
+				shapesValueType.push(findTypeOfString(rightinput) + "^" + shapesEx[shapesEx.length-1]);
+			} else {
+				shapesValueType.push(findTypeOfString(rightinput));
+			}
+			console.log(shapesValueType[shapes.length-1])
+			if (shapesValue[shapes.length-1] == 0 && shapesValueType != "constant") {
+				shapesValue[shapes.length-1] = 1;
+			}
 		}
+		console.log(shapesValue[shapesValue.length-1]);
+		console.log(shapesValueType[shapesValue.length-1]);
 	}
 	if (eval(leftinput) == eval(rightinput)) {
 		document.getElementById("status").style.backgroundColor = "green";
-		document.getElementById("status").style.color = "white";
 		document.getElementById("status").innerHTML = "Equal";
 	} else {
 		document.getElementById("status").style.backgroundColor = "red";
-		document.getElementById("status").style.color = "white";
 		document.getElementById("status").innerHTML = "Not Equal";
 	}
 }
@@ -262,13 +300,13 @@ function render() {
 	d.fillRect(560, 210 - scaleHeight, 400, 20);
 
 	//Render Shapes
-	d.fillStyle = "#008800";
 	for (var i = 0; i<shapes.length; i++) {
 		if (shapes[i] === 0) {
+			d.fillStyle = "#008800";
 			d.fillRect(shapesX[i], shapesY[i], shapesW[i], shapesH[i]);
 		} else if (shapes[i] === 1) {
 			d.font = "30px Arial";
-			d.fillStyle = "#000000";
+			d.fillStyle = "#555555";
 			d.fillText(shapesText[i], shapesX[i], shapesY[i] + shapesH[i]);
 		}
 	}
@@ -337,8 +375,8 @@ function update() {
 			shapesY[i] = my - (shapesH[i]/2);
 		}
 	}
-
-
+	
+	
 	// Detect how much is on each side of the scale
 
 	// Timer is used to only run the code every 25 times the code reaches this point for better performance.
@@ -354,7 +392,7 @@ function update() {
 			var valueTypeNum = -1;
 			// For each variable used
 			for (var j = 0; j < weightVars.length; j++) {
-				//If the variable of the shape is the same as j, set teh variable type number to j
+				//If the variable of the shape is the same as j, set the variable type number to j
 				if (shapesValueType[i] === weightVars[j]) {
 					valueTypeNum = j;
 				}
@@ -364,7 +402,7 @@ function update() {
 				valueTypeNum = weightVars.length;
 				weightVars.push(shapesValueType[i]);
 			}
-
+			
 			// Add the value into the leftweight or rightweight arrays.
 			if (shapesY[i] <= 210+scaleHeight && shapesY[i] >= 140 + scaleHeight) {
 				if (shapesX[i] < 500) {
@@ -384,11 +422,11 @@ function update() {
 				} else {
 					while (rightweight.length < weightVars.length-1) {
 						rightweight.push(0);
-					}
+					}	
 					rightweight.push(parseInt(shapesValue[i]));
-				}
+				}			
 			}
-
+			
 		}
 		// Detect if the sides are equal
 		equal = false;
@@ -407,7 +445,7 @@ function update() {
 			if (leftweight[i] != rightweight[i]) {
 				differences.push(leftweight[i] - rightweight[i]);
 			}
-		}
+		} 
 		console.log(differences);
 		var difference = 0;
 		for (var i = 0; i < differences.length; i++) {
