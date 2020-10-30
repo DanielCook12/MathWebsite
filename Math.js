@@ -76,14 +76,18 @@ function findValueOfString(string) {
 	var terms = [0];
 	var termsType = ["constant"];
 	var operators = [];
+	var negative = [1];
 	//var groups = [];
 	for (var i = 0; i < string.length; i++) {
 		if (val[i] === "num") {
 			terms[terms.length-1] *= 10;
 			console.log("num");
 			terms[terms.length-1] += parseInt(string.charAt(i));
+		} else if (string.charAt(i) == "-") {
+			negative[negative.length-1] = -1;
 		} else if (val[i] === "op") {
 			terms.push(0);
+			negative.push(1);
 			console.log("sym");
 			termsType.push("constant");
 			operators.push(string.charAt(i));
@@ -92,15 +96,19 @@ function findValueOfString(string) {
 			termsType[termsType.length-1] = string.charAt(i);
 		}
 	}
-	if (terms.length > 1) {
+	
+	for (var i = 0; i < terms.length; i++) {
+		terms[i] *= negative[i];
+	}
+ 	if (terms.length > 1) {
 		for (var i = 0; i < terms.length; i++) {
 			for (var j = 0; j < terms.length; j++) {
 				if (j != i && termsType[i] === termsType[j] && (val[i] === "letter" || val[i] === "num")) {
 					if (operators[i] === "+") {
 						terms[i] += terms[j];
-					} else if (operators[i] === "-") {
+					}/* else if (operators[i] === "-") { 
 						terms[i] -= terms[j];
-					} else if (operators[i] === "*") {
+					}*/ else if (operators[i] === "*") {
 						terms[i] *= terms[j];
 					} else if (operators[i] === "/") {
 						terms[i] /= terms[j];
@@ -122,17 +130,19 @@ function findTypeOfString(string) {
 	var terms = [0];
 	var termsType = ["constant"];
 	var operators = [];
-	//var groups = [];
 	for (var i = 0; i < string.length; i++) {
 		if (val[i] === "num") {
 			terms[terms.length-1] *= 10;
 			console.log("num");
 			terms[terms.length-1] += parseInt(string.charAt(i));
+		} else if (string.charAt(i) == "-") {
+				terms[terms.length-1] *= -1;
 		} else if (val[i] === "op") {
 			terms.push(0);
 			console.log("sym");
 			termsType.push("constant");
 			operators.push(string.charAt(i));
+
 		} else if (val[i] === "letter") {
 			console.log("var");
 			termsType[termsType.length-1] = string.charAt(i);
@@ -144,9 +154,9 @@ function findTypeOfString(string) {
 				if (j != i && termsType[i] === termsType[j] && (val[i] === "letter" || val[i] === "num")) {
 					if (operators[i] === "+") {
 						terms[i] += terms[j];
-					} else if (operators[i] === "-") {
+					}/* else if (operators[i] === "-") { 
 						terms[i] -= terms[j];
-					} else if (operators[i] === "*") {
+					} */else if (operators[i] === "*") {
 						terms[i] *= terms[j];
 					} else if (operators[i] === "/") {
 						terms[i] /= terms[j];
