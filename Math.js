@@ -105,7 +105,7 @@ function findValueOfString(string) {
 			exponets[exponets.length-1] = string.charAt(i+1);
 		}
 	}
-	
+
 	for (var i = 0; i < terms.length; i++) {
 		terms[i] *= negative[i];
 	}
@@ -115,7 +115,7 @@ function findValueOfString(string) {
 				if (j != i && termsType[i] === termsType[j] && (val[i] === "letter" || val[i] === "num")) {
 					if (operators[i] === "+" || "-") {
 						terms[i] += terms[j];
-					}/* else if (operators[i] === "-") { 
+					}/* else if (operators[i] === "-") {
 						terms[i] -= terms[j];
 					}*/ else if (operators[i] === "*") {
 						terms[i] *= terms[j];
@@ -162,18 +162,18 @@ function findTypeOfString(string) {
 			exponets[exponets.length-1] = string.charAt(i);
 		}
 	}
-	
+
 	for (var i = 0; i < terms.length; i++) {
 		terms[i] *= negative[i];
 	}
-	
+
 	if (terms.length > 1) {
 		for (var i = 0; i < terms.length; i++) {
 			for (var j = 0; j < terms.length; j++) {
 				if (j != i && termsType[i] === termsType[j] && (val[i] === "letter" || val[i] === "num")) {
 					if (operators[i] === "+" || "-") {
 						terms[i] += terms[j];
-					}/* else if (operators[i] === "-") { 
+					}/* else if (operators[i] === "-") {
 						terms[i] -= terms[j];
 					} */else if (operators[i] === "*") {
 						terms[i] *= terms[j];
@@ -218,7 +218,7 @@ function send() {
 		}
 		console.log(shapesValue[shapesValue.length-1]);
 		console.log(shapesValueType[shapesValue.length-1]);
-		
+
 	}
 	if (rightinput != "") {
 		shapes.push(1);
@@ -327,9 +327,9 @@ function update() {
 			shapesVX[i] = Math.floor(shapesVX[i]*2)/2;
 		} else if (shapesVX[i] != 0) {
 			if (shapesVX[i] > 0) {
-				shapesVX[i] -= 0.1;
+				shapesVX[i] -= 0.05;
 			} else {
-				shapesVX[i] += 0.1;
+				shapesVX[i] += 0.01;
 			}
 			shapesVX[i] = Math.floor(shapesVX[i]*2)/2;
 		}
@@ -375,8 +375,8 @@ function update() {
 			shapesY[i] = my - (shapesH[i]/2);
 		}
 	}
-	
-	
+
+
 	// Detect how much is on each side of the scale
 
 	// Timer is used to only run the code every 25 times the code reaches this point for better performance.
@@ -402,7 +402,7 @@ function update() {
 				valueTypeNum = weightVars.length;
 				weightVars.push(shapesValueType[i]);
 			}
-			
+
 			// Add the value into the leftweight or rightweight arrays.
 			if (shapesY[i] <= 210+scaleHeight && shapesY[i] >= 140 + scaleHeight) {
 				if (shapesX[i] < 500) {
@@ -422,11 +422,11 @@ function update() {
 				} else {
 					while (rightweight.length < weightVars.length-1) {
 						rightweight.push(0);
-					}	
+					}
 					rightweight.push(parseInt(shapesValue[i]));
-				}			
+				}
 			}
-			
+
 		}
 		// Detect if the sides are equal
 		equal = false;
@@ -445,7 +445,7 @@ function update() {
 			if (leftweight[i] != rightweight[i]) {
 				differences.push(leftweight[i] - rightweight[i]);
 			}
-		} 
+		}
 		console.log(differences);
 		var difference = 0;
 		for (var i = 0; i < differences.length; i++) {
