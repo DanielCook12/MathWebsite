@@ -42,6 +42,7 @@ function clearCanvas() {	 	 // The function called by the Clear button
 	location.reload()          // Reloads the page, thus clearing all text inputs
 }
 
+
 function findTypeFromString(string, start, end) {
 	var returnV = [];
 	if (start != null) {
@@ -391,6 +392,7 @@ function update() {
 		leftweight = [0];
 		rightweight = [0];
 		weightVars = ["constant"];
+		weightEx = [1];
 		//For each shape
 		for (var i = 0; i < shapesValue.length; i++) {
 			var valueTypeNum = -1;
@@ -405,6 +407,7 @@ function update() {
 			if (valueTypeNum === -1) {
 				valueTypeNum = weightVars.length;
 				weightVars.push(shapesValueType[i]);
+				weightEx.push(shapesEx[i]);
 			}
 
 			// Add the value into the leftweight or rightweight arrays.
@@ -448,6 +451,9 @@ function update() {
 		for (var i = 0; i < leftweight.length; i++) {
 			if (leftweight[i] != rightweight[i]) {
 				differences.push(leftweight[i] - rightweight[i]);
+				if (weightEx[i] > 1) {
+					differences[differences.length-1] *= weightEx[i]
+				}
 			}
 		}
 		console.log(differences);
