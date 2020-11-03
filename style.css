@@ -111,7 +111,5 @@ p.guide {
 #canvas {
 	border: 8px solid black;
 	border-radius:20px;
-	position:fixed;
-	top: 80px;
-	right: 10px;
+	float: right;
 }
