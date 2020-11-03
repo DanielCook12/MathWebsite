@@ -1,10 +1,7 @@
-html {
-	background-color: gray;
-}
 header {
 	text-align: center;
 	text-decoration: underline;
-	background-color: #2b2b2b;
+	background-color: gray;
 	color: white;
 	margin-left: -1em;
 	padding-left: 1em;
@@ -17,7 +14,7 @@ header {
 }
 main {
 	display: block;
-	background-color: gray;
+	background-color: lightgray;
 	position: relative;
 	text-align: center;
 	margin-left: -1em;
@@ -115,16 +112,9 @@ p.footer {
 	border: 8px solid transparent;
 	border-radius: 1em;
 }
-div.guide {
-	background-color: lightgray;
+guide {
 	position: relative;
-	margin-top: 12em;
-	margin-left: -1em;
-	padding-left: 1em;
-	margin-right: -1em;
-	padding-right: 1em;
-	padding-top: 0.1em;
-	padding-bottom: 0.1em;
+	top: 200px;
 }
 h1.guide {
 	font-family: sans-serif;
