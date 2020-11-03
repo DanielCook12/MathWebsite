@@ -1,28 +1,10 @@
 header {
 	text-align: center;
 	text-decoration: underline;
-	background-color: gray;
-	color: white;
-	margin-left: -1em;
-	padding-left: 1em;
-	margin-right: -1em;
-	padding-right: 1em;
-	margin-top: -1.5em;
-	padding-top: 1em;
-	margin-bottom: -1.5em;
-	padding-bottom: 1em;
 }
 main {
-	display: block;
-	background-color: lightgray;
 	position: relative;
 	text-align: center;
-	margin-left: -1em;
-	padding-left: 1em;
-	margin-right: -1em;
-	padding-right: 1em;
-	padding-top: 1em;
-	padding-bottom: 1em;
 }
 div.left {
 	margin: 0.5em;
@@ -130,6 +112,6 @@ p.guide {
 	border: 8px solid black;
 	border-radius:20px;
 	position:fixed;
-	top: 105px;
+	top: 80px;
 	right: 10px;
 }
