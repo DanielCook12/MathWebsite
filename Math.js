@@ -133,9 +133,9 @@ function findValueOfString(string) {
 			}
 		}
 	}
-	console.log(terms);
-	console.log(termsType);
-	return [terms[0], exponets[0]];
+	// console.log(terms);
+	// console.log(termsType);
+	return [terms, exponets];
 }
 
 
@@ -149,21 +149,21 @@ function findTypeOfString(string) {
 	for (var i = 0; i < string.length; i++) {
 		if (val[i] === "num" && val[i-1] != "exponet") {
 			terms[terms.length-1] *= 10;
-			console.log("num");
+			// console.log("num");
 			terms[terms.length-1] += parseInt(string.charAt(i));
 		} else if (string.charAt(i) == "-") {
 			negative[negative.length-1] = -1;
 		} else if (val[i] === "op") {
 			terms.push(0);
-			console.log("sym");
+			// console.log("sym");
 			termsType.push("constant");
 			operators.push(string.charAt(i));
 
 		} else if (val[i] === "letter") {
-			console.log("var");
+			// console.log("var");
 			termsType[termsType.length-1] = string.charAt(i);
 		} else if (val[i] === "exponet") {
-			console.log("exponet");
+			// console.log("exponet");
 			exponets[exponets.length-1] = string.charAt(i);
 		}
 	}
@@ -191,7 +191,7 @@ function findTypeOfString(string) {
 			}
 		}
 	}
-	return termsType[0];
+	return termsType;
 }
 
 function send() {
@@ -211,14 +211,22 @@ function send() {
 		} else {
 			shapesValue.push(findValueOfString(leftinput)[0]);
 			shapesEx.push(findValueOfString(leftinput)[1]);
-			if (shapesEx[shapes.length-1] != 0) {
-				shapesValueType.push(findTypeOfString(leftinput) + "^" + shapesEx[shapesEx.length-1]);
-			} else {
-				shapesValueType.push(findTypeOfString(leftinput));
-			}
-			console.log(shapesValueType[shapes.length-1])
-			if (shapesValue[shapes.length-1] == 0 && shapesValueType != "constant") {
-				shapesValue[shapes.length-1] = 1;
+			console.log(shapesEx[shapesEx.length-1]);
+			// For each term
+			shapesValueType.push([0]);
+			for (var i = 0; i < shapesValue[shapesValue.length-1].length; i++) {
+				console.log(shapesEx[shapesEx.length-1][i]);
+				if (shapesEx[shapesEx.length-1][i] != 0) {
+					shapesValueType[shapesValueType.length-1][i] = findTypeOfString(leftinput)[i] + "^" + shapesEx[shapesEx.length-1][0];
+					console.log("ex");
+					console.log(findTypeOfString(leftinput)[i] + "^" + shapesEx[shapesEx.length-1][0]);
+				} else {
+					shapesValueType[shapesValueType.length-1][i] = findTypeOfString(leftinput)[i];
+				}
+				console.log(shapesValueType[shapes.length-1][i])
+				if (shapesValue[shapes.length-1][i] == 0 && shapesValueType[shapesValueType.length-1][i] != "constant") {
+					shapesValue[shapes.length-1][i] = 1;
+				}
 			}
 		}
 		console.log(shapesValue[shapesValue.length-1]);
@@ -239,18 +247,26 @@ function send() {
 		} else {
 			shapesValue.push(findValueOfString(rightinput)[0]);
 			shapesEx.push(findValueOfString(rightinput)[1]);
-			if (shapesEx[shapes.length-1] != 0) {
-				shapesValueType.push(findTypeOfString(rightinput) + "^" + shapesEx[shapesEx.length-1]);
-			} else {
-				shapesValueType.push(findTypeOfString(rightinput));
-			}
-			console.log(shapesValueType[shapes.length-1])
-			if (shapesValue[shapes.length-1] == 0 && shapesValueType != "constant") {
-				shapesValue[shapes.length-1] = 1;
+			console.log(shapesEx[shapesEx.length-1]);
+			// For each term
+			shapesValueType.push([0]);
+			for (var i = 0; i < shapesValue[shapesValue.length-1].length; i++) {
+				console.log(shapesEx[shapesEx.length-1][i]);
+				if (shapesEx[shapesEx.length-1][i] != 0) {
+					shapesValueType[shapesValueType.length-1][i] = findTypeOfString(rightinput)[i] + "^" + shapesEx[shapesEx.length-1][0];
+					console.log("ex");
+					console.log(findTypeOfString(rightinput)[i] + "^" + shapesEx[shapesEx.length-1][0]);
+				} else {
+					shapesValueType[shapesValueType.length-1][i] = findTypeOfString(rightinput)[i];
+				}
+				console.log(shapesValueType[shapes.length-1][i])
+				if (shapesValue[shapes.length-1][i] == 0 && shapesValueType[shapesValueType.length-1][i] != "constant") {
+					shapesValue[shapes.length-1][i] = 1;
+				}
 			}
 		}
-		console.log(shapesValue[shapesValue.length-1]);
-		console.log(shapesValueType[shapesValue.length-1]);
+		// console.log(shapesValue[shapesValue.length-1]);
+		// console.log(shapesValueType[shapesValue.length-1]);
 	}
 	if (eval(leftinput) == eval(rightinput)) {
 		document.getElementById("status").style.backgroundColor = "green";
@@ -395,45 +411,48 @@ function update() {
 		weightEx = [1];
 		//For each shape
 		for (var i = 0; i < shapesValue.length; i++) {
-			var valueTypeNum = -1;
-			// For each variable used
-			for (var j = 0; j < weightVars.length; j++) {
-				//If the variable of the shape is the same as j, set the variable type number to j
-				if (shapesValueType[i] === weightVars[j]) {
-					valueTypeNum = j;
+			// For each term in the shape
+			for (var k = 0; k < shapesValue[i].length; k++) {
+				var valueTypeNum = -1;
+				// For each variable used
+				for (var j = 0; j < weightVars.length; j++) {
+					//If the variable of the shape is the same as j, set the variable type number to j
+					if (shapesValueType[i][k] === weightVars[j]) {
+						valueTypeNum = j;
+					}
 				}
-			}
-			// If it is a previously unused variable, add it to weightVars
-			if (valueTypeNum === -1) {
-				valueTypeNum = weightVars.length;
-				weightVars.push(shapesValueType[i]);
-				weightEx.push(shapesEx[i]);
-			}
+				// If it is a previously unused variable, add it to weightVars
+				if (valueTypeNum === -1) {
+					valueTypeNum = weightVars.length;
+					weightVars.push(shapesValueType[i][k]);
+					weightEx.push(shapesEx[i][k]);
+				}
 
-			// Add the value into the leftweight or rightweight arrays.
-			if (shapesY[i] <= 210+scaleHeight && shapesY[i] >= 140 + scaleHeight) {
-				if (shapesX[i] < 500) {
-					if (valueTypeNum < leftweight.length) {
-						leftweight[valueTypeNum] += parseInt(shapesValue[i]);
-					} else {
-						while (leftweight.length < weightVars.length-1) {
-							leftweight.push(0);
+				// Add the value into the leftweight or rightweight arrays.
+				if (shapesY[i] <= 210+scaleHeight && shapesY[i] >= 140 + scaleHeight) {
+					if (shapesX[i] < 500) {
+						if (valueTypeNum < leftweight.length) {
+							leftweight[valueTypeNum] += parseInt(shapesValue[i][k]);
+						} else {
+							while (leftweight.length < weightVars.length-1) {
+								leftweight.push(0);
+							}
+							leftweight.push(parseInt(shapesValue[i][k]));
 						}
-						leftweight.push(parseInt(shapesValue[i]));
 					}
 				}
-			}
-			if (shapesY[i] <= 210 - scaleHeight && shapesY[i] >= 140-scaleHeight && shapesX[i] >=500) {
-				if (valueTypeNum < rightweight.length) {
-					rightweight[valueTypeNum] += parseInt(shapesValue[i]);
-				} else {
-					while (rightweight.length < weightVars.length-1) {
-						rightweight.push(0);
+				if (shapesY[i] <= 210 - scaleHeight && shapesY[i] >= 140-scaleHeight && shapesX[i] >=500) {
+					if (valueTypeNum < rightweight.length) {
+						rightweight[valueTypeNum] += parseInt(shapesValue[i][k]);
+					} else {
+						while (rightweight.length < weightVars.length-1) {
+							rightweight.push(0);
+						}
+						rightweight.push(parseInt(shapesValue[i][k]));
 					}
-					rightweight.push(parseInt(shapesValue[i]));
 				}
-			}
 
+			}
 		}
 		// Detect if the sides are equal
 		equal = false;
@@ -456,7 +475,7 @@ function update() {
 				}
 			}
 		}
-		console.log(differences);
+		// console.log(differences);
 		var difference = 0;
 		for (var i = 0; i < differences.length; i++) {
 			difference += differences[i];
