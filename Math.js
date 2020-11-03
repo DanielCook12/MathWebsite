@@ -38,6 +38,10 @@ function contains(string, value) {
 	return false;
 }
 
+function clearCanvas() {	 	 // The function called by the Clear button
+	location.reload()          // Reloads the page, thus clearing all text inputs
+}
+
 function findTypeFromString(string, start, end) {
 	var returnV = [];
 	if (start != null) {
