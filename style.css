@@ -94,7 +94,7 @@ p.footer {
 	border: 8px solid transparent;
 	border-radius: 1em;
 }
-guide {
+div.guide {
 	position: relative;
 	top: 200px;
 }
