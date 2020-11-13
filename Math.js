@@ -16,6 +16,7 @@ var prevMy = 0;
 var scale = 0;
 var shapesValue = [0, 0];
 var shapesValueType = ["constant", "constant"];
+var shapesTermLength = [0, 0];
 var shapesType = ["none", "none"];
 var shapesEx = ["0", "0"];
 var rightWeight = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
@@ -104,7 +105,11 @@ function findValueOfString(string) {
 			operators.push(string.charAt(i));
 		} else if (val[i] === "letter") {
 			console.log("var");
-			termsType[termsType.length-1] = string.charAt(i);
+			if (termsType[termsType.length-1] === "constant") {
+				termsType[termsType.length-1] = string.charAt(i);
+			} else {
+				termsType[termsType.length-1] = termsType[termsType.length-1] + string.charAt(i);
+			}
 		} else if (val[i] === "exponet") {
 			console.log("exponet");
 			exponets[exponets.length-1] = string.charAt(i+1);
@@ -120,9 +125,7 @@ function findValueOfString(string) {
 				if (j != i && termsType[i] === termsType[j] && (val[i] === "letter" || val[i] === "num")) {
 					if (operators[i] === "+" || "-") {
 						terms[i] += terms[j];
-					}/* else if (operators[i] === "-") {
-						terms[i] -= terms[j];
-					}*/ else if (operators[i] === "*") {
+					} else if (operators[i] === "*") {
 						terms[i] *= terms[j];
 					} else if (operators[i] === "/") {
 						terms[i] /= terms[j];
@@ -146,6 +149,7 @@ function findTypeOfString(string) {
 	var negative = [1];
 	var exponets = [0]
 	var operators = [];
+	var termLength = [1]
 	for (var i = 0; i < string.length; i++) {
 		if (val[i] === "num" && val[i-1] != "exponet") {
 			terms[terms.length-1] *= 10;
@@ -158,10 +162,15 @@ function findTypeOfString(string) {
 			// console.log("sym");
 			termsType.push("constant");
 			operators.push(string.charAt(i));
-
+			termLength.push(1);
 		} else if (val[i] === "letter") {
 			// console.log("var");
-			termsType[termsType.length-1] = string.charAt(i);
+			if (termsType[termsType.length-1] === "constant") {
+				termsType[termsType.length-1] = string.charAt(i);
+			} else {
+				termsType[termsType.length-1] = termsType[termsType.length-1] + string.charAt(i);
+				termLength[termLength.length-1]++;
+			}
 		} else if (val[i] === "exponet") {
 			// console.log("exponet");
 			exponets[exponets.length-1] = string.charAt(i);
@@ -178,9 +187,7 @@ function findTypeOfString(string) {
 				if (j != i && termsType[i] === termsType[j] && (val[i] === "letter" || val[i] === "num")) {
 					if (operators[i] === "+" || "-") {
 						terms[i] += terms[j];
-					}/* else if (operators[i] === "-") {
-						terms[i] -= terms[j];
-					} */else if (operators[i] === "*") {
+					} else if (operators[i] === "*") {
 						terms[i] *= terms[j];
 					} else if (operators[i] === "/") {
 						terms[i] /= terms[j];
@@ -191,7 +198,7 @@ function findTypeOfString(string) {
 			}
 		}
 	}
-	return termsType;
+	return [termsType, termLength];
 }
 
 function send() {
@@ -217,18 +224,21 @@ function send() {
 			for (var i = 0; i < shapesValue[shapesValue.length-1].length; i++) {
 				console.log(shapesEx[shapesEx.length-1][i]);
 				if (shapesEx[shapesEx.length-1][i] != 0) {
-					shapesValueType[shapesValueType.length-1][i] = findTypeOfString(leftinput)[i] + "^" + shapesEx[shapesEx.length-1][0];
+					shapesValueType[shapesValueType.length-1][i] = findTypeOfString(leftinput)[0][i] + "^" + shapesEx[shapesEx.length-1][0];
 					console.log("ex");
-					console.log(findTypeOfString(leftinput)[i] + "^" + shapesEx[shapesEx.length-1][0]);
+					console.log(findTypeOfString(leftinput)[0][i] + "^" + shapesEx[shapesEx.length-1][0]);
 				} else {
-					shapesValueType[shapesValueType.length-1][i] = findTypeOfString(leftinput)[i];
+					shapesValueType[shapesValueType.length-1][i] = findTypeOfString(leftinput)[0][i];
 				}
 				console.log(shapesValueType[shapes.length-1][i])
 				if (shapesValue[shapes.length-1][i] == 0 && shapesValueType[shapesValueType.length-1][i] != "constant") {
 					shapesValue[shapes.length-1][i] = 1;
 				}
 			}
+			shapesTermLength.push(findTypeOfString(leftinput)[1]);
+			console.log("Shape Term Length: " + shapesTermLength[shapes.length-1]);
 		}
+		
 		console.log(shapesValue[shapesValue.length-1]);
 		console.log(shapesValueType[shapesValue.length-1]);
 
@@ -253,11 +263,11 @@ function send() {
 			for (var i = 0; i < shapesValue[shapesValue.length-1].length; i++) {
 				console.log(shapesEx[shapesEx.length-1][i]);
 				if (shapesEx[shapesEx.length-1][i] != 0) {
-					shapesValueType[shapesValueType.length-1][i] = findTypeOfString(rightinput)[i] + "^" + shapesEx[shapesEx.length-1][0];
+					shapesValueType[shapesValueType.length-1][i] = findTypeOfString(rightinput)[0][i] + "^" + shapesEx[shapesEx.length-1][0];
 					console.log("ex");
-					console.log(findTypeOfString(rightinput)[i] + "^" + shapesEx[shapesEx.length-1][0]);
+					console.log(findTypeOfString(rightinput)[0][i] + "^" + shapesEx[shapesEx.length-1][0]);
 				} else {
-					shapesValueType[shapesValueType.length-1][i] = findTypeOfString(rightinput)[i];
+					shapesValueType[shapesValueType.length-1][i] = findTypeOfString(rightinput)[0][i];
 				}
 				console.log(shapesValueType[shapes.length-1][i])
 				if (shapesValue[shapes.length-1][i] == 0 && shapesValueType[shapesValueType.length-1][i] != "constant") {
@@ -471,7 +481,10 @@ function update() {
 			if (leftweight[i] != rightweight[i]) {
 				differences.push(leftweight[i] - rightweight[i]);
 				if (weightEx[i] > 1) {
-					differences[differences.length-1] *= weightEx[i]
+					differences[differences.length-1] *= weightEx[i];
+				}
+				if (weightVars[i] != "constant") {
+					differences[differences.length-1] *= weightVars[i].length;
 				}
 			}
 		}
