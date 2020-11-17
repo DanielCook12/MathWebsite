@@ -16,12 +16,14 @@ var prevMy = 0;
 var scale = 0;
 var shapesValue = [0, 0];
 var shapesValueType = ["constant", "constant"];
+var shapesValueTypeNoEx = ["constant", "constant"];
 var shapesTermLength = [0, 0];
 var shapesType = ["none", "none"];
 var shapesEx = ["0", "0"];
 var rightWeight = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 var leftWeight = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 var weightVars = ["constant"];
+var sizes = [20];
 var timer = 0;
 var equal = true;
 var left = false;
@@ -29,6 +31,49 @@ var right = false;
 var farLeft = false;
 var farRight = false;
 var scaleHeight = 0;
+var shapesOn = false;
+
+function switchShapesAndText() {
+	shapesOn = !shapesOn;
+	if (shapesOn) {
+		sizes = [20];     // Reset sizes array
+		for (var i = 1; i < weightVars.length; i++) {
+			sizes.push(20+((20/weightVars.length)*i));    // Add a different number to the array for each type of variable used
+		}
+		console.log(sizes);
+		for (var i = 0; i < shapes.length; i++) {
+			if (shapes[i] === 1) {
+				console.log("Shapes Value Type " + shapesValueTypeNoEx[i][0]);
+				console.log("Shapes Exponet " + shapesEx[i]);
+				if (shapesValueTypeNoEx[i][0] === "constant") {
+					shapesH[i] = 20;
+					shapesW[i] = 20*shapesValue[i];
+					console.log("constant");
+				} else if (shapesEx[i][0] === 1) { // variables without exponets
+					var j;
+					console.log("Exponet of 1");
+					for (j = 1; j < weightVars.length; j++) {   // find which size it should be
+						if (shapesValueTypeNoEx[i] == weightVars[j]) {
+							break;
+						}
+					}
+					shapesH[i] = 20;
+					shapesW[i] = sizes[j]*shapesValue[i];
+				} else if (shapesEx[i][0] > 1) { // variables with exponets
+					var j;
+					console.log("Exponet of 1");
+					for (j = 1; j < weightVars.length; j++) {   // find which size it should be
+						if (shapesValueTypeNoEx[i] == weightVars[j]) {
+							break;
+						}
+					}
+					shapesH[i] = sizes[j];
+					shapesW[i] = sizes[j]*shapesValue[i];
+				}
+			}
+		}
+	}
+}
 
 function contains(string, value) {
 	for (var i = 0; i < string.length; i++) {
@@ -105,6 +150,7 @@ function findValueOfString(string) {
 			operators.push(string.charAt(i));
 		} else if (val[i] === "letter") {
 			console.log("var");
+			exponets[exponets.length-1] = 1;
 			if (termsType[termsType.length-1] === "constant") {
 				termsType[termsType.length-1] = string.charAt(i);
 			} else {
@@ -221,14 +267,17 @@ function send() {
 			console.log(shapesEx[shapesEx.length-1]);
 			// For each term
 			shapesValueType.push([0]);
+			shapesValueTypeNoEx.push([0]);
 			for (var i = 0; i < shapesValue[shapesValue.length-1].length; i++) {
 				console.log(shapesEx[shapesEx.length-1][i]);
-				if (shapesEx[shapesEx.length-1][i] != 0) {
+				if (shapesEx[shapesEx.length-1][i] != 0 && shapesEx[shapesEx.length-1][i] != 1) { // If there is an exponet
 					shapesValueType[shapesValueType.length-1][i] = findTypeOfString(leftinput)[0][i] + "^" + shapesEx[shapesEx.length-1][0];
 					console.log("ex");
 					console.log(findTypeOfString(leftinput)[0][i] + "^" + shapesEx[shapesEx.length-1][0]);
+					shapesValueTypeNoEx[shapesValueTypeNoEx.length-1][i] = findTypeOfString(leftinput)[0][i];
 				} else {
 					shapesValueType[shapesValueType.length-1][i] = findTypeOfString(leftinput)[0][i];
+					shapesValueTypeNoEx[shapesValueTypeNoEx.length-1][i] = findTypeOfString(leftinput)[0][i];
 				}
 				console.log(shapesValueType[shapes.length-1][i])
 				if (shapesValue[shapes.length-1][i] == 0 && shapesValueType[shapesValueType.length-1][i] != "constant") {
@@ -260,14 +309,17 @@ function send() {
 			console.log(shapesEx[shapesEx.length-1]);
 			// For each term
 			shapesValueType.push([0]);
+			shapesValueTypeNoEx.push([0]);
 			for (var i = 0; i < shapesValue[shapesValue.length-1].length; i++) {
 				console.log(shapesEx[shapesEx.length-1][i]);
-				if (shapesEx[shapesEx.length-1][i] != 0) {
+				if (shapesEx[shapesEx.length-1][i] != 0 && shapesEx[shapesEx.length-1][i] != 1) {
 					shapesValueType[shapesValueType.length-1][i] = findTypeOfString(rightinput)[0][i] + "^" + shapesEx[shapesEx.length-1][0];
 					console.log("ex");
 					console.log(findTypeOfString(rightinput)[0][i] + "^" + shapesEx[shapesEx.length-1][0]);
+					shapesValueTypeNoEx[shapesValueType.length-1][i] = findTypeOfString(rightinput)[0][i];
 				} else {
 					shapesValueType[shapesValueType.length-1][i] = findTypeOfString(rightinput)[0][i];
+					shapesValueTypeNoEx[shapesValueType.length-1][i] = findTypeOfString(rightinput)[0][i];
 				}
 				console.log(shapesValueType[shapes.length-1][i])
 				if (shapesValue[shapes.length-1][i] == 0 && shapesValueType[shapesValueType.length-1][i] != "constant") {
@@ -331,14 +383,26 @@ function render() {
 	d.fillRect(560, 210 - scaleHeight, 400, 20);
 
 	//Render Shapes
-	for (var i = 0; i<shapes.length; i++) {
-		if (shapes[i] === 0) {
-			d.fillStyle = "#008800";
-			d.fillRect(shapesX[i], shapesY[i], shapesW[i], shapesH[i]);
-		} else if (shapes[i] === 1) {
-			d.font = "30px Arial";
-			d.fillStyle = "#555555";
-			d.fillText(shapesText[i], shapesX[i], shapesY[i] + shapesH[i]);
+	if (shapesOn) {
+		for (var i = 0; i<shapes.length; i++) {
+			if (shapes[i] === 0) {
+				d.fillStyle = "#008800";
+				d.fillRect(shapesX[i], shapesY[i], shapesW[i], shapesH[i]);
+			} else if (shapes[i] === 1) {
+				d.fillStyle = "#000088";
+				d.fillRect(shapesX[i], shapesY[i], shapesW[i], shapesH[i]);
+			}
+		}
+	} else {
+		for (var i = 0; i<shapes.length; i++) {
+			if (shapes[i] === 0) {
+				d.fillStyle = "#008800";
+				d.fillRect(shapesX[i], shapesY[i], shapesW[i], shapesH[i]);
+			} else if (shapes[i] === 1) {
+				d.font = "30px Arial";
+				d.fillStyle = "#555555";
+				d.fillText(shapesText[i], shapesX[i], shapesY[i] + shapesH[i]);
+			}
 		}
 	}
 }
