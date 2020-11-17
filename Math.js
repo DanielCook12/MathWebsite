@@ -78,7 +78,7 @@ function switchShapesAndText() {
 function contains(string, value) {
 	for (var i = 0; i < string.length; i++) {
 		if (string.charAt(i) === value) {
-			return i;
+			return true;
 		}
 	}
 	return false;
@@ -259,8 +259,11 @@ function send() {
 		shapesH.push(30);
 		shapesW.push(leftinput.length * 15);
 		shapesText.push(leftinput);
-		if (contains(leftinput, '"')) {
+		if (contains(leftinput, "'")) {
 			shapesValue.push(0);
+			shapes[shapes.length-1] = 0;
+			console.log("comment");
+			shapesText[shapesText.length-1] = leftinput;
 		} else {
 			shapesValue.push(findValueOfString(leftinput)[0]);
 			shapesEx.push(findValueOfString(leftinput)[1]);
@@ -301,8 +304,11 @@ function send() {
 		shapesH.push(30);
 		shapesW.push(rightinput.length * 15);
 		shapesText.push(rightinput);
-		if (contains(rightinput, '"')) {
+		if (contains(rightinput, "'")) {
 			shapesValue.push(0);
+			shapes[shapes.length-1] = 0;
+			console.log("comment");
+			shapesText[shapesText.length-1] = rightinput;
 		} else {
 			shapesValue.push(findValueOfString(rightinput)[0]);
 			shapesEx.push(findValueOfString(rightinput)[1]);
@@ -388,6 +394,9 @@ function render() {
 			if (shapes[i] === 0) {
 				d.fillStyle = "#008800";
 				d.fillRect(shapesX[i], shapesY[i], shapesW[i], shapesH[i]);
+				d.font = "30px Arial";
+				d.fillStyle = "#000000";
+				d.fillText(shapesText[i], shapesX[i], shapesY[i] + shapesH[i]);
 			} else if (shapes[i] === 1) {
 				d.fillStyle = "#000088";
 				d.fillRect(shapesX[i], shapesY[i], shapesW[i], shapesH[i]);
@@ -398,6 +407,9 @@ function render() {
 			if (shapes[i] === 0) {
 				d.fillStyle = "#008800";
 				d.fillRect(shapesX[i], shapesY[i], shapesW[i], shapesH[i]);
+				d.font = "30px Arial";
+				d.fillStyle = "#000000";
+				d.fillText(shapesText[i], shapesX[i], shapesY[i] + shapesH[i]);
 			} else if (shapes[i] === 1) {
 				d.font = "30px Arial";
 				d.fillStyle = "#555555";
