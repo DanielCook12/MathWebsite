@@ -2,3 +2,4 @@
 2: vice-versa ^
 3: Allow multi-digit exponets
 4: Allow adding of two variables that have no constant and are the same type
+5: Scaling (for shape sizes, for example, if the values are greater than 10, scale them down 10x)
