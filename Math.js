@@ -35,10 +35,37 @@ var shapesOn = false;
 
 function switchShapesAndText() {
 	shapesOn = !shapesOn;
+	var weightVarsNoEx = [];
+	for (var i = 0; i < weightVars.length; i++) {
+		if (!contains(weightVars[i], "^")) {
+			weightVarsNoEx.push(weightVars[i]);
+		} else {
+			var noExponetString = "";
+			var newString = true;
+			for (var j = 0; j < weightVars[i].length; j++) {
+				if (weightVars[i].charAt(j) === "^") {
+					break;
+				} else {
+					noExponetString = noExponetString + weightVars[i].charAt(j);
+				}
+			}
+			for (var j = 0; j < weightVarsNoEx.length; j++) {
+				if (noExponetString === weightVarsNoEx[j]) {
+					newString = false;
+				}
+			}
+			if (newString) {
+				weightVarsNoEx.push(noExponetString);
+			}
+			console.log(noExponetString);
+		}
+	}
+	console.log("Weight Vars: " + weightVarsNoEx);
+
 	if (shapesOn) {
 		sizes = [20];     // Reset sizes array
-		for (var i = 1; i < weightVars.length; i++) {
-			sizes.push(20+((20/weightVars.length)*i));    // Add a different number to the array for each type of variable used
+		for (var i = 1; i < weightVarsNoEx.length; i++) {
+			sizes.push(20+((20/weightVarsNoEx.length)*i));    // Add a different number to the array for each type of variable used
 		}
 		console.log(sizes);
 		for (var i = 0; i < shapes.length; i++) {
@@ -52,8 +79,8 @@ function switchShapesAndText() {
 				} else if (shapesEx[i][0] === 1) { // variables without exponets
 					var j;
 					console.log("Exponet of 1");
-					for (j = 1; j < weightVars.length; j++) {   // find which size it should be
-						if (shapesValueTypeNoEx[i] == weightVars[j]) {
+					for (j = 1; j < weightVarsNoEx.length; j++) {   // find which size it should be
+						if (shapesValueTypeNoEx[i] == weightVarsNoEx[j]) {
 							break;
 						}
 					}
@@ -62,14 +89,21 @@ function switchShapesAndText() {
 				} else if (shapesEx[i][0] > 1) { // variables with exponets
 					var j;
 					console.log("Exponet of more than 1");
-					for (j = 1; j < weightVars.length; j++) {   // find which size it should be
-						if (shapesValueTypeNoEx[i] == weightVars[j]) {
+					for (j = 1; j < weightVarsNoEx.length; j++) {   // find which size it should be
+						if (shapesValueTypeNoEx[i] == weightVarsNoEx[j]) {
 							break;
 						}
 					}
 					shapesH[i] = sizes[j] * (shapesEx[i][0] * 0.5);
 					shapesW[i] = sizes[j]*shapesValue[i];
 				}
+			}
+		}
+	} else {
+		for (var i = 0; i < shapes.length; i++) {
+			if (shapes[i] === 1) {
+				shapesH[i] = 30;
+				shapesW[i] = shapesText[i].length * 15;
 			}
 		}
 	}
