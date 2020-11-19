@@ -61,13 +61,13 @@ function switchShapesAndText() {
 					shapesW[i] = sizes[j]*shapesValue[i];
 				} else if (shapesEx[i][0] > 1) { // variables with exponets
 					var j;
-					console.log("Exponet of 1");
+					console.log("Exponet of more than 1");
 					for (j = 1; j < weightVars.length; j++) {   // find which size it should be
 						if (shapesValueTypeNoEx[i] == weightVars[j]) {
 							break;
 						}
 					}
-					shapesH[i] = sizes[j];
+					shapesH[i] = sizes[j] * (shapesEx[i][0] * 0.5);
 					shapesW[i] = sizes[j]*shapesValue[i];
 				}
 			}
