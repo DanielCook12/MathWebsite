@@ -1,6 +1,5 @@
-1: change numbers to shapes and vice-versa (for multi-term expressions)
-2: Allow multi-digit exponets
-3: Allow adding of two variables that have no constant and are the same type
-4: Scaling (for shape sizes, for example, if the values are greater than 10, scale them down 10x)
-5: Decimals
-6: Negatives not working with multi-term expressions
+1: Allow multi-digit exponets
+2: Allow adding of two variables that have no constant and are the same type
+3: Scaling (for shape sizes, for example, if the values are greater than 10, scale them down 10x)
+4: Decimals
+5: Negatives not working with multi-term expressions
