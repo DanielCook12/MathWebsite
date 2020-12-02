@@ -18,23 +18,23 @@
 		<canvas id="canvas" width="1000px" height="500px" style="margin-bottom: 100px;"></canvas>
 		<form id="inputForm" onsubmit="return false;">
 			<div class="left">
-				<input style="width:250px;" type="text" class="mathinput" id="leftinput" placeholder="Left Input"></input>
+				<input style="width:250px;" type="text" class="mathinput" id="leftinput" placeholder="Left Input" title="This is the left input box, enter your equation here and they will appear on the left side of the scale"></input>
 			</div>
 			<div class="right">
-				<input style="width:250px;" type="text" class="mathinput" id="rightinput" placeholder="Right Input"></input>
+				<input style="width:250px;" type="text" class="mathinput" id="rightinput" placeholder="Right Input" title="This is the right input box, enter your equation here and they will appear on the right side of the scale"></input>
 			</div>
 			<div class="submit">
-				<button style="width:250px;" type="submit" class="submit" onclick="send();">Submit</button>
+				<button style="width:250px;" type="submit" class="submit" onclick="send();" title="Submit the equations you currently have entered in the left and right input boxes">Submit</button>
 			</div>
 		</form>
 		<div class="status">
-				<p style="width:250px;" class="status" id="status">Unknown</p>
+				<p style="width:250px;" class="status" id="status" title="Our JS function does not know if these equations you just entered are equal or not">Unknown</p>
 		</div>
 		<div class="submit">
-			<button style="width:250px;" type="submit" class="submit" onclick="clearCanvas();">Clear</button>
+			<button style="width:250px;" type="submit" class="submit" onclick="clearCanvas();" title="Clears the scale area, removing all entered equations and shapes">Clear</button>
 		</div>
 		<div class="submit">
-			<button type="submit" class="submit2" onclick="switchShapesAndText();">Switch between Shapes and Text</button>
+			<button type="submit" id="switch" class="submit2" onclick="switchShapesAndText();" title="Switches between whether your equations should be visualized as shapes or plain text. Currently on text">Switch between Shapes and Text</button>
 		</div>
 		<script src="Math.js"></script>
 	</main>

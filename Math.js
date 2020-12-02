@@ -63,6 +63,7 @@ function switchShapesAndText() {
 	console.log("Weight Vars: " + weightVarsNoEx);
 
 	if (shapesOn) {
+		document.getElementById("switch").title = "Switches between whether your equations should be visualized as shapes or plain text. Currently on shapes"
 		sizes = [20];     // Reset sizes array
 		for (var i = 1; i < weightVarsNoEx.length; i++) {
 			sizes.push(20+((20/weightVarsNoEx.length)*i));    // Add a different number to the array for each type of variable used
@@ -100,6 +101,7 @@ function switchShapesAndText() {
 			}
 		}
 	} else {
+		document.getElementById("switch").title = "Switches between whether your equations should be visualized as shapes or plain text. Currently on text"
 		for (var i = 0; i < shapes.length; i++) {
 			if (shapes[i] === 1) {
 				shapesH[i] = 30;
@@ -324,7 +326,7 @@ function send() {
 			shapesTermLength.push(findTypeOfString(leftinput)[1]);
 			console.log("Shape Term Length: " + shapesTermLength[shapes.length-1]);
 		}
-		
+
 		console.log(shapesValue[shapesValue.length-1]);
 		console.log(shapesValueType[shapesValue.length-1]);
 
@@ -373,9 +375,11 @@ function send() {
 	if (eval(leftinput) == eval(rightinput)) {
 		document.getElementById("status").style.backgroundColor = "green";
 		document.getElementById("status").innerHTML = "Equal";
+		document.getElementById("status").title = "The equations you just entered are equal";
 	} else {
 		document.getElementById("status").style.backgroundColor = "red";
 		document.getElementById("status").innerHTML = "Not Equal";
+		document.getElementById("status").title = "The equations you just entered aren't equal";
 	}
 }
 
