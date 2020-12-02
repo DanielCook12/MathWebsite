@@ -165,7 +165,7 @@ function switchShapesAndText() {
 									shapesH[i][k] = 20;
 									shapesW[i][k] = 20*shapesValue[i][k];
 									console.log("constant");
-								} else if (shapesEx[i][0][k] === 1) { // for variables without exponets
+								} else if (shapesEx[i][0] === 1) { // for variables without exponets
 									var j;
 									console.log("Exponet of 1");
 									for (j = 1; j < weightVarsNoEx.length; j++) {   // find which size it should be
