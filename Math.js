@@ -372,14 +372,15 @@ function send() {
 		// console.log(shapesValue[shapesValue.length-1]);
 		// console.log(shapesValueType[shapesValue.length-1]);
 	}
+	var status = document.getElementById("status")
 	if (eval(leftinput) == eval(rightinput)) {
-		document.getElementById("status").style.backgroundColor = "green";
-		document.getElementById("status").innerHTML = "Equal";
-		document.getElementById("status").title = "The equations you just entered are equal";
+		status.style.backgroundColor = "green";
+		status.innerHTML = "Equal";
+		status.title = "The equations you just entered are equal";
 	} else {
-		document.getElementById("status").style.backgroundColor = "red";
-		document.getElementById("status").innerHTML = "Not Equal";
-		document.getElementById("status").title = "The equations you just entered aren't equal";
+		status.style.backgroundColor = "red";
+		status.innerHTML = "Not Equal";
+		status.title = "The equations you just entered aren't equal";
 	}
 }
 
