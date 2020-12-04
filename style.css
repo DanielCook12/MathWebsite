@@ -41,6 +41,10 @@ div.submit {
 	margin: 0.5em;
 	text-align:left;
 }
+div.dark {
+	margin: 0.5em;
+	text-align:left;
+}
 div.clear {
 	margin: 0.5em;
 	text-align:left;
@@ -71,6 +75,20 @@ button.submit {
 	transition: background-color 0.65s,height 0.65s;
 }
 button.submit:hover {
+	background-color: lightgray;
+	height: 100px;
+}
+button.dark {
+	background-color: white;
+	border: 3px solid black;
+	border-radius: 1em;
+	width: 250px;
+	height: 50px;
+	font-size:25px;
+	padding-left:10px;
+	transition: background-color 0.65s,height 0.65s;
+}
+button.dark:hover {
 	background-color: lightgray;
 	height: 100px;
 }
@@ -122,13 +140,13 @@ p.footer {
 	font-family: monospace;
 	font-weight: bold;
 	font-size: 1.2em;
-	background-color: #2b2b2b;
-	color: white;
+	background-color: white;
+	color: black;
 	margin: 1%;
 	padding: 0.5em;
 	margin-left: 20%;
 	margin-right: 20%;
-	border: 8px solid transparent;
+	border: 3px solid gray;
 	border-radius: 1em;
 }
 div.guide {

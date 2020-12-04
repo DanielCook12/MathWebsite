@@ -161,7 +161,7 @@ function switchShapesAndText() {
 									shapesH.push(sizes[j] * (shapesEx[shapes.length-1][0] * 0.5));
 									shapesW.push(sizes[j] * shapesValue[shapes.length-1][0]);
 								}
-							} else { 
+							} else {
 								console.log("Shapes Value Type " + shapesValueTypeNoEx[i][0][k]);
 								console.log("Shapes Exponet " + shapesEx[i][k]);
 								if (shapesValueTypeNoEx[i][0][k] === "constant") { // for constants
@@ -456,7 +456,7 @@ function send() {
 			shapesTermLength.push(findTypeOfString(leftinput)[1]);
 			console.log("Shape Term Length: " + shapesTermLength[shapes.length-1]);
 		}
-		
+
 		console.log(shapesValue[shapesValue.length-1]);
 		console.log(shapesValueType[shapesValue.length-1]);
 
