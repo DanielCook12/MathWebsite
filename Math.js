@@ -38,11 +38,14 @@ function consoleLog() {
 	console.log(shapesValue);
 	console.log("Type: ");
 	console.log(shapesValueType);
-	console.log("No Ex Type: " + shapesValueTypeNoEx);
+	console.log("No Ex Type: ");
+	console.log(shapesValueTypeNoEx);
 	console.log("Term Length: ")
 	console.log(shapesTermLength);
-	console.log("Shapes Type: " + shapesType);
-	console.log("Shapes Ex: " + shapesEx);
+	console.log("Shapes Type: ");
+	console.log(shapesType);
+	console.log("Shapes Ex: ");
+	console.log(shapesEx);
 	console.log("Shapes Text: ");
 	console.log(shapesText);
 }
@@ -270,7 +273,7 @@ function findValueOfString(string) {
 	var negative = [1];
 	var exponets = [0];
 	for (var i = 0; i < string.length; i++) {
-		if (val[i] === "num" && val[i-1] != "exponet") {
+		if (val[i] === "num" && val[i-1] != "exponetNum") {
 			terms[terms.length-1] *= 10;
 			console.log("num");
 			terms[terms.length-1] += parseInt(string.charAt(i));
@@ -294,6 +297,12 @@ function findValueOfString(string) {
 		} else if (val[i] === "exponet") {
 			console.log("exponet");
 			exponets[exponets.length-1] = string.charAt(i+1);
+			var k = 2;
+			while (string.charAt(i+k) == "1" || string.charAt(i+k) == "2"|| string.charAt(i+k) == "3" || string.charAt(i+k) == "4" || string.charAt(i+k) == "5" || string.charAt(i+k) == "6" || string.charAt(i+k) == "7" || string.charAt(i+k) == "8" || string.charAt(i+k) == "9" || string.charAt(i+k) == "0") {
+				exponets[exponets.length-1] += string.charAt(i+k);
+				val[i+k] = "exponetNum";
+				k++;
+			} 
 		}
 	}
 
@@ -319,6 +328,7 @@ function findValueOfString(string) {
 	}
 	// console.log(terms);
 	// console.log(termsType);
+	console.log("Exponets: " + exponets);
 	return [terms, exponets];
 }
 
@@ -332,7 +342,7 @@ function findTypeOfString(string) {
 	var operators = [];
 	var termLength = [1]
 	for (var i = 0; i < string.length; i++) {
-		if (val[i] === "num" && val[i-1] != "exponet") {
+		if (val[i] === "num" && val[i-1] != "exponetNum") {
 			terms[terms.length-1] *= 10;
 			// console.log("num");
 			terms[terms.length-1] += parseInt(string.charAt(i));
@@ -353,8 +363,13 @@ function findTypeOfString(string) {
 				termLength[termLength.length-1]++;
 			}
 		} else if (val[i] === "exponet") {
-			// console.log("exponet");
-			exponets[exponets.length-1] = string.charAt(i);
+			exponets[exponets.length-1] = string.charAt(i+1);
+			var k = 2;
+			while (string.charAt(i+k) == "1" || string.charAt(i+k) == "2"|| string.charAt(i+k) == "3" || string.charAt(i+k) == "4" || string.charAt(i+k) == "5" || string.charAt(i+k) == "6" || string.charAt(i+k) == "7" || string.charAt(i+k) == "8" || string.charAt(i+k) == "9" || string.charAt(i+k) == "0") {
+				exponets[exponets.length-1] += string.charAt(i+k);
+				val[i+k] = "exponetNum";
+				k++;
+			} 
 		}
 	}
 
@@ -645,8 +660,8 @@ function update() {
 				// If it is a previously unused variable, add it to weightVars
 				if (valueTypeNum === -1) {
 					valueTypeNum = weightVars.length;
-					weightVars.push(shapesValueType[i][k]);
-					weightEx.push(shapesEx[i][k]);
+					weightVars.push(shapesValueTypeNoEx[i][k]);
+					weightEx.push(parseInt(shapesEx[i][k]));
 				}
 
 				// Add the value into the leftweight or rightweight arrays.
@@ -699,7 +714,12 @@ function update() {
 				}
 			}
 		}
-		// console.log(differences);
+		console.log("WeightVars:");
+		console.log(weightVars);
+		console.log("WeightEx: ");
+		console.log(weightEx);
+		console.log("Differences:");
+		console.log(differences);
 		var difference = 0;
 		for (var i = 0; i < differences.length; i++) {
 			difference += differences[i];
