@@ -1,3 +1,3 @@
 1: Scaling (for shape sizes, for example, if the values are greater than 10, scale them down 10x)
 2: Decimals
-3: Negatives not working with multi-term expressions
+3: Negatives not working with multi-term expressions or variables with no coefficent
