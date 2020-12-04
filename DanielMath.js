@@ -39,7 +39,7 @@ function darkMode() {
       document.getElementById("footer").style.color = "white";
       document.getElementById("footer").style.backgroundColor = "black";
       document.getElementById("footer").style.border = "3px solid gray";
-
+	  document.getElementById("canvas").style.border = "8px solid gray";
       break;
     case 1:
       console.log("Dark Mode enabled, disabling...")
@@ -71,7 +71,8 @@ function darkMode() {
       document.getElementById("darkButton").style.border = "3px solid black";
       document.getElementById("footer").style.color = "black";
       document.getElementById("footer").style.backgroundColor = "white";
-      document.getElementById("footer").style.border = "3px solid gray";
+      document.getElementById("footer").style.border = "3px solid black";
+	  document.getElementById("canvas").style.border = "8px solid black";
       break;
   };
 };
