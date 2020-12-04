@@ -309,7 +309,12 @@ function findValueOfString(string) {
 	for (var i = 0; i < terms.length; i++) {
 		terms[i] *= negative[i];
 	}
- 	if (terms.length > 1) {
+	if (terms.length > 1) {
+		for (var i = 0; i < terms.length; i++) {
+			if (terms[i] === 0 && termsType[i] != "constant") {
+				terms[i] = 1;
+			}
+		}
 		for (var i = 0; i < terms.length; i++) {
 			for (var j = 0; j < terms.length; j++) {
 				if (j != i && termsType[i] === termsType[j] && (val[i] === "letter" || val[i] === "num")) {
@@ -324,10 +329,13 @@ function findValueOfString(string) {
 					termsType.splice(j, 1);
 				}
 			}
+
 		}
 	}
-	// console.log(terms);
-	// console.log(termsType);
+	console.log("terms: ");
+	console.log(terms);
+	console.log("terms type: ");
+	console.log(termsType);
 	console.log("Exponets: " + exponets);
 	return [terms, exponets];
 }
@@ -379,6 +387,11 @@ function findTypeOfString(string) {
 
 	if (terms.length > 1) {
 		for (var i = 0; i < terms.length; i++) {
+			if (terms[i] === 0 && termsType[i] != "constant") {
+				terms[i] = 1;
+			}
+		}
+		for (var i = 0; i < terms.length; i++) {
 			for (var j = 0; j < terms.length; j++) {
 				if (j != i && termsType[i] === termsType[j] && (val[i] === "letter" || val[i] === "num")) {
 					if (operators[i] === "+" || "-") {
@@ -392,8 +405,11 @@ function findTypeOfString(string) {
 					termsType.splice(j, 1);
 				}
 			}
+
 		}
 	}
+	console.log("real terms type");
+	console.log(termsType);
 	return [termsType, termLength];
 }
 
@@ -432,7 +448,7 @@ function send() {
 					shapesValueType[shapesValueType.length-1][i] = findTypeOfString(leftinput)[0][i];
 					shapesValueTypeNoEx[shapesValueTypeNoEx.length-1][i] = findTypeOfString(leftinput)[0][i];
 				}
-				console.log(shapesValueType[shapes.length-1][i])
+				// console.log(shapesValueType[shapes.length-1][i]);
 				if (shapesValue[shapes.length-1][i] == 0 && shapesValueType[shapesValueType.length-1][i] != "constant") {
 					shapesValue[shapes.length-1][i] = 1;
 				}
