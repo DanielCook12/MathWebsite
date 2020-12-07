@@ -32,7 +32,8 @@ function darkModeOn() {
   localStorage.setItem("darkModeEnabled","1");
   document.getElementById("darkButton").innerHTML = "Light Mode";
   document.getElementById("navBar").style.backgroundColor = "darkgray";
-  document.getElementById("linkNav").style.color = "#f5f5f5"
+  document.getElementById("linkNav").style.color = "#2b2b2b";
+  document.getElementById("linkNav2").style.color = "#2b2b2b"
   document.getElementById("body").style.backgroundColor="#2b2b2b"
   document.getElementById("title").style.color = "#f5f5f5"
   document.getElementById("header").style.textDecorationColor = "#f5f5f5"
@@ -67,9 +68,10 @@ function darkModeOff() {
   localStorage.setItem("darkModeEnabled","0");
   document.getElementById("darkButton").innerHTML = "Dark Mode"
   document.getElementById("navBar").style.backgroundColor = "lightgray";
-  document.getElementById("linkNav").style.color = "white"
-  document.getElementById("body").style.backgroundColor="white"
-  document.getElementById("title").style.color = "black"
+  document.getElementById("linkNav").style.color = "#2b2b2b";
+  document.getElementById("linkNav2").style.color = "#2b2b2b";
+  document.getElementById("body").style.backgroundColor="white";
+  document.getElementById("title").style.color = "black";
   document.getElementById("header").style.textDecorationColor = "black"
   document.getElementById("leftinput").style.backgroundColor = "white";
   document.getElementById("leftinput").style.border = "3px solid black";

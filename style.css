@@ -22,12 +22,12 @@ a.nav {
 	margin-right: 1em;
 	font-family: monospace;
 	font-weight: bold;
-	color: white;
+	color: black;
 	font-size: 1.5em;
 	transition: text-decoration-color 0.5s;
 }
 a.nav:hover {
-	text-decoration-color: white;
+	text-decoration-color: currentColor;
 }
 div.left {
 	margin: 0.5em;
