@@ -32,9 +32,10 @@ var farLeft = false;
 var farRight = false;
 var scaleHeight = 0;
 var shapesOn = false;
-var scaleFill = "#000000";
 var highestShapeValue = 0;
 var highestShapeEx = 0;
+var scaleFill = "#000000";
+
 
 function consoleLog() {
 	console.log("Value: ");
@@ -194,7 +195,7 @@ function switchShapesAndText() {
 									shapesH.push((sizes[j] * (shapesEx[shapes.length-1][0] * 0.5))/scaleEx);
 									shapesW.push(((sizes[j] * shapesValue[shapes.length-1][0])/scale)/shapesEx[i][k]);
 								}
-							} else {
+							} else { 
 								console.log("Shapes Value Type " + shapesValueTypeNoEx[i][0][k]);
 								console.log("Shapes Exponet " + shapesEx[i][k]);
 								if (shapesValueTypeNoEx[i][0][k] === "constant") { // for constants
@@ -274,6 +275,8 @@ function findTypeFromString(string, start, end) {
 				returnV[i] = "group";
 			} else if (string.charAt(i) == "a" || string.charAt(i) == "b" || string.charAt(i) == "c" || string.charAt(i) == "d" || string.charAt(i) == "e" || string.charAt(i) == "f" || string.charAt(i) == "g" || string.charAt(i) == "h" || string.charAt(i) == "i" || string.charAt(i) == "j" || string.charAt(i) == "k" || string.charAt(i) == "l" || string.charAt(i) == "m" || string.charAt(i) == "n" || string.charAt(i) == "o" || string.charAt(i) == "p" || string.charAt(i) == "q" || string.charAt(i) == "r" || string.charAt(i) == "s" || string.charAt(i) == "t" || string.charAt(i) == "u" || string.charAt(i) == "v" || string.charAt(i) == "w" || string.charAt(i) == "x" || string.charAt(i) == "y" || string.charAt(i) == "z") {
 				returnV[i] = "letter";
+			} else if (string.charAt(i) == ".") {
+				returnV[i] = "decimal";
 			} else {
 				returnV[i] = "unknown";
 			}
@@ -290,6 +293,8 @@ function findTypeFromString(string, start, end) {
 				returnV[i] = "group";
 			} else if (string.charAt(i) == "a" || string.charAt(i) == "b" || string.charAt(i) == "c" || string.charAt(i) == "d" || string.charAt(i) == "e" || string.charAt(i) == "f" || string.charAt(i) == "g" || string.charAt(i) == "h" || string.charAt(i) == "i" || string.charAt(i) == "j" || string.charAt(i) == "k" || string.charAt(i) == "l" || string.charAt(i) == "m" || string.charAt(i) == "n" || string.charAt(i) == "o" || string.charAt(i) == "p" || string.charAt(i) == "q" || string.charAt(i) == "r" || string.charAt(i) == "s" || string.charAt(i) == "t" || string.charAt(i) == "u" || string.charAt(i) == "v" || string.charAt(i) == "w" || string.charAt(i) == "x" || string.charAt(i) == "y" || string.charAt(i) == "z") {
 				returnV[i] = "letter";
+			} else if (string.charAt(i) == ".") {
+				returnV[i] = "decimal";
 			} else {
 				returnV[i] = "unknown";
 			}
@@ -305,11 +310,17 @@ function findValueOfString(string) {
 	var operators = [];
 	var negative = [1];
 	var exponets = [0];
+	var containsDecimal = [false];
 	for (var i = 0; i < string.length; i++) {
 		if (val[i] === "num" && val[i-1] != "exponetNum") {
-			terms[terms.length-1] *= 10;
-			console.log("num");
-			terms[terms.length-1] += parseInt(string.charAt(i));
+			if (!containsDecimal[containsDecimal.length-1]) {
+				terms[terms.length-1] *= 10;
+				console.log("num");
+				terms[terms.length-1] += parseInt(string.charAt(i));
+			} else {
+				console.log("num");
+				terms[terms.length-1] += parseInt(string.charAt(i))/10;
+			}
 		} else if (string.charAt(i) == "-") {
 			negative[negative.length-1] = -1;
 		} else if (val[i] === "op") {
@@ -319,6 +330,7 @@ function findValueOfString(string) {
 			console.log("sym");
 			termsType.push("constant");
 			operators.push(string.charAt(i));
+			containsDecimal.push(false);
 		} else if (val[i] === "letter") {
 			console.log("var");
 			exponets[exponets.length-1] = 1;
@@ -335,7 +347,10 @@ function findValueOfString(string) {
 				exponets[exponets.length-1] += string.charAt(i+k);
 				val[i+k] = "exponetNum";
 				k++;
-			}
+			} 
+		} else if (val[i] === "decimal") {
+			console.log("decimal");
+			containsDecimal[containsDecimal.length-1] = true;
 		}
 	}
 
@@ -410,7 +425,7 @@ function findTypeOfString(string) {
 				exponets[exponets.length-1] += string.charAt(i+k);
 				val[i+k] = "exponetNum";
 				k++;
-			}
+			} 
 		}
 	}
 
@@ -489,7 +504,7 @@ function send() {
 			shapesTermLength.push(findTypeOfString(leftinput)[1]);
 			console.log("Shape Term Length: " + shapesTermLength[shapes.length-1]);
 		}
-
+		
 		console.log(shapesValue[shapesValue.length-1]);
 		console.log(shapesValueType[shapesValue.length-1]);
 
@@ -554,7 +569,7 @@ function render() {
 	d.clearRect(0, 0, 1000, 700);
 
 	// Render Scale
-	d.fillStyle = scaleFill;
+	d.fillStyle = "#000000";
 
 	// Main Triangle
 	d.beginPath();
@@ -717,7 +732,7 @@ function update() {
 				if (shapesY[i]+shapesH[i] <= 210+scaleHeight && shapesY[i]+shapesH[i] >= 140 + scaleHeight) {
 					if (shapesX[i] < 500) {
 						if (valueTypeNum < leftweight.length) {
-							leftweight[valueTypeNum] += parseInt(shapesValue[i][k]);
+							leftweight[valueTypeNum] += shapesValue[i][k];
 						} else {
 							while (leftweight.length < weightVars.length-1) {
 								leftweight.push(0);
@@ -728,7 +743,7 @@ function update() {
 				}
 				if (shapesY[i]+shapesH[i] <= 210 - scaleHeight && shapesY[i]+shapesH[i] >= 140-scaleHeight && shapesX[i] >=500) {
 					if (valueTypeNum < rightweight.length) {
-						rightweight[valueTypeNum] += parseInt(shapesValue[i][k]);
+						rightweight[valueTypeNum] += shapesValue[i][k];
 					} else {
 						while (rightweight.length < weightVars.length-1) {
 							rightweight.push(0);
@@ -763,12 +778,12 @@ function update() {
 				}
 			}
 		}
-		// console.log("WeightVars:");
-		// console.log(weightVars);
-		// console.log("WeightEx: ");
-		// console.log(weightEx);
-		// console.log("Differences:");
-		// console.log(differences);
+		console.log("WeightVars:");
+		console.log(weightVars);
+		console.log("WeightEx: ");
+		console.log(weightEx);
+		console.log("Differences:");
+		console.log(differences);
 		var difference = 0;
 		for (var i = 0; i < differences.length; i++) {
 			difference += differences[i];
