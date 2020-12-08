@@ -4,6 +4,4 @@ https://scps.webex.com/meet/pr5924003803
 
 is Mrs. Brown here today (12/8/2020)?
 
-No she is not, there is an exam thing for the informational website on ecampus, but we can just submit this.
-
-Daniel, there is a weird glitch related to some of your new CSS. When I hover over the text boxes for a second or two, the page starts glitching out.
+The CSS didn't need to be completely removed, I believe I fixed it so that it works, if you have any problems with it feel free to revert the changes.
