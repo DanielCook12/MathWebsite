@@ -31,6 +31,7 @@ function darkModeOn() {
   IsDarkMode = true;
   localStorage.setItem("darkModeEnabled","1");
   document.getElementById("navBar").style.backgroundColor = "darkgray";
+  document.getElementById("navBar").style.border = "3px solid black";
   document.getElementById("linkNav").style.color = "#2b2b2b";
   document.getElementById("linkNav2").style.color = "#2b2b2b";
   document.getElementById("body").style.backgroundColor="#2b2b2b";
