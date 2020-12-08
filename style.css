@@ -79,11 +79,12 @@ button.submit {
 	height: 50px;
 	font-size:25px;
 	padding-left:10px;
-	transition: background-color 0.65s,height 0.65s;
+	transition: background-color 0.65s,height 0.65s, font-size 0.65s;
 }
 button.submit:hover {
 	background-color: lightgray;
 	height: 100px;
+	font-size: 35px;
 }
 button.dark {
 	background-color: white;
@@ -93,11 +94,12 @@ button.dark {
 	height: 50px;
 	font-size:25px;
 	padding-left:10px;
-	transition: background-color 0.65s,height 0.65s;
+	transition: background-color 0.65s,height 0.65s,font-size 0.65s;
 }
 button.dark:hover {
 	background-color: lightgray;
 	height: 100px;
+	font-size: 35px;
 }
 button.submit2 {
 	background-color: white;
@@ -121,11 +123,12 @@ button.clear {
 	height: 50px;
 	font-size:25px;
 	padding-left:10px;
-	transition: background-color 0.65s,height 0.65s;
+	transition: background-color 0.65s,height 0.65s,font-size 0.65s;
 }
 button.clear:hover {
 	background-color: lightgray;
 	height: 100px;
+	font-size: 35px;
 }
 input.mathinput {
 	background-color: white;
