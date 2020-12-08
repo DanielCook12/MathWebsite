@@ -32,7 +32,9 @@ var farLeft = false;
 var farRight = false;
 var scaleHeight = 0;
 var shapesOn = false;
-var scaleFill = "#000000"
+var scaleFill = "#000000";
+var highestShapeValue = 0;
+var highestShapeEx = 0;
 
 function consoleLog() {
 	console.log("Value: ");
@@ -52,10 +54,39 @@ function consoleLog() {
 }
 
 function switchShapesAndText() {
+	highestShapeValue = 0;
+	for (var j=0; j < shapes.length; j++) {
+		for (var i=0; i < shapesValue[j].length; i++) {
+			if (shapesEx[j][i] != 0) {
+				if (shapesValue[j][i]/parseInt(shapesEx[j][i]) > highestShapeValue) {
+					highestShapeValue = shapesValue[j][i]/parseInt(shapesEx[j][i]);
+				}
+			} else {
+				if (shapesValue[j][i] > highestShapeValue) {
+					highestShapeValue = shapesValue[j][i];
+				}
+			}
+		}
+	}
+	var scale = 1;
+	if (highestShapeValue >= 6) {
+		console.log("Highest Shape Value" + highestShapeValue);
+		scale *= highestShapeValue/3;
+	}
+	highestShapeEx = 0;
+	for (var j=0; j < shapes.length; j++) {
+		for (var i=0; i < shapesEx[j].length; i++) {
+			if (parseInt(shapesEx[j][i]) > highestShapeEx) {
+				highestShapeEx = parseInt(shapesEx[j][i]);
+			}
+		}
+	}
+	var scaleEx = 1;
+	if (highestShapeEx >= 6) {
+		scaleEx *= highestShapeEx/3;
+	}
 	shapesOn = !shapesOn;
 	var weightVarsNoEx = [];
-	// console.log(weightVarsNoEx);
-	// console.log("^WVNEx^");
 	for (var i = 0; i < weightVars.length; i++) {
 		if (!contains(weightVars[i], "^")) {
 			weightVarsNoEx.push(weightVars[i]);
@@ -80,6 +111,7 @@ function switchShapesAndText() {
 			console.log(noExponetString);
 		}
 	}
+
 	if (shapesOn) {
 		sizes = [20];     // Reset sizes array
 		for (var i = 1; i < weightVarsNoEx.length; i++) {
@@ -92,8 +124,8 @@ function switchShapesAndText() {
 						console.log("Shapes Value Type " + shapesValueTypeNoEx[i][0]);
 						console.log("Shapes Exponet " + shapesEx[i]);
 						if (shapesValueTypeNoEx[i][0] === "constant") { // for constants
-							shapesH[i] = 20;
-							shapesW[i] = 20*shapesValue[i];
+							shapesH[i] = 20/scaleEx;
+							shapesW[i] = (20*shapesValue[i])/scale;
 							console.log("constant");
 						} else if (shapesEx[i][0] === 1) { // for variables without exponets
 							var j;
@@ -103,8 +135,8 @@ function switchShapesAndText() {
 									break;
 								}
 							}
-							shapesH[i] = 20;
-							shapesW[i] = sizes[j]*shapesValue[i];
+							shapesH[i] = 20/scaleEx;
+							shapesW[i] = (sizes[j]*shapesValue[i])/scale;
 						} else if (shapesEx[i][0] > 1) { // for variables with exponets
 							var j;
 							console.log("Exponet of more than 1");
@@ -113,8 +145,8 @@ function switchShapesAndText() {
 									break;
 								}
 							}
-							shapesH[i] = sizes[j] * (shapesEx[i][0] * 0.5);
-							shapesW[i] = sizes[j]*shapesValue[i];
+							shapesH[i] = (sizes[j] * (shapesEx[i][0] * 0.5))/scaleEx;
+							shapesW[i] = ((sizes[j]*shapesValue[i])/shapesEx[i][0])/scale;
 						}
 					}
 				} else {
@@ -138,8 +170,8 @@ function switchShapesAndText() {
 								// console.log(shapesValueTypeNoEx);
 								// console.log("Shapes Exponet " + shapesEx[shapes.length-1]);
 								if (shapesValueTypeNoEx[shapes.length-1][0] === "constant") { // for constants
-									shapesH.push(20);
-									shapesW.push(20*shapesValue[shapes.length-1][0]);
+									shapesH.push(20/scaleEx);
+									shapesW.push((20*shapesValue[shapes.length-1][0])/shapesEx[i][k]);
 									console.log("constant");
 								} else if (shapesEx[shapes.length-1][0] === 1) { // for variables without exponets
 									var j;
@@ -149,8 +181,8 @@ function switchShapesAndText() {
 											break;
 										}
 									}
-									shapesH.push(20);
-									shapesW.push(sizes[j]*shapesValue[shapes.length-1][0]);
+									shapesH.push(20/scaleEx);
+									shapesW.push(((sizes[j]*shapesValue[shapes.length-1][0])/scale)/shapesEx[i][k]);
 								} else if (shapesEx[shapes.length-1][0] > 1) { // for variables with exponets
 									var j;
 									console.log("Exponet of more than 1");
@@ -159,15 +191,15 @@ function switchShapesAndText() {
 											break;
 										}
 									}
-									shapesH.push(sizes[j] * (shapesEx[shapes.length-1][0] * 0.5));
-									shapesW.push(sizes[j] * shapesValue[shapes.length-1][0]);
+									shapesH.push((sizes[j] * (shapesEx[shapes.length-1][0] * 0.5))/scaleEx);
+									shapesW.push(((sizes[j] * shapesValue[shapes.length-1][0])/scale)/shapesEx[i][k]);
 								}
 							} else {
 								console.log("Shapes Value Type " + shapesValueTypeNoEx[i][0][k]);
 								console.log("Shapes Exponet " + shapesEx[i][k]);
 								if (shapesValueTypeNoEx[i][0][k] === "constant") { // for constants
-									shapesH[i][k] = 20;
-									shapesW[i][k] = 20*shapesValue[i][k];
+									shapesH[i][k] = 20/scaleEx;
+									shapesW[i][k] = ((20*shapesValue[i][k])/scale)/shapesEx[i][0];
 									console.log("constant");
 								} else if (shapesEx[i][0] === 1) { // for variables without exponets
 									var j;
@@ -177,8 +209,8 @@ function switchShapesAndText() {
 											break;
 										}
 									}
-									shapesH[i] = 20;
-									shapesW[i] = sizes[j]*shapesValue[i][k];
+									shapesH[i] = 20/scaleEx;
+									shapesW[i] = ((sizes[j]*shapesValue[i][k])/scale)/shapesEx[i][0];
 								} else if (shapesEx[i][0][k] > 1) { // for variables with exponets
 									var j;
 									console.log("Exponet of more than 1");
@@ -187,8 +219,8 @@ function switchShapesAndText() {
 											break;
 										}
 									}
-									shapesH[i] = sizes[j] * (shapesEx[i][0][k] * 0.5);
-									shapesW[i] = sizes[j]*shapesValue[i][k];
+									shapesH[i] = (sizes[j] * (shapesEx[i][0][k] * 0.5))/scaleEx;
+									shapesW[i] = ((sizes[j]*shapesValue[i][k])/scale)/shapesEx[i][0];
 								}
 							}
 						}
@@ -682,7 +714,7 @@ function update() {
 				}
 
 				// Add the value into the leftweight or rightweight arrays.
-				if (shapesY[i] <= 210+scaleHeight && shapesY[i] >= 140 + scaleHeight) {
+				if (shapesY[i]+shapesH[i] <= 210+scaleHeight && shapesY[i]+shapesH[i] >= 140 + scaleHeight) {
 					if (shapesX[i] < 500) {
 						if (valueTypeNum < leftweight.length) {
 							leftweight[valueTypeNum] += parseInt(shapesValue[i][k]);
@@ -694,7 +726,7 @@ function update() {
 						}
 					}
 				}
-				if (shapesY[i] <= 210 - scaleHeight && shapesY[i] >= 140-scaleHeight && shapesX[i] >=500) {
+				if (shapesY[i]+shapesH[i] <= 210 - scaleHeight && shapesY[i]+shapesH[i] >= 140-scaleHeight && shapesX[i] >=500) {
 					if (valueTypeNum < rightweight.length) {
 						rightweight[valueTypeNum] += parseInt(shapesValue[i][k]);
 					} else {
@@ -731,12 +763,12 @@ function update() {
 				}
 			}
 		}
-		console.log("WeightVars:");
-		console.log(weightVars);
-		console.log("WeightEx: ");
-		console.log(weightEx);
-		console.log("Differences:");
-		console.log(differences);
+		// console.log("WeightVars:");
+		// console.log(weightVars);
+		// console.log("WeightEx: ");
+		// console.log(weightEx);
+		// console.log("Differences:");
+		// console.log(differences);
 		var difference = 0;
 		for (var i = 0; i < differences.length; i++) {
 			difference += differences[i];
