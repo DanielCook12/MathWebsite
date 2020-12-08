@@ -56,8 +56,14 @@ function switchShapesAndText() {
 	highestShapeValue = 0;
 	for (var j=0; j < shapes.length; j++) {
 		for (var i=0; i < shapesValue[j].length; i++) {
-			if (shapesValue[j][i]/parseInt(shapesEx[j][i]) > highestShapeValue) {
-				highestShapeValue = shapesValue[j][i]/parseInt(shapesEx[j][i]);
+			if (shapesEx[j][i] != 0) {
+				if (shapesValue[j][i]/parseInt(shapesEx[j][i]) > highestShapeValue) {
+					highestShapeValue = shapesValue[j][i]/parseInt(shapesEx[j][i]);
+				}
+			} else {
+				if (shapesValue[j][i] > highestShapeValue) {
+					highestShapeValue = shapesValue[j][i];
+				}
 			}
 		}
 	}
@@ -118,7 +124,7 @@ function switchShapesAndText() {
 						console.log("Shapes Exponet " + shapesEx[i]);
 						if (shapesValueTypeNoEx[i][0] === "constant") { // for constants
 							shapesH[i] = 20/scaleEx;
-							shapesW[i] = ((20*shapesValue[i])/scale)/shapesEx[i][0];
+							shapesW[i] = (20*shapesValue[i])/scale;
 							console.log("constant");
 						} else if (shapesEx[i][0] === 1) { // for variables without exponets
 							var j;
@@ -707,7 +713,7 @@ function update() {
 				}
 
 				// Add the value into the leftweight or rightweight arrays.
-				if (shapesY[i] <= 210+scaleHeight && shapesY[i] >= 140 + scaleHeight) {
+				if (shapesY[i]+shapesH[i] <= 210+scaleHeight && shapesY[i]+shapesH[i] >= 140 + scaleHeight) {
 					if (shapesX[i] < 500) {
 						if (valueTypeNum < leftweight.length) {
 							leftweight[valueTypeNum] += parseInt(shapesValue[i][k]);
@@ -719,7 +725,7 @@ function update() {
 						}
 					}
 				}
-				if (shapesY[i] <= 210 - scaleHeight && shapesY[i] >= 140-scaleHeight && shapesX[i] >=500) {
+				if (shapesY[i]+shapesH[i] <= 210 - scaleHeight && shapesY[i]+shapesH[i] >= 140-scaleHeight && shapesX[i] >=500) {
 					if (valueTypeNum < rightweight.length) {
 						rightweight[valueTypeNum] += parseInt(shapesValue[i][k]);
 					} else {
@@ -756,12 +762,12 @@ function update() {
 				}
 			}
 		}
-		console.log("WeightVars:");
-		console.log(weightVars);
-		console.log("WeightEx: ");
-		console.log(weightEx);
-		console.log("Differences:");
-		console.log(differences);
+		// console.log("WeightVars:");
+		// console.log(weightVars);
+		// console.log("WeightEx: ");
+		// console.log(weightEx);
+		// console.log("Differences:");
+		// console.log(differences);
 		var difference = 0;
 		for (var i = 0; i < differences.length; i++) {
 			difference += differences[i];
