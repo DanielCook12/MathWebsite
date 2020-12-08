@@ -322,11 +322,14 @@ function findValueOfString(string) {
 				terms[terms.length-1] += parseInt(string.charAt(i))/(10 * containsDecimal[containsDecimal.length-1]);
 				containsDecimal[containsDecimal.length-1] *= 10;
 			}
-		} else if (string.charAt(i) == "-") {
+		} else if (string.charAt(0) == "-" && i === 0) {
 			negative[negative.length-1] = -1;
 		} else if (val[i] === "op") {
 			terms.push(0);
 			negative.push(1);
+			if (string.charAt(i) === "-") {
+				negative[negative.length-1] = -1;
+			}
 			exponets.push(0);
 			console.log("sym");
 			termsType.push("constant");
@@ -410,14 +413,18 @@ function findTypeOfString(string) {
 				terms[terms.length-1] += parseInt(string.charAt(i))/(10 ^ containsDecimal[containsDecimal.length-1]);
 				containsDecimal[containsDecimal.length-1] += 1;
 			}
-		} else if (string.charAt(i) == "-") {
+		} else if (string.charAt(i) == "-" && i === 0) {
 			negative[negative.length-1] = -1;
 		} else if (val[i] === "op") {
 			terms.push(0);
+			negative.push(1);
+			if (string.charAt(i) === "-") {
+				negative[negative.length-1] = -1;
+			}
+			exponets.push(0);
 			// console.log("sym");
 			termsType.push("constant");
 			operators.push(string.charAt(i));
-			termLength.push(1);
 			containsDecimal.push(0);
 		} else if (val[i] === "letter") {
 			// console.log("var");
@@ -773,6 +780,7 @@ function update() {
 		farRight = false;
 		farLeft = false;
 		var differences = [];
+		console.log(weightVars);
 		while (leftweight.length > rightweight.length) {
 			rightweight.push(0);
 		}
