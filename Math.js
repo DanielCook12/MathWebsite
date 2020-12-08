@@ -40,7 +40,7 @@ function consoleLog() {
 	console.log(shapesValueType);
 	console.log("No Ex Type: ");
 	console.log(shapesValueTypeNoEx);
-	console.log("Term Length: ")
+	console.log("Term Length: ");
 	console.log(shapesTermLength);
 	console.log("Shapes Type: ");
 	console.log(shapesType);
@@ -223,7 +223,7 @@ function contains(string, value) {
 }
 
 function clearCanvas() {	 	 // The function called by the Clear button
-	location.reload()          // Reloads the page, thus clearing all text inputs
+	location.reload();          // Reloads the page, thus clearing all text inputs
 }
 
 
@@ -242,7 +242,7 @@ function findTypeFromString(string, start, end) {
 			} else if (string.charAt(i) == "a" || string.charAt(i) == "b" || string.charAt(i) == "c" || string.charAt(i) == "d" || string.charAt(i) == "e" || string.charAt(i) == "f" || string.charAt(i) == "g" || string.charAt(i) == "h" || string.charAt(i) == "i" || string.charAt(i) == "j" || string.charAt(i) == "k" || string.charAt(i) == "l" || string.charAt(i) == "m" || string.charAt(i) == "n" || string.charAt(i) == "o" || string.charAt(i) == "p" || string.charAt(i) == "q" || string.charAt(i) == "r" || string.charAt(i) == "s" || string.charAt(i) == "t" || string.charAt(i) == "u" || string.charAt(i) == "v" || string.charAt(i) == "w" || string.charAt(i) == "x" || string.charAt(i) == "y" || string.charAt(i) == "z") {
 				returnV[i] = "letter";
 			} else {
-				returnV[i] = "unknown"
+				returnV[i] = "unknown";
 			}
 		}
 	} else {
@@ -258,7 +258,7 @@ function findTypeFromString(string, start, end) {
 			} else if (string.charAt(i) == "a" || string.charAt(i) == "b" || string.charAt(i) == "c" || string.charAt(i) == "d" || string.charAt(i) == "e" || string.charAt(i) == "f" || string.charAt(i) == "g" || string.charAt(i) == "h" || string.charAt(i) == "i" || string.charAt(i) == "j" || string.charAt(i) == "k" || string.charAt(i) == "l" || string.charAt(i) == "m" || string.charAt(i) == "n" || string.charAt(i) == "o" || string.charAt(i) == "p" || string.charAt(i) == "q" || string.charAt(i) == "r" || string.charAt(i) == "s" || string.charAt(i) == "t" || string.charAt(i) == "u" || string.charAt(i) == "v" || string.charAt(i) == "w" || string.charAt(i) == "x" || string.charAt(i) == "y" || string.charAt(i) == "z") {
 				returnV[i] = "letter";
 			} else {
-				returnV[i] = "unknown"
+				returnV[i] = "unknown";
 			}
 		}
 	}
@@ -302,7 +302,7 @@ function findValueOfString(string) {
 				exponets[exponets.length-1] += string.charAt(i+k);
 				val[i+k] = "exponetNum";
 				k++;
-			} 
+			}
 		}
 	}
 
@@ -346,9 +346,9 @@ function findTypeOfString(string) {
 	var terms = [0];
 	var termsType = ["constant"];
 	var negative = [1];
-	var exponets = [0]
+	var exponets = [0];
 	var operators = [];
-	var termLength = [1]
+	var termLength = [1];
 	for (var i = 0; i < string.length; i++) {
 		if (val[i] === "num" && val[i-1] != "exponetNum") {
 			terms[terms.length-1] *= 10;
@@ -377,7 +377,7 @@ function findTypeOfString(string) {
 				exponets[exponets.length-1] += string.charAt(i+k);
 				val[i+k] = "exponetNum";
 				k++;
-			} 
+			}
 		}
 	}
 
@@ -493,7 +493,7 @@ function send() {
 					shapesValueType[shapesValueType.length-1][i] = findTypeOfString(rightinput)[0][i];
 					shapesValueTypeNoEx[shapesValueType.length-1][i] = findTypeOfString(rightinput)[0][i];
 				}
-				console.log(shapesValueType[shapes.length-1][i])
+				console.log(shapesValueType[shapes.length-1][i]);
 				if (shapesValue[shapes.length-1][i] == 0 && shapesValueType[shapesValueType.length-1][i] != "constant") {
 					shapesValue[shapes.length-1][i] = 1;
 				}
@@ -772,7 +772,7 @@ document.addEventListener('mousemove', function(event) {
 	my = event.offsetY;
 	var mxNow = mx;
 	var myNow = my;
-	setTimeout(function() {prevMx = mxNow; prevMy = myNow}, 200);
+	setTimeout(function() {prevMx = mxNow; prevMy = myNow;}, 200);
 });
 
 document.addEventListener('mousedown', function(event) {

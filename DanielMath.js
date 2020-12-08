@@ -3,40 +3,40 @@ var DarkModeInt = 0;
 
 function loaded() {
   if (localStorage.getItem("darkModeEnabled") === "1") {
-    darkModeOn()
+    darkModeOn();
   } else if (localStorage.getItem("darkModeEnabled") === "0") {
-    darkModeOff()
+    darkModeOff();
   }
 }
 
 function darkMode() {
-  console.log(localStorage.getItem("darkModeEnabled"))
+  console.log(localStorage.getItem("darkModeEnabled"));
   if (Boolean(IsDarkMode) === Boolean(false)) {
     DarkModeInt = 0;
   } else if (Boolean(IsDarkMode) === Boolean(true)) {
     DarkModeInt = 1;
-  };
+  }
 	switch (DarkModeInt) {
     case 0:
-      darkModeOn()
+      darkModeOn();
       break;
     case 1:
-      darkModeOff()
+      darkModeOff();
       break;
-  };
-};
+  }
+}
 
 function darkModeOn() {
-  console.log("Dark Mode disabled, enabling...")
+  console.log("Dark Mode disabled, enabling...");
   IsDarkMode = true;
   localStorage.setItem("darkModeEnabled","1");
   document.getElementById("darkButton").innerHTML = "Light Mode";
   document.getElementById("navBar").style.backgroundColor = "darkgray";
   document.getElementById("linkNav").style.color = "#2b2b2b";
-  document.getElementById("linkNav2").style.color = "#2b2b2b"
-  document.getElementById("body").style.backgroundColor="#2b2b2b"
-  document.getElementById("title").style.color = "#f5f5f5"
-  document.getElementById("header").style.textDecorationColor = "#f5f5f5"
+  document.getElementById("linkNav2").style.color = "#2b2b2b";
+  document.getElementById("body").style.backgroundColor="#2b2b2b";
+  document.getElementById("title").style.color = "#f5f5f5";
+  document.getElementById("header").style.textDecorationColor = "#f5f5f5";
   document.getElementById("leftinput").style.backgroundColor = "black";
   document.getElementById("leftinput").style.border = "3px solid gray";
   document.getElementById("leftinput").style.color = "white";
@@ -63,16 +63,16 @@ function darkModeOn() {
 }
 
 function darkModeOff() {
-  console.log("Dark Mode enabled, disabling...")
+  console.log("Dark Mode enabled, disabling...");
   IsDarkMode = false;
   localStorage.setItem("darkModeEnabled","0");
-  document.getElementById("darkButton").innerHTML = "Dark Mode"
+  document.getElementById("darkButton").innerHTML = "Dark Mode";
   document.getElementById("navBar").style.backgroundColor = "lightgray";
   document.getElementById("linkNav").style.color = "#2b2b2b";
   document.getElementById("linkNav2").style.color = "#2b2b2b";
   document.getElementById("body").style.backgroundColor="white";
   document.getElementById("title").style.color = "black";
-  document.getElementById("header").style.textDecorationColor = "black"
+  document.getElementById("header").style.textDecorationColor = "black";
   document.getElementById("leftinput").style.backgroundColor = "white";
   document.getElementById("leftinput").style.border = "3px solid black";
   document.getElementById("leftinput").style.color = "black";
