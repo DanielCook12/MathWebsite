@@ -29,6 +29,13 @@ a.nav {
 a.nav:hover {
 	text-decoration-color: currentColor;
 }
+a.emailLink {
+	font-size: auto;
+	transition: font-size 0.65s;
+}
+a.emailLink:hover {
+	font-size: 125%;
+}
 div.left {
 	margin: 0.5em;
 	text-align:left;
