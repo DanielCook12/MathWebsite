@@ -749,7 +749,7 @@ function update() {
 							while (leftweight.length < weightVars.length-1) {
 								leftweight.push(0);
 							}
-							leftweight.push(parseInt(shapesValue[i][k]));
+							leftweight.push(shapesValue[i][k]);
 						}
 					}
 				}
@@ -760,7 +760,7 @@ function update() {
 						while (rightweight.length < weightVars.length-1) {
 							rightweight.push(0);
 						}
-						rightweight.push(parseInt(shapesValue[i][k]));
+						rightweight.push(shapesValue[i][k]);
 					}
 				}
 
