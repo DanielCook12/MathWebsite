@@ -30,6 +30,7 @@ function darkModeOn() {
   console.log("Dark Mode disabled, enabling...");
   IsDarkMode = true;
   localStorage.setItem("darkModeEnabled","1");
+  scaleFill = "#D2D2d2"
   document.getElementById("darkButton").innerHTML = "Light Mode";
   document.getElementById("navBar").style.backgroundColor = "darkgray";
   document.getElementById("navBar").style.border = "3px solid black"
@@ -67,6 +68,7 @@ function darkModeOff() {
   console.log("Dark Mode enabled, disabling...");
   IsDarkMode = false;
   localStorage.setItem("darkModeEnabled","0");
+  scaleFill = "#000000"
   document.getElementById("darkButton").innerHTML = "Dark Mode";
   document.getElementById("navBar").style.backgroundColor = "lightgray";
   document.getElementById("navBar").style.border = "3px solid transparent";

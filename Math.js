@@ -32,6 +32,7 @@ var farLeft = false;
 var farRight = false;
 var scaleHeight = 0;
 var shapesOn = false;
+var scaleFill = "#000000"
 
 function consoleLog() {
 	console.log("Value: ");
@@ -521,7 +522,7 @@ function render() {
 	d.clearRect(0, 0, 1000, 700);
 
 	// Render Scale
-	d.fillStyle = "#000000";
+	d.fillStyle = scaleFill;
 
 	// Main Triangle
 	d.beginPath();

@@ -30,6 +30,8 @@ function darkModeOn() {
   console.log("Dark Mode disabled, enabling...");
   IsDarkMode = true;
   localStorage.setItem("darkModeEnabled","1");
+  document.getElementById("link1").style.color = "#d2d2d2";
+  document.getElementById("link2").style.color = "#d2d2d2";
   document.getElementById("navBar").style.backgroundColor = "darkgray";
   document.getElementById("navBar").style.border = "3px solid black";
   document.getElementById("linkNav").style.color = "#2b2b2b";
