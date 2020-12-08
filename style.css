@@ -188,3 +188,6 @@ p.content {
 	border-radius:20px;
 	float: right;
 }
+input.mathinput:hover {
+	width: 22%;
+}
