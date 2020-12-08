@@ -32,6 +32,8 @@ var farLeft = false;
 var farRight = false;
 var scaleHeight = 0;
 var shapesOn = false;
+var highestShapeValue = 0;
+var highestShapeEx = 0;
 
 function consoleLog() {
 	console.log("Value: ");
@@ -51,10 +53,33 @@ function consoleLog() {
 }
 
 function switchShapesAndText() {
+	highestShapeValue = 0;
+	for (var j=0; j < shapes.length; j++) {
+		for (var i=0; i < shapesValue[j].length; i++) {
+			if (shapesValue[j][i]/parseInt(shapesEx[j][i]) > highestShapeValue) {
+				highestShapeValue = shapesValue[j][i]/parseInt(shapesEx[j][i]);
+			}
+		}
+	}
+	var scale = 1;
+	if (highestShapeValue >= 6) {
+		console.log("Highest Shape Value" + highestShapeValue);
+		scale *= highestShapeValue/3;
+	}
+	highestShapeEx = 0;
+	for (var j=0; j < shapes.length; j++) {
+		for (var i=0; i < shapesEx[j].length; i++) {
+			if (parseInt(shapesEx[j][i]) > highestShapeEx) {
+				highestShapeEx = parseInt(shapesEx[j][i]);
+			}
+		}
+	}
+	var scaleEx = 1;
+	if (highestShapeEx >= 6) {
+		scaleEx *= highestShapeEx/3;
+	}
 	shapesOn = !shapesOn;
 	var weightVarsNoEx = [];
-	// console.log(weightVarsNoEx);
-	// console.log("^WVNEx^");
 	for (var i = 0; i < weightVars.length; i++) {
 		if (!contains(weightVars[i], "^")) {
 			weightVarsNoEx.push(weightVars[i]);
@@ -79,6 +104,7 @@ function switchShapesAndText() {
 			console.log(noExponetString);
 		}
 	}
+
 	if (shapesOn) {
 		sizes = [20];     // Reset sizes array
 		for (var i = 1; i < weightVarsNoEx.length; i++) {
@@ -91,8 +117,8 @@ function switchShapesAndText() {
 						console.log("Shapes Value Type " + shapesValueTypeNoEx[i][0]);
 						console.log("Shapes Exponet " + shapesEx[i]);
 						if (shapesValueTypeNoEx[i][0] === "constant") { // for constants
-							shapesH[i] = 20;
-							shapesW[i] = 20*shapesValue[i];
+							shapesH[i] = 20/scaleEx;
+							shapesW[i] = ((20*shapesValue[i])/scale)/shapesEx[i][0];
 							console.log("constant");
 						} else if (shapesEx[i][0] === 1) { // for variables without exponets
 							var j;
@@ -102,8 +128,8 @@ function switchShapesAndText() {
 									break;
 								}
 							}
-							shapesH[i] = 20;
-							shapesW[i] = sizes[j]*shapesValue[i];
+							shapesH[i] = 20/scaleEx;
+							shapesW[i] = (sizes[j]*shapesValue[i])/scale;
 						} else if (shapesEx[i][0] > 1) { // for variables with exponets
 							var j;
 							console.log("Exponet of more than 1");
@@ -112,8 +138,8 @@ function switchShapesAndText() {
 									break;
 								}
 							}
-							shapesH[i] = sizes[j] * (shapesEx[i][0] * 0.5);
-							shapesW[i] = sizes[j]*shapesValue[i];
+							shapesH[i] = (sizes[j] * (shapesEx[i][0] * 0.5))/scaleEx;
+							shapesW[i] = ((sizes[j]*shapesValue[i])/shapesEx[i][0])/scale;
 						}
 					}
 				} else {
@@ -137,8 +163,8 @@ function switchShapesAndText() {
 								// console.log(shapesValueTypeNoEx);
 								// console.log("Shapes Exponet " + shapesEx[shapes.length-1]);
 								if (shapesValueTypeNoEx[shapes.length-1][0] === "constant") { // for constants
-									shapesH.push(20);
-									shapesW.push(20*shapesValue[shapes.length-1][0]);
+									shapesH.push(20/scaleEx);
+									shapesW.push((20*shapesValue[shapes.length-1][0])/shapesEx[i][k]);
 									console.log("constant");
 								} else if (shapesEx[shapes.length-1][0] === 1) { // for variables without exponets
 									var j;
@@ -148,8 +174,8 @@ function switchShapesAndText() {
 											break;
 										}
 									}
-									shapesH.push(20);
-									shapesW.push(sizes[j]*shapesValue[shapes.length-1][0]);
+									shapesH.push(20/scaleEx);
+									shapesW.push(((sizes[j]*shapesValue[shapes.length-1][0])/scale)/shapesEx[i][k]);
 								} else if (shapesEx[shapes.length-1][0] > 1) { // for variables with exponets
 									var j;
 									console.log("Exponet of more than 1");
@@ -158,15 +184,15 @@ function switchShapesAndText() {
 											break;
 										}
 									}
-									shapesH.push(sizes[j] * (shapesEx[shapes.length-1][0] * 0.5));
-									shapesW.push(sizes[j] * shapesValue[shapes.length-1][0]);
+									shapesH.push((sizes[j] * (shapesEx[shapes.length-1][0] * 0.5))/scaleEx);
+									shapesW.push(((sizes[j] * shapesValue[shapes.length-1][0])/scale)/shapesEx[i][k]);
 								}
-							} else {
+							} else { 
 								console.log("Shapes Value Type " + shapesValueTypeNoEx[i][0][k]);
 								console.log("Shapes Exponet " + shapesEx[i][k]);
 								if (shapesValueTypeNoEx[i][0][k] === "constant") { // for constants
-									shapesH[i][k] = 20;
-									shapesW[i][k] = 20*shapesValue[i][k];
+									shapesH[i][k] = 20/scaleEx;
+									shapesW[i][k] = ((20*shapesValue[i][k])/scale)/shapesEx[i][0];
 									console.log("constant");
 								} else if (shapesEx[i][0] === 1) { // for variables without exponets
 									var j;
@@ -176,8 +202,8 @@ function switchShapesAndText() {
 											break;
 										}
 									}
-									shapesH[i] = 20;
-									shapesW[i] = sizes[j]*shapesValue[i][k];
+									shapesH[i] = 20/scaleEx;
+									shapesW[i] = ((sizes[j]*shapesValue[i][k])/scale)/shapesEx[i][0];
 								} else if (shapesEx[i][0][k] > 1) { // for variables with exponets
 									var j;
 									console.log("Exponet of more than 1");
@@ -186,8 +212,8 @@ function switchShapesAndText() {
 											break;
 										}
 									}
-									shapesH[i] = sizes[j] * (shapesEx[i][0][k] * 0.5);
-									shapesW[i] = sizes[j]*shapesValue[i][k];
+									shapesH[i] = (sizes[j] * (shapesEx[i][0][k] * 0.5))/scaleEx;
+									shapesW[i] = ((sizes[j]*shapesValue[i][k])/scale)/shapesEx[i][0];
 								}
 							}
 						}
@@ -302,7 +328,7 @@ function findValueOfString(string) {
 				exponets[exponets.length-1] += string.charAt(i+k);
 				val[i+k] = "exponetNum";
 				k++;
-			}
+			} 
 		}
 	}
 
@@ -377,7 +403,7 @@ function findTypeOfString(string) {
 				exponets[exponets.length-1] += string.charAt(i+k);
 				val[i+k] = "exponetNum";
 				k++;
-			}
+			} 
 		}
 	}
 
@@ -456,7 +482,7 @@ function send() {
 			shapesTermLength.push(findTypeOfString(leftinput)[1]);
 			console.log("Shape Term Length: " + shapesTermLength[shapes.length-1]);
 		}
-
+		
 		console.log(shapesValue[shapesValue.length-1]);
 		console.log(shapesValueType[shapesValue.length-1]);
 
