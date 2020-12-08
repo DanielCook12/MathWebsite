@@ -32,9 +32,10 @@ function darkModeOn() {
   localStorage.setItem("darkModeEnabled","1");
   document.getElementById("darkButton").innerHTML = "Light Mode";
   document.getElementById("navBar").style.backgroundColor = "darkgray";
+  document.getElementById("navBar").style.border = "3px solid black"
   document.getElementById("linkNav").style.color = "#2b2b2b";
   document.getElementById("linkNav2").style.color = "#2b2b2b";
-  document.getElementById("body").style.backgroundColor="#2b2b2b";
+  document.getElementById("body").style.backgroundColor="#888888";
   document.getElementById("title").style.color = "#f5f5f5";
   document.getElementById("header").style.textDecorationColor = "#f5f5f5";
   document.getElementById("leftinput").style.backgroundColor = "black";
@@ -59,7 +60,7 @@ function darkModeOn() {
   document.getElementById("footer").style.color = "white";
   document.getElementById("footer").style.backgroundColor = "black";
   document.getElementById("footer").style.border = "3px solid gray";
-  document.getElementById("canvas").style.border = "8px solid gray";
+  document.getElementById("canvas").style.border = "8px solid black";
 }
 
 function darkModeOff() {
@@ -68,6 +69,7 @@ function darkModeOff() {
   localStorage.setItem("darkModeEnabled","0");
   document.getElementById("darkButton").innerHTML = "Dark Mode";
   document.getElementById("navBar").style.backgroundColor = "lightgray";
+  document.getElementById("navBar").style.border = "3px solid transparent";
   document.getElementById("linkNav").style.color = "#2b2b2b";
   document.getElementById("linkNav2").style.color = "#2b2b2b";
   document.getElementById("body").style.backgroundColor="white";
