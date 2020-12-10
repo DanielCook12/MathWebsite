@@ -314,9 +314,15 @@ function findValueOfString(string) {
 	var negative = [1];
 	var exponets = [0];
 	var containsDecimal = [0];
+	var fractions = ["no"];
 	for (var i = 0; i < string.length; i++) {
 		if (val[i] === "num" && val[i-1] != "exponetNum") {
-			if (containsDecimal[containsDecimal.length-1] === 0) {
+			if (fractions[fractions.length-1] != "no") {
+				fractions[fractions.length-1] *= 10;
+				console.log("frac");
+				console.log(fractions);
+				fractions[fractions.length-1] += parseInt(string.charAt(i));
+			} else if (containsDecimal[containsDecimal.length-1] === 0) {
 				terms[terms.length-1] *= 10;
 				console.log("num");
 				terms[terms.length-1] += parseInt(string.charAt(i));
@@ -327,7 +333,11 @@ function findValueOfString(string) {
 			}
 		} else if (string.charAt(0) == "-" && i === 0) {
 			negative[negative.length-1] = -1;
+		} else if (val[i] === "op" && string.charAt(i) == "/") {
+			fractions[fractions.length-1] = 0;
+			console.log("/");
 		} else if (val[i] === "op") {
+			fractions.push("no");
 			terms.push(0);
 			negative.push(1);
 			if (string.charAt(i) === "-") {
@@ -360,8 +370,10 @@ function findValueOfString(string) {
 			containsDecimal[containsDecimal.length-1] = 1;
 		}
 	}
-
 	for (var i = 0; i < terms.length; i++) {
+		if (fractions[i] != "no") {
+			terms[i] = terms[i]/fractions[i];
+		}
 		terms[i] *= negative[i];	
 		if (terms[i] === 0 && termsType[i] != "constant" && negative[i] === -1) {
 			terms[i] = -1;
@@ -393,11 +405,11 @@ function findValueOfString(string) {
 
 		}
 	}
-	console.log("terms: ");
-	console.log(terms);
-	console.log("terms type: ");
-	console.log(termsType);
-	console.log("Exponets: " + exponets);
+	// console.log("terms: ");
+	// console.log(terms);
+	// console.log("terms type: ");
+	// console.log(termsType);
+	// console.log("Exponets: " + exponets);
 	return [terms, exponets];
 }
 
@@ -411,20 +423,26 @@ function findTypeOfString(string) {
 	var operators = [];
 	var termLength = [1];
 	var containsDecimal = [0];
+	var fractions = [0];
 	for (var i = 0; i < string.length; i++) {
 		if (val[i] === "num" && val[i-1] != "exponetNum") {
-			if (containsDecimal[containsDecimal.length-1] === 0) {
+			if (fractions[fractions.length-1] != 0) {
+				fractions[fractions.length-1] *= 10;
+				console.log("frac");
+				fractions[fractions.length-1] += parseInt(string.charAt(i));
+			} else if (containsDecimal[containsDecimal.length-1] === 0) {
 				terms[terms.length-1] *= 10;
-				// console.log("num");
+				console.log("num");
 				terms[terms.length-1] += parseInt(string.charAt(i));
 			} else {
-				// console.log("num");
-				terms[terms.length-1] += parseInt(string.charAt(i))/(10 ^ containsDecimal[containsDecimal.length-1]);
-				containsDecimal[containsDecimal.length-1] += 1;
+				console.log("num");
+				terms[terms.length-1] += parseInt(string.charAt(i))/(10 * containsDecimal[containsDecimal.length-1]);
+				containsDecimal[containsDecimal.length-1] *= 10;
 			}
 		} else if (string.charAt(i) == "-" && i === 0) {
 			negative[negative.length-1] = -1;
 		} else if (val[i] === "op") {
+			fractions.push(0);
 			terms.push(0);
 			negative.push(1);
 			if (string.charAt(i) === "-") {
@@ -452,7 +470,7 @@ function findTypeOfString(string) {
 				k++;
 			} 
 		} else if (val[i] === "decimal") {
-			console.log("decimal");
+			// console.log("decimal");
 			containsDecimal[containsDecimal.length-1] = 1;
 		}
 	}
@@ -489,8 +507,8 @@ function findTypeOfString(string) {
 
 		}
 	}
-	console.log("real terms type");
-	console.log(termLength);
+	// console.log("real terms type");
+	// console.log(termLength);
 	return [termsType, termLength];
 }
 
