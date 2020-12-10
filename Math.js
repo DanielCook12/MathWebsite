@@ -359,8 +359,14 @@ function findValueOfString(string) {
 	}
 
 	for (var i = 0; i < terms.length; i++) {
-		terms[i] *= negative[i];
+		terms[i] *= negative[i];	
+		if (terms[i] === 0 && termsType[i] != "constant" && negative[i] === -1) {
+			terms[i] = -1;
+		} else if (terms[i] === 0 && termsType[i] != "constant" && negative[i] === 1) {
+			terms[i] = 1;
+		}
 	}
+	
 	if (terms.length > 1) {
 		for (var i = 0; i < terms.length; i++) {
 			if (terms[i] === 0 && termsType[i] != "constant") {
@@ -450,6 +456,11 @@ function findTypeOfString(string) {
 
 	for (var i = 0; i < terms.length; i++) {
 		terms[i] *= negative[i];
+		if (terms[i] === 0 && termsType[i] != "constant" && negative[i] === -1) {
+			terms[i] = -1;
+		} else if (terms[i] === 0 && termsType[i] != "constant" && negative[i] === 1) {
+			terms[i] = 1;
+		}
 	}
 
 	if (terms.length > 1) {
@@ -516,9 +527,9 @@ function send() {
 					shapesValueTypeNoEx[shapesValueTypeNoEx.length-1][i] = findTypeOfString(leftinput)[0][i];
 				}
 				// console.log(shapesValueType[shapes.length-1][i]);
-				if (shapesValue[shapes.length-1][i] == 0 && shapesValueType[shapesValueType.length-1][i] != "constant") {
+				/*if (shapesValue[shapes.length-1][i] == 0 && shapesValueType[shapesValueType.length-1][i] != "constant") {
 					shapesValue[shapes.length-1][i] = 1;
-				}
+				}*/
 			}
 			shapesTermLength.push(findTypeOfString(leftinput)[1]);
 			console.log("Shape Term Length: " + shapesTermLength[shapes.length-1]);
@@ -561,9 +572,9 @@ function send() {
 					shapesValueTypeNoEx[shapesValueType.length-1][i] = findTypeOfString(rightinput)[0][i];
 				}
 				console.log(shapesValueType[shapes.length-1][i]);
-				if (shapesValue[shapes.length-1][i] == 0 && shapesValueType[shapesValueType.length-1][i] != "constant") {
-					shapesValue[shapes.length-1][i] = 1;
-				}
+				// if (shapesValue[shapes.length-1][i] == 0 && shapesValueType[shapesValueType.length-1][i] != "constant") {
+					// shapesValue[shapes.length-1][i] = 1;
+				// }
 			}
 		}
 		// console.log(shapesValue[shapesValue.length-1]);
