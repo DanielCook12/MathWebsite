@@ -138,6 +138,7 @@ input.mathinput {
 	height: 50px;
 	font-size:25px;
 	padding-left:10px;
+	transition: width 0.65s;
 }
 footer {
 	bottom: 0;
