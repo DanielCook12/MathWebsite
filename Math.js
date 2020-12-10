@@ -359,8 +359,12 @@ function findValueOfString(string) {
 	}
 
 	for (var i = 0; i < terms.length; i++) {
-		terms[i] *= negative[i];
+		terms[i] *= negative[i];	
+		if (terms[i] === 0 && termsType[i] != "constant" && negative[i] === -1) {
+			terms[i] = -1;
+		}
 	}
+	
 	if (terms.length > 1) {
 		for (var i = 0; i < terms.length; i++) {
 			if (terms[i] === 0 && termsType[i] != "constant") {
