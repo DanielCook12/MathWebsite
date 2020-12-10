@@ -138,7 +138,6 @@ input.mathinput {
 	height: 50px;
 	font-size:25px;
 	padding-left:10px;
-	transition: width 0.65s;
 }
 footer {
 	bottom: 0;
@@ -188,7 +187,4 @@ p.content {
 	border: 8px solid black;
 	border-radius:20px;
 	float: right;
-}
-input.mathinput:hover {
-	width: 22%;
 }
