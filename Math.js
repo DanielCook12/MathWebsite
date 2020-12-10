@@ -136,7 +136,7 @@ function switchShapesAndText() {
 									break;
 								}
 							}
-							shapesH[i] = 20/scaleEx;
+							shapesH[i] = (20 * shapesTermLength[i][0])/scaleEx;
 							shapesW[i] = (sizes[j]*shapesValue[i])/scale;
 						} else if (shapesEx[i][0] > 1) { // for variables with exponets
 							var j;
@@ -146,7 +146,7 @@ function switchShapesAndText() {
 									break;
 								}
 							}
-							shapesH[i] = (sizes[j] * (shapesEx[i][0] * 0.5))/scaleEx;
+							shapesH[i] = ((sizes[j] * (shapesEx[i][0] * 0.5))/scaleEx) * shapesTermLength[i][0];
 							shapesW[i] = ((sizes[j]*shapesValue[i])/shapesEx[i][0])/scale;
 						}
 					}
@@ -182,7 +182,7 @@ function switchShapesAndText() {
 											break;
 										}
 									}
-									shapesH.push(20/scaleEx);
+									shapesH.push((20/scaleEx) * shapesTermLength[i][0]);
 									shapesW.push(((sizes[j]*shapesValue[shapes.length-1][0])/scale)/shapesEx[i][k]);
 								} else if (shapesEx[shapes.length-1][0] > 1) { // for variables with exponets
 									var j;
@@ -192,7 +192,7 @@ function switchShapesAndText() {
 											break;
 										}
 									}
-									shapesH.push((sizes[j] * (shapesEx[shapes.length-1][0] * 0.5))/scaleEx);
+									shapesH.push(((sizes[j] * (shapesEx[shapes.length-1][0] * 0.5))/scaleEx) * shapesTermLength[i][0]);
 									shapesW.push(((sizes[j] * shapesValue[shapes.length-1][0])/scale)/shapesEx[i][k]);
 								}
 							} else { 
@@ -210,7 +210,7 @@ function switchShapesAndText() {
 											break;
 										}
 									}
-									shapesH[i] = 20/scaleEx;
+									shapesH[i] = (20/scaleEx) * shapesTermLength[i][0];
 									shapesW[i] = ((sizes[j]*shapesValue[i][k])/scale)/shapesEx[i][0];
 								} else if (shapesEx[i][0][k] > 1) { // for variables with exponets
 									var j;
@@ -220,7 +220,7 @@ function switchShapesAndText() {
 											break;
 										}
 									}
-									shapesH[i] = (sizes[j] * (shapesEx[i][0][k] * 0.5))/scaleEx;
+									shapesH[i] = ((sizes[j] * (shapesEx[i][0][k] * 0.5))/scaleEx) * shapesTermLength[i][0];
 									shapesW[i] = ((sizes[j]*shapesValue[i][k])/scale)/shapesEx[i][0];
 								}
 							}
@@ -487,7 +487,7 @@ function findTypeOfString(string) {
 		}
 	}
 	console.log("real terms type");
-	console.log(termsType);
+	console.log(termLength);
 	return [termsType, termLength];
 }
 
@@ -509,6 +509,7 @@ function send() {
 			console.log("comment");
 			shapesText[shapesText.length-1] = leftinput;
 		} else {
+			shapesTermLength.push(0);
 			shapesValue.push(findValueOfString(leftinput)[0]);
 			shapesEx.push(findValueOfString(leftinput)[1]);
 			console.log(shapesEx[shapesEx.length-1]);
@@ -531,7 +532,7 @@ function send() {
 					shapesValue[shapes.length-1][i] = 1;
 				}*/
 			}
-			shapesTermLength.push(findTypeOfString(leftinput)[1]);
+			shapesTermLength[shapesTermLength.length-1] = (findTypeOfString(leftinput)[1]);
 			console.log("Shape Term Length: " + shapesTermLength[shapes.length-1]);
 		}
 		
@@ -554,6 +555,7 @@ function send() {
 			console.log("comment");
 			shapesText[shapesText.length-1] = rightinput;
 		} else {
+			shapesTermLength.push(0);
 			shapesValue.push(findValueOfString(rightinput)[0]);
 			shapesEx.push(findValueOfString(rightinput)[1]);
 			console.log(shapesEx[shapesEx.length-1]);
@@ -576,6 +578,8 @@ function send() {
 					// shapesValue[shapes.length-1][i] = 1;
 				// }
 			}
+			shapesTermLength[shapesTermLength.length-1] = (findTypeOfString(rightinput)[1]);
+			console.log("Shape Term Length: " + shapesTermLength[shapes.length-1]);
 		}
 		// console.log(shapesValue[shapesValue.length-1]);
 		// console.log(shapesValueType[shapesValue.length-1]);
@@ -791,7 +795,7 @@ function update() {
 		farRight = false;
 		farLeft = false;
 		var differences = [];
-		console.log(weightVars);
+		// console.log(weightVars);
 		while (leftweight.length > rightweight.length) {
 			rightweight.push(0);
 		}
@@ -809,12 +813,12 @@ function update() {
 				}
 			}
 		}
-		console.log("WeightVars:");
-		console.log(weightVars);
-		console.log("WeightEx: ");
-		console.log(weightEx);
-		console.log("Differences:");
-		console.log(differences);
+		// console.log("WeightVars:");
+		// console.log(weightVars);
+		// console.log("WeightEx: ");
+		// console.log(weightEx);
+		// console.log("Differences:");
+		// console.log(differences);
 		var difference = 0;
 		for (var i = 0; i < differences.length; i++) {
 			difference += differences[i];
