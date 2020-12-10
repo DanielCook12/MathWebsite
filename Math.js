@@ -1,5 +1,8 @@
 var c = document.getElementById("canvas");
 var d = c.getContext("2d");
+var canvasW = canvas.getBoundingClientRect().width;
+var canvasH = canvas.getBoundingClientRect().height;
+console.log(canvasW + " & " + canvasH);
 var shapes = [0, 0];
 var shapesX = [10, 100];
 var shapesY = [10, 10];
@@ -596,6 +599,9 @@ function send() {
 setInterval(function() {
 	render();
 	update();
+	canvasW = canvas.getBoundingClientRect().width;
+	canvasH = canvas.getBoundingClientRect().height;
+	// console.log(canvasW + " " + canvasH);
 }, 33);
 
 function render() {
@@ -851,16 +857,17 @@ function update() {
 }
 
 document.addEventListener('mousemove', function(event) {
-	mx = event.offsetX;
-	my = event.offsetY;
+	mx = event.offsetX * (1015/canvasW);
+	my = event.offsetY * (515/canvasH);
 	var mxNow = mx;
 	var myNow = my;
 	setTimeout(function() {prevMx = mxNow; prevMy = myNow;}, 200);
 });
 
 document.addEventListener('mousedown', function(event) {
-	mx = event.offsetX;
-	my = event.offsetY;
+	mx = event.offsetX * (1015/canvasW);
+	my = event.offsetY * (515/canvasH);
+	// console.log(mx + " " + my);
 	if (selected == -1) {
 		for (var i = 0; i < shapes.length; i++) {
 			if (mx - shapesX[i] <= shapesW[i] && mx - shapesX[i] >= 0 && my - shapesY[i] >= 0 && my - shapesY[i] <= shapesH[i]) {
