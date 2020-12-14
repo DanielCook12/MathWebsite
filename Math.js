@@ -698,19 +698,21 @@ function update() {
 		shapesY[i] += shapesVY[i]; // Change Y
 
 		if (shapesVX[i] != 0 && shapesVY[i] == 0) { // friction
-			if (shapesVX[i] > 0) {
-				shapesVX[i] -= 1;
-			} else {
-				shapesVX[i] += 1;
+			for (var j = 0; j < 2; j++) {
+				if (shapesVX[i] > 0) {
+					shapesVX[i] -= 0.5;
+				} else if (shapesVX[i] < 0) {
+					shapesVX[i] += 0.5;
+				}
+				shapesVX[i] = Math.floor(shapesVX[i]*2)/2; // round value to halves
 			}
-			shapesVX[i] = Math.floor(shapesVX[i]*2)/2; // round value to halves
 		} else if (shapesVX[i] != 0) { // Air resistance
 			if (shapesVX[i] > 0) {
 				shapesVX[i] -= 0.05;
 			} else {
-				shapesVX[i] += 0.01;
+				shapesVX[i] += 0.05;
 			}
-			shapesVX[i] = Math.floor(shapesVX[i]*2)/2; // round value to havles
+			// shapesVX[i] = Math.floor(shapesVX[i]*2)/2; // round value to halves
 		}
 		if (shapesX[i] < 0) { // stop from going off the left side of the screen
 			shapesX[i] = 0;
@@ -719,12 +721,12 @@ function update() {
 		} else if (shapesVX[i] != 0) {
 			for (var j = 0; j < shapes.length; j++) {
 				if (shapesVX[j] === 0 && j != i) { // for all other shapes moving that is not this shape
-					if (((shapesX[i] + shapesW[i] >= shapesX[j] && shapesX[i] + shapesW[i] <= shapesX[j] + shapesW[j]) || (shapesX[i] >= shapesX[j] && shapesX[i] <= shapesX[j] + shapesW[j])) && (shapesY[i] + shapesH[i] >= shapesY[j] + (shapesH[j] * 0.7) && shapesY[i] <= shapesY[j] + shapesH[j])) { // collide with other shapes from the left
+					if (((shapesX[i] + shapesW[i] >= shapesX[j] && shapesX[i] + shapesW[i] <= shapesX[j] + shapesW[j]) /*|| (shapesX[i] >= shapesX[j] && shapesX[i] <= shapesX[j] + shapesW[j])*/) && (shapesY[i] + shapesH[i] >= shapesY[j] + (shapesH[j] * 0.3) && shapesY[i] <= shapesY[j] + shapesH[j])) { // collide with other shapes from the left
 						shapesVX[i] *= -0.8;
-						shapesX[i] = shapesX[j] - shapesW[i] - 1;
-					} else if (shapesX[i] >= shapesX[j] && shapesX[i] <= shapesX[j] + shapesW[j] && (shapesY[i] + shapesH[i] >= shapesY[j] + (shapesH[j] * 0.7) && shapesY[i] <= shapesY[j] + shapesH[j])) { // collide with other shapes from the right
+						setTimeout(function () {shapesX[i] = shapesX[j] - shapesW[i] - 1;}, 10);
+					} else if ((shapesX[i] >= shapesX[j] && shapesX[i] <= shapesX[j] + shapesW[j]) && (shapesY[i] + shapesH[i] >= shapesY[j] + (shapesH[j] * 0.3) && shapesY[i] <= shapesY[j] + shapesH[j])) { // collide with other shapes from the right
 						shapesVX[i] *= -0.8;
-						shapesX[i] = shapesX[j] + shapesW[j] + 1;
+						setTimeout(function () {shapesX[i] = shapesX[j] + shapesW[i] + 1;}, 10);
 					}
 				}
 			}
@@ -758,7 +760,8 @@ function update() {
 							console.log("problem");
 						} else {
 							shapesY[j] -= shapesH[i];
-							console.log("problem");						}
+							console.log("problem");						
+						}
 					}
 				}
 			}
