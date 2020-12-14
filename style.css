@@ -30,7 +30,7 @@ a.nav:hover {
 	text-decoration-color: currentColor;
 }
 a.emailLink {
-	font-size: auto;
+	font-size: inherit;
 	transition: font-size 0.65s;
 }
 a.emailLink:hover {
@@ -58,7 +58,7 @@ div.clear {
 }
 div.status {
 	margin: 0.5em;
-	text-align: middle;
+	text-align: center;
 }
 p.status {
 	margin-top: 0px;
