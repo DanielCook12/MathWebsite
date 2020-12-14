@@ -694,57 +694,71 @@ function render() {
 function update() {
 	// Move Shapes
 	for (var i = 0; i < shapes.length; i++) {
-		shapesX[i] += shapesVX[i];
-		shapesY[i] += shapesVY[i];
+		shapesX[i] += shapesVX[i]; // Change X
+		shapesY[i] += shapesVY[i]; // Change Y
 
-		if (shapesVX[i] != 0 && shapesVY[i] == 0) {
+		if (shapesVX[i] != 0 && shapesVY[i] == 0) { // friction
 			if (shapesVX[i] > 0) {
 				shapesVX[i] -= 1;
 			} else {
 				shapesVX[i] += 1;
 			}
-			shapesVX[i] = Math.floor(shapesVX[i]*2)/2;
-		} else if (shapesVX[i] != 0) {
+			shapesVX[i] = Math.floor(shapesVX[i]*2)/2; // round value to halves
+		} else if (shapesVX[i] != 0) { // Air resistance
 			if (shapesVX[i] > 0) {
 				shapesVX[i] -= 0.05;
 			} else {
 				shapesVX[i] += 0.01;
 			}
-			shapesVX[i] = Math.floor(shapesVX[i]*2)/2;
+			shapesVX[i] = Math.floor(shapesVX[i]*2)/2; // round value to havles
 		}
-		if (shapesX[i] < 0) {
+		if (shapesX[i] < 0) { // stop from going off the left side of the screen
 			shapesX[i] = 0;
-		} else if (shapesX[i] > 1000 - shapesW[i]) {
+		} else if (shapesX[i] > 1000 - shapesW[i]) { // stop from going off the right side.
 			shapesX[i] = 1000 - shapesW[i];
 		} else if (shapesVX[i] != 0) {
 			for (var j = 0; j < shapes.length; j++) {
-				if (shapesVX[j] === 0 && j != i) {
-					if (shapesX[i] + shapesW[i] >= shapesX[j] && shapesX[i] + shapesW[i] <= shapesX[j] + shapesW[j] && (shapesY[i] + shapesH[i] >= shapesY[j] + (shapesH[j] * 0.7) && shapesY[i] <= shapesY[j] + shapesH[j])) {
-						shapesVX[i] = 0;
-						shapesX[i] = shapesX[j] - shapesW[i];
-					} else if (shapesX[i] >= shapesX[j] && shapesX[i] <= shapesX[j] + shapesW[j] && (shapesY[i] + shapesH[i] >= shapesY[j] + (shapesH[j] * 0.7) && shapesY[i] <= shapesY[j] + shapesH[j])) {
-						shapesVX[i] = 0;
-						shapesX[i] = shapesX[j] + shapesW[j];
+				if (shapesVX[j] === 0 && j != i) { // for all other shapes moving that is not this shape
+					if (((shapesX[i] + shapesW[i] >= shapesX[j] && shapesX[i] + shapesW[i] <= shapesX[j] + shapesW[j]) || (shapesX[i] >= shapesX[j] && shapesX[i] <= shapesX[j] + shapesW[j])) && (shapesY[i] + shapesH[i] >= shapesY[j] + (shapesH[j] * 0.7) && shapesY[i] <= shapesY[j] + shapesH[j])) { // collide with other shapes from the left
+						shapesVX[i] *= -0.8;
+						shapesX[i] = shapesX[j] - shapesW[i] - 1;
+					} else if (shapesX[i] >= shapesX[j] && shapesX[i] <= shapesX[j] + shapesW[j] && (shapesY[i] + shapesH[i] >= shapesY[j] + (shapesH[j] * 0.7) && shapesY[i] <= shapesY[j] + shapesH[j])) { // collide with other shapes from the right
+						shapesVX[i] *= -0.8;
+						shapesX[i] = shapesX[j] + shapesW[j] + 1;
 					}
 				}
 			}
 		}
-		shapesVY[i] += 1;
-		if (shapesY[i] >= 210 - shapesH[i] + scaleHeight && shapesY[i] <= 230 - shapesH[i] + scaleHeight && shapesVY[i] > 0 && (shapesX[i] < 440) && shapesX[i] > 40 - shapesW[i]) {
+		shapesVY[i] += 1; // gravity
+		if (shapesY[i] >= 210 - shapesH[i] + scaleHeight && shapesY[i] <= 230 - shapesH[i] + scaleHeight && shapesVY[i] > 0 && (shapesX[i] < 440) && shapesX[i] > 40 - shapesW[i]) { // collide with left scale
 			shapesVY[i] = 0;
 			shapesY[i] = 210 - shapesH[i] + scaleHeight;
-		} else if (shapesY[i] >= 210 - shapesH[i] - scaleHeight && shapesY[i] <= 230 - shapesH[i] - scaleHeight && shapesVY[i] > 0 && (shapesX[i] > 560) && shapesX[i] < 960) {
+		} else if (shapesY[i] >= 210 - shapesH[i] - scaleHeight && shapesY[i] <= 230 - shapesH[i] - scaleHeight && shapesVY[i] > 0 && (shapesX[i] > 560) && shapesX[i] < 960) { // collide with right scale
 			shapesVY[i] = 0;
 			shapesY[i] = 210 - shapesH[i] - scaleHeight;
-		} else if (shapesY[i] >= 460 - shapesH[i]) {
+		} else if (shapesY[i] >= 460 - shapesH[i]) { // collide with ground
 			shapesVY[i] = 0;
 			shapesY[i] = 460 - shapesH[i];
-		} else if (shapesVY[i] > 0) {
+		} else if (shapesVY[i] != 0) {
 			for (var j = 0; j < shapes.length; j++) {
-				if (shapesVY[j] === 0 && j != i && shapesY[j] >= shapesY[i] + (shapesH[i]*6/10)) {
-					if (shapesY[i] + shapesH[i] >= shapesY[j] && shapesY[i] + shapesH[i] <= shapesY[j] + shapesH[j] && (shapesX[i] + shapesW[i] >= shapesX[j] && shapesX[i] <= shapesX[j] + shapesW[j])) {
+				if (shapesVY[j] === 0 && j != i && shapesY[j] >= shapesY[i] + (shapesH[i]*6/10)) { // for all other shapes that are not moving and below this shape
+					if (shapesY[i] + shapesH[i] >= shapesY[j] && shapesY[i] + shapesH[i] <= shapesY[j] + shapesH[j] && (shapesX[i] + shapesW[i] >= shapesX[j] && shapesX[i] <= shapesX[j] + shapesW[j])) { // collide downwards
 						shapesVY[i] = 0;
 						shapesY[i] = shapesY[j] - shapesH[i];
+					}
+				}
+			}
+		} 
+		if (shapesVY[i] === 0) {
+			for (var j = 0; j < shapes.length; j++) {
+				if (shapesVY[j] === 0 && shapesVX[j] === 0 && j != i) {
+					if (((shapesX[i] <= shapesX[j] && shapesX[i] + shapesW[i] >= shapesX[j]) || (shapesX[i] <= shapesX[j] + shapesW[j] && shapesX[i] + shapesW[i] >= shapesX[j] + shapesW[j]) || (shapesX[i] <= shapesX[j] && shapesX[i] + shapesW[i] >= shapesX[j] + shapesW[j])) && (shapesY[i]+shapesH[i] === shapesY[j]+shapesH[j])) {
+						if (shapesH[i] >= shapesH[j]) {
+							shapesY[i] -= shapesH[j];
+							console.log("problem");
+						} else {
+							shapesY[j] -= shapesH[i];
+							console.log("problem");						}
 					}
 				}
 			}
