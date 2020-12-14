@@ -605,6 +605,10 @@ function send() {
 		// console.log(shapesValue[shapesValue.length-1]);
 		// console.log(shapesValueType[shapesValue.length-1]);
 	}
+	if (shapesOn) {
+		shapesOn = false;
+		switchShapesAndText();
+	}
 	if (eval(leftinput) == eval(rightinput)) {
 		document.getElementById("status").style.backgroundColor = "green";
 		document.getElementById("status").innerHTML = "Equal";
@@ -612,6 +616,7 @@ function send() {
 		document.getElementById("status").style.backgroundColor = "red";
 		document.getElementById("status").innerHTML = "Not Equal";
 	}
+
 }
 
 setInterval(function() {
@@ -696,6 +701,8 @@ function update() {
 	for (var i = 0; i < shapes.length; i++) {
 		shapesX[i] += shapesVX[i]; // Change X
 		shapesY[i] += shapesVY[i]; // Change Y
+		var xDone = false;
+		var yDone = false;
 
 		if (shapesVX[i] != 0 && shapesVY[i] == 0) { // friction
 			for (var j = 0; j < 2; j++) {
@@ -721,12 +728,14 @@ function update() {
 		} else if (shapesVX[i] != 0) {
 			for (var j = 0; j < shapes.length; j++) {
 				if (shapesVX[j] === 0 && j != i) { // for all other shapes moving that is not this shape
-					if (((shapesX[i] + shapesW[i] >= shapesX[j] && shapesX[i] + shapesW[i] <= shapesX[j] + shapesW[j]) /*|| (shapesX[i] >= shapesX[j] && shapesX[i] <= shapesX[j] + shapesW[j])*/) && (shapesY[i] + shapesH[i] >= shapesY[j] + (shapesH[j] * 0.3) && shapesY[i] <= shapesY[j] + shapesH[j])) { // collide with other shapes from the left
+					if ((shapesX[i] + shapesW[i] >= shapesX[j] && shapesX[i] + shapesW[i] <= shapesX[j] + shapesW[j]) && (shapesY[i] + shapesH[i] >= shapesY[j] + (shapesH[j] * 0.3) && shapesY[i] <= shapesY[j] + shapesH[j])) { // collide with other shapes from the left
 						shapesVX[i] *= -0.8;
 						setTimeout(function () {shapesX[i] = shapesX[j] - shapesW[i] - 1;}, 10);
+						xDone = true;
 					} else if ((shapesX[i] >= shapesX[j] && shapesX[i] <= shapesX[j] + shapesW[j]) && (shapesY[i] + shapesH[i] >= shapesY[j] + (shapesH[j] * 0.3) && shapesY[i] <= shapesY[j] + shapesH[j])) { // collide with other shapes from the right
 						shapesVX[i] *= -0.8;
 						setTimeout(function () {shapesX[i] = shapesX[j] + shapesW[i] + 1;}, 10);
+						xDone = true;
 					}
 				}
 			}
@@ -753,7 +762,7 @@ function update() {
 		} 
 		if (shapesVY[i] === 0) {
 			for (var j = 0; j < shapes.length; j++) {
-				if (shapesVY[j] === 0 && shapesVX[j] === 0 && j != i) {
+				if (shapesVY[j] === 0 && shapesVX[j] === 0 && j != i && !xDone) {
 					if (((shapesX[i] <= shapesX[j] && shapesX[i] + shapesW[i] >= shapesX[j]) || (shapesX[i] <= shapesX[j] + shapesW[j] && shapesX[i] + shapesW[i] >= shapesX[j] + shapesW[j]) || (shapesX[i] <= shapesX[j] && shapesX[i] + shapesW[i] >= shapesX[j] + shapesW[j])) && (shapesY[i]+shapesH[i] === shapesY[j]+shapesH[j])) {
 						if (shapesH[i] >= shapesH[j]) {
 							shapesY[i] -= shapesH[j];
