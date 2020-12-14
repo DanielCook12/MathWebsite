@@ -405,11 +405,15 @@ function findValueOfString(string) {
 
 		}
 	}
-	// console.log("terms: ");
-	// console.log(terms);
-	// console.log("terms type: ");
-	// console.log(termsType);
-	// console.log("Exponets: " + exponets);
+	console.log("terms: ");
+	console.log(terms);
+	console.log("terms type: ");
+	console.log(termsType);
+	console.log("terms: ");
+	console.log(terms);
+	console.log("terms type: ");
+	console.log(termsType);
+	console.log("Exponets: " + exponets);
 	return [terms, exponets];
 }
 
@@ -423,12 +427,13 @@ function findTypeOfString(string) {
 	var operators = [];
 	var termLength = [1];
 	var containsDecimal = [0];
-	var fractions = [0];
+	var fractions = ["no"];
 	for (var i = 0; i < string.length; i++) {
 		if (val[i] === "num" && val[i-1] != "exponetNum") {
-			if (fractions[fractions.length-1] != 0) {
+			if (fractions[fractions.length-1] != "no") {
 				fractions[fractions.length-1] *= 10;
 				console.log("frac");
+				console.log(fractions);
 				fractions[fractions.length-1] += parseInt(string.charAt(i));
 			} else if (containsDecimal[containsDecimal.length-1] === 0) {
 				terms[terms.length-1] *= 10;
@@ -441,8 +446,11 @@ function findTypeOfString(string) {
 			}
 		} else if (string.charAt(i) == "-" && i === 0) {
 			negative[negative.length-1] = -1;
+		} else if (val[i] === "op" && string.charAt(i) == "/") {
+			fractions[fractions.length-1] = 0;
+			console.log("/");
 		} else if (val[i] === "op") {
-			fractions.push(0);
+			fractions.push("no");
 			terms.push(0);
 			negative.push(1);
 			if (string.charAt(i) === "-") {
@@ -476,6 +484,9 @@ function findTypeOfString(string) {
 	}
 
 	for (var i = 0; i < terms.length; i++) {
+		if (fractions[i] != "no") {
+			terms[i] = terms[i]/fractions[i];
+		}
 		terms[i] *= negative[i];
 		if (terms[i] === 0 && termsType[i] != "constant" && negative[i] === -1) {
 			terms[i] = -1;
@@ -507,8 +518,8 @@ function findTypeOfString(string) {
 
 		}
 	}
-	// console.log("real terms type");
-	// console.log(termLength);
+	console.log("real terms type");
+	console.log(termsType);
 	return [termsType, termLength];
 }
 
