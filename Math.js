@@ -770,6 +770,9 @@ function update() {
 			shapesX[i] = mx - (shapesW[i]/2);
 			shapesY[i] = my - (shapesH[i]/2);
 		}
+		if (shapesX[i] * 0 != 0) {
+			shapesX[i] = 1;
+		}
 	}
 
 
