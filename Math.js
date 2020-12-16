@@ -388,21 +388,37 @@ function findValueOfString(string) {
 				terms[i] = 1;
 			}
 		}
-		for (var i = 0; i < terms.length; i++) {
-			for (var j = 0; j < terms.length; j++) {
-				if (j != i && termsType[i] === termsType[j] && (val[i] === "letter" || val[i] === "num")) {
-					if (operators[i] === "+" || "-") {
-						terms[i] += terms[j];
-					} else if (operators[i] === "*") {
-						terms[i] *= terms[j];
-					} else if (operators[i] === "/") {
-						terms[i] /= terms[j];
-					}
-					terms.splice(j, 1);
-					termsType.splice(j, 1);
-				}
-			}
+		// for (var i = 0; i < terms.length; i++) {
+			// for (var j = 0; j < terms.length; j++) {
+				// if (j != i && termsType[i] === termsType[j] && (val[i] === "letter" || val[i] === "num")) {
+					// if (operators[i] === "+" || operators[i] ===  "-") {
+						// terms[i] += terms[j];
+					// } else if (operators[i] === "*") {
+						// terms[i] *= terms[j];
+					// } else if (operators[i] === "/") {
+						// terms[i] /= terms[j];
+					// }
+					// terms.splice(j, 1);
+					// termsType.splice(j, 1);
+				// }
+			// }
 
+		// }
+		var isConstant = true;
+		for (var i = 0; i<terms.length; i++) {
+			if (termsType[i] != "constant") {
+				isConstant = false;
+			}
+		}
+		if (isConstant) {
+			terms[0] = eval(string);
+			termsType[0] = "constant";
+			exponets[0] = 0;
+			while (terms.length > 1) {
+				terms.splice(1, 1);
+				termsType.splice(1, 1);
+				exponets.splice(1, 1);
+			}
 		}
 	}
 	console.log("terms: ");
@@ -516,6 +532,22 @@ function findTypeOfString(string) {
 				}
 			}
 
+		}
+		var isConstant = true;
+		for (var i = 0; i<terms.length; i++) {
+			if (termsType[i] != "constant") {
+				isConstant = false;
+			}
+		}
+		if (isConstant) {
+			terms[0] = eval(string);
+			termsType[0] = "constant";
+			exponets[0] = 0;
+			while (terms.length > 1) {
+				terms.splice(1, 1);
+				termsType.splice(1, 1);
+				exponets.splice(1, 1);
+			}
 		}
 	}
 	console.log("real terms type");
