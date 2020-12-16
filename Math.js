@@ -931,15 +931,31 @@ function update() {
 		} else if (difference === 0) {
 			equal = true;
 			// console.log("Equal");
+			for (var i = 0; i < shapes.length; i++) {
+				if (shapesY[i] <= 210 && scaleHeight != 0) {
+					shapesY[i] -= 25;
+				}
+			}
 			scaleHeight = 0;
 		} else if (difference <= -50) {
 			farRight = true;
 			// console.log("far right");
+			for (var i = 0; i < shapes.length; i++) {
+				if (shapesY[i] <= 210 && scaleHeight != -25) {
+					shapesY[i] -= 25;
+				}
+			}
 			scaleHeight = -25;
 		} else if (difference >= 50) {
 			farLeft = true;
 			// console.log("far Left");
+			for (var i = 0; i < shapes.length; i++) {
+				if (shapesY[i] <= 210 && scaleHeight != 25) {
+					shapesY[i] -= 25;
+				}
+			}
 			scaleHeight = 25;
+
 		}
 		// console.log(leftweight);
 		// console.log(rightweight);
