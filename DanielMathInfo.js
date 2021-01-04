@@ -46,11 +46,13 @@ function darkModeOn() {
   document.getElementById("subHeader2").style.color = "white";
   document.getElementById("subHeader3").style.color = "white";
   document.getElementById("subHeader4").style.color = "white";
+  document.getElementById("subHeader5").style.color = "white";
   document.getElementById("content").style.color = "white";
   document.getElementById("content2").style.color = "white";
   document.getElementById("content3").style.color = "white";
   document.getElementById("content4").style.color = "white";
   document.getElementById("content5").style.color = "white";
+  document.getElementById("content6").style.color = "white";
 };
 
 function darkModeOff() {
