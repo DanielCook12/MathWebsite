@@ -53,6 +53,12 @@ function darkModeOn() {
   document.getElementById("content4").style.color = "white";
   document.getElementById("content5").style.color = "white";
   document.getElementById("content6").style.color = "white";
+  document.getElementById("leftinput").style.backgroundColor = "black";
+  document.getElementById("leftinput").style.border = "3px solid transparent";
+  document.getElementById("leftinput").style.color = "white";
+  document.getElementById("rightinput").style.backgroundColor = "black";
+  document.getElementById("rightinput").style.border = "3px solid transparent";
+  document.getElementById("rightinput").style.color = "white";
 };
 
 function darkModeOff() {
