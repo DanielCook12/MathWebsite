@@ -58,7 +58,7 @@ function consoleLog() {
 }
 
 function switchShapesAndText() {
-	highestShapeValue = 0;
+	/*highestShapeValue = 0;
 	for (var j=0; j < shapes.length; j++) {
 		for (var i=0; i < shapesValue[j].length; i++) {
 			if (shapesEx[j][i] != 0) {
@@ -115,9 +115,14 @@ function switchShapesAndText() {
 			console.log(noExponetString);
 		}
 	}
-
+*/
+	shapesOn = !shapesOn;
 	if (shapesOn) {
-		sizes = [20];     // Reset sizes array
+		for (var i = 0; i < shapes.length; i++) {
+			shapesW[i] = 40;
+			shapesH[i] = 40;
+		}
+		/*sizes = [20];     // Reset sizes array
 		for (var i = 1; i < weightVarsNoEx.length; i++) {
 			sizes.push(20+((20/weightVarsNoEx.length)*i));    // Add a different number to the array for each type of variable used
 		}
@@ -252,7 +257,7 @@ function switchShapesAndText() {
 				}
 
 			}
-		}
+		}*/
 	} else {
 		for (var i = 0; i < shapes.length; i++) {
 			if (shapes[i] === 1) {
@@ -723,31 +728,94 @@ function render() {
 	d.fillRect(560, 210 - scaleHeight, 400, 20);
 
 	//Render Shapes
-	if (shapesOn) {
-		for (var i = 0; i<shapes.length; i++) {
-			if (shapes[i] === 0) {
-				d.fillStyle = "#008800";
-				d.fillRect(shapesX[i], shapesY[i], shapesW[i], shapesH[i]);
-				d.font = "30px Arial";
-				d.fillStyle = "#000000";
-				d.fillText(shapesText[i], shapesX[i], shapesY[i] + shapesH[i]);
-			} else if (shapes[i] === 1) {
-				d.fillStyle = "#000088";
-				d.fillRect(shapesX[i], shapesY[i], shapesW[i], shapesH[i]);
-			}
-		}
-	} else {
-		for (var i = 0; i<shapes.length; i++) {
-			if (shapes[i] === 0) {
-				d.fillStyle = "#008800";
-				d.fillRect(shapesX[i], shapesY[i], shapesW[i], shapesH[i]);
-				d.font = "30px Arial";
-				d.fillStyle = "#000000";
-				d.fillText(shapesText[i], shapesX[i], shapesY[i] + shapesH[i]);
-			} else if (shapes[i] === 1) {
-				d.font = "30px Arial";
-				d.fillStyle = "#555555";
-				d.fillText(shapesText[i], shapesX[i], shapesY[i] + shapesH[i]);
+	for (var i = 0; i<shapes.length; i++) {
+		if (shapesOn) {
+				if (shapes[i] === 0) {
+					d.fillStyle = "#008800";
+					d.beginPath();
+					d.moveTo(shapesX[i] + (shapesW[i]/4), shapesY[i]);
+					d.lineTo(shapesX[i] + ((shapesW[i]/4)*3), shapesY[i]);
+					d.lineTo(shapesX[i] + shapesW[i], shapesY[i]+(shapesH[i]/2));
+					d.lineTo(shapesX[i] + ((shapesW[i]/4)*3), shapesY[i]+shapesH[i]);
+					d.lineTo(shapesX[i] + (shapesW[i]/4), shapesY[i]+shapesH[i]);
+					d.lineTo(shapesX[i], shapesY[i]+(shapesH[i]/2));
+					d.lineTo(shapesX[i] + (shapesW[i]/4), shapesY[i]);
+					d.fill();
+					d.font = "30px Arial";
+					d.fillStyle = "#000000";
+					d.fillText(shapesText[i], shapesX[i], shapesY[i] + shapesH[i]);
+				} else if (shapes[i] === 1) {
+					d.fillStyle = "#000088";
+					if (shapesValue[i][0] === 1) {
+						d.beginPath();
+						d.moveTo(shapesX[i] + (shapesW[i]/4), shapesY[i]);
+						d.lineTo(shapesX[i] + ((shapesW[i]/4)*3), shapesY[i]);
+						d.lineTo(shapesX[i] + shapesW[i], shapesY[i]+(shapesH[i]/2));
+						d.lineTo(shapesX[i] + ((shapesW[i]/4)*3), shapesY[i]+shapesH[i]);
+						d.lineTo(shapesX[i] + (shapesW[i]/4), shapesY[i]+shapesH[i]);
+						d.lineTo(shapesX[i], shapesY[i]+(shapesH[i]/2));
+						d.lineTo(shapesX[i] + (shapesW[i]/4), shapesY[i]);
+						d.fill();			
+					} else if (shapesValue[i][0] === 0.5) {
+						d.beginPath();
+						d.moveTo(shapesX[i], shapesY[i]+(shapesH[i]/2));
+						d.lineTo(shapesX[i] + shapesW[i], shapesY[i]+(shapesH[i]/2));
+						d.lineTo(shapesX[i] + ((shapesW[i]/4)*3), shapesY[i]+shapesH[i]);
+						d.lineTo(shapesX[i] + (shapesW[i]/4), shapesY[i]+shapesH[i]);
+						d.lineTo(shapesX[i], shapesY[i]+(shapesH[i]/2));
+						d.fill();		
+					} else if (shapesValue[i][0] === 1/3) {
+						d.beginPath();
+						d.moveTo(shapesX[i] + (shapesW[i]/2), shapesY[i]+(shapesH[i]/2));
+						d.lineTo(shapesX[i] + ((shapesW[i]/4)*3), shapesY[i]+shapesH[i]);
+						d.lineTo(shapesX[i] + (shapesW[i]/4), shapesY[i]+shapesH[i]);
+						d.lineTo(shapesX[i], shapesY[i]+(shapesH[i]/2));
+						d.lineTo(shapesX[i] + (shapesW[i]/2), shapesY[i]+(shapesH[i]/2));
+						d.fill();			
+					} else if (shapesValue[i][0] === 1/6) {
+						d.beginPath();
+						d.moveTo(shapesX[i] + (shapesW[i]/2), shapesY[i]+(shapesH[i]/2));
+						d.lineTo(shapesX[i] + ((shapesW[i]/4)*3), shapesY[i]+shapesH[i]);
+						d.lineTo(shapesX[i] + (shapesW[i]/4), shapesY[i]+shapesH[i]);
+						d.lineTo(shapesX[i] + (shapesW[i]/2), shapesY[i]+(shapesH[i]/2));
+						d.fill();			
+					} else if (shapesValue[i][0] === 5/6) {
+						d.beginPath();
+						d.moveTo(shapesX[i] + (shapesW[i]/4), shapesY[i]);
+						d.lineTo(shapesX[i]+(shapesW[i]/2), shapesY[i]+shapesH[i]/2);
+						d.lineTo(shapesX[i] + ((shapesW[i]/4)*3), shapesY[i]);
+						d.lineTo(shapesX[i] + shapesW[i], shapesY[i]+(shapesH[i]/2));
+						d.lineTo(shapesX[i] + ((shapesW[i]/4)*3), shapesY[i]+shapesH[i]);
+						d.lineTo(shapesX[i] + (shapesW[i]/4), shapesY[i]+shapesH[i]);
+						d.lineTo(shapesX[i], shapesY[i]+(shapesH[i]/2));
+						d.lineTo(shapesX[i] + (shapesW[i]/4), shapesY[i]);
+						d.fill();						
+					} else if (shapesValue[i][0] === 2/3) {
+						d.beginPath();
+						d.moveTo(shapesX[i] + (shapesW[i]/4), shapesY[i]);
+						d.lineTo(shapesX[i]+(shapesW[i]/2), shapesY[i]+shapesH[i]/2);
+						d.lineTo(shapesX[i] + shapesW[i], shapesY[i]+(shapesH[i]/2));
+						d.lineTo(shapesX[i] + ((shapesW[i]/4)*3), shapesY[i]+shapesH[i]);
+						d.lineTo(shapesX[i] + (shapesW[i]/4), shapesY[i]+shapesH[i]);
+						d.lineTo(shapesX[i], shapesY[i]+(shapesH[i]/2));
+						d.lineTo(shapesX[i] + (shapesW[i]/4), shapesY[i]);
+						d.fill();						
+					}
+				}
+		} 
+		if (!shapesOn || (shapesValue[i][0] != 1 && shapesValue[i][0] != 0.5 && shapesValue[i][0] != 1/3 && shapesValue[i][0] != 2/3 && shapesValue[i][0] != 1/6 && shapesValue[i][0] != 5/6)) {
+			for (var i = 0; i<shapes.length; i++) {
+				if (shapes[i] === 0) {
+					d.fillStyle = "#008800";
+					d.fillRect(shapesX[i], shapesY[i], shapesW[i], shapesH[i]);
+					d.font = "30px Arial";
+					d.fillStyle = "#000000";
+					d.fillText(shapesText[i], shapesX[i], shapesY[i] + shapesH[i]);
+				} else if (shapes[i] === 1) {
+					d.font = "30px Arial";
+					d.fillStyle = "#555555";
+					d.fillText(shapesText[i], shapesX[i], shapesY[i] + shapesH[i]);
+				}
 			}
 		}
 	}
