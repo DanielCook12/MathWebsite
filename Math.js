@@ -212,7 +212,7 @@ function switchShapesAndText() {
 									shapesH.push(((sizes[j] * (shapesEx[shapes.length-1][0] * 0.5))/scaleEx) * shapesTermLength[i][0]);
 									shapesW.push(((sizes[j] * shapesValue[shapes.length-1][0])/scale)/shapesEx[i][k]);
 								}
-							} else { 
+							} else {
 								console.log("Shapes Value Type " + shapesValueTypeNoEx[i][0]);
 								console.log("Shapes Exponet " + shapesEx[i][0]);
 								if (shapesValueTypeNoEx[i][0] === "constant") { // for constants
@@ -383,7 +383,7 @@ function findValueOfString(string) {
 				exponets[exponets.length-1] += string.charAt(i+k);
 				val[i+k] = "exponetNum";
 				k++;
-			} 
+			}
 		} else if (val[i] === "decimal") {
 			console.log("decimal");
 			containsDecimal[containsDecimal.length-1] = 1;
@@ -393,14 +393,14 @@ function findValueOfString(string) {
 		if (fractions[i] != "no") {
 			terms[i] = terms[i]/fractions[i];
 		}
-		terms[i] *= negative[i];	
+		terms[i] *= negative[i];
 		if (terms[i] === 0 && termsType[i] != "constant" && negative[i] === -1) {
 			terms[i] = -1;
 		} else if (terms[i] === 0 && termsType[i] != "constant" && negative[i] === 1) {
 			terms[i] = 1;
 		}
 	}
-	
+
 	if (terms.length > 1) {
 		for (var i = 0; i < terms.length; i++) {
 			if (terms[i] === 0 && termsType[i] != "constant") {
@@ -511,7 +511,7 @@ function findTypeOfString(string) {
 				exponets[exponets.length-1] += string.charAt(i+k);
 				val[i+k] = "exponetNum";
 				k++;
-			} 
+			}
 		} else if (val[i] === "decimal") {
 			// console.log("decimal");
 			containsDecimal[containsDecimal.length-1] = 1;
@@ -618,7 +618,7 @@ function send() {
 			shapesTermLength[shapesTermLength.length-1] = (findTypeOfString(leftinput)[1]);
 			console.log("Shape Term Length: " + shapesTermLength[shapes.length-1]);
 		}
-		
+
 		console.log(shapesValue[shapesValue.length-1]);
 		console.log(shapesValueType[shapesValue.length-1]);
 
@@ -674,9 +674,11 @@ function send() {
 	if (eval(leftinput) == eval(rightinput)) {
 		document.getElementById("status").style.backgroundColor = "green";
 		document.getElementById("status").innerHTML = "Equal";
+		document.getElementById("status").title = "Our JS Function thinks these two equations are equal";
 	} else {
 		document.getElementById("status").style.backgroundColor = "red";
 		document.getElementById("status").innerHTML = "Not Equal";
+		document.getElementById("status").title = "Our JS Function thinks these two equations are not equal";
 	}
 
 }
@@ -755,7 +757,7 @@ function render() {
 						d.lineTo(shapesX[i] + (shapesW[i]/4), shapesY[i]+shapesH[i]);
 						d.lineTo(shapesX[i], shapesY[i]+(shapesH[i]/2));
 						d.lineTo(shapesX[i] + (shapesW[i]/4), shapesY[i]);
-						d.fill();			
+						d.fill();
 					} else if (shapesValue[i][0] === 0.5) {
 						d.beginPath();
 						d.moveTo(shapesX[i], shapesY[i]+(shapesH[i]/2));
@@ -763,7 +765,7 @@ function render() {
 						d.lineTo(shapesX[i] + ((shapesW[i]/4)*3), shapesY[i]+shapesH[i]);
 						d.lineTo(shapesX[i] + (shapesW[i]/4), shapesY[i]+shapesH[i]);
 						d.lineTo(shapesX[i], shapesY[i]+(shapesH[i]/2));
-						d.fill();		
+						d.fill();
 					} else if (shapesValue[i][0] === 1/3) {
 						d.beginPath();
 						d.moveTo(shapesX[i] + (shapesW[i]/2), shapesY[i]+(shapesH[i]/2));
@@ -771,14 +773,14 @@ function render() {
 						d.lineTo(shapesX[i] + (shapesW[i]/4), shapesY[i]+shapesH[i]);
 						d.lineTo(shapesX[i], shapesY[i]+(shapesH[i]/2));
 						d.lineTo(shapesX[i] + (shapesW[i]/2), shapesY[i]+(shapesH[i]/2));
-						d.fill();			
+						d.fill();
 					} else if (shapesValue[i][0] === 1/6) {
 						d.beginPath();
 						d.moveTo(shapesX[i] + (shapesW[i]/2), shapesY[i]+(shapesH[i]/2));
 						d.lineTo(shapesX[i] + ((shapesW[i]/4)*3), shapesY[i]+shapesH[i]);
 						d.lineTo(shapesX[i] + (shapesW[i]/4), shapesY[i]+shapesH[i]);
 						d.lineTo(shapesX[i] + (shapesW[i]/2), shapesY[i]+(shapesH[i]/2));
-						d.fill();			
+						d.fill();
 					} else if (shapesValue[i][0] === 5/6) {
 						d.beginPath();
 						d.moveTo(shapesX[i] + (shapesW[i]/4), shapesY[i]);
@@ -789,7 +791,7 @@ function render() {
 						d.lineTo(shapesX[i] + (shapesW[i]/4), shapesY[i]+shapesH[i]);
 						d.lineTo(shapesX[i], shapesY[i]+(shapesH[i]/2));
 						d.lineTo(shapesX[i] + (shapesW[i]/4), shapesY[i]);
-						d.fill();						
+						d.fill();
 					} else if (shapesValue[i][0] === 2/3) {
 						d.beginPath();
 						d.moveTo(shapesX[i] + (shapesW[i]/4), shapesY[i]);
@@ -799,10 +801,10 @@ function render() {
 						d.lineTo(shapesX[i] + (shapesW[i]/4), shapesY[i]+shapesH[i]);
 						d.lineTo(shapesX[i], shapesY[i]+(shapesH[i]/2));
 						d.lineTo(shapesX[i] + (shapesW[i]/4), shapesY[i]);
-						d.fill();						
+						d.fill();
 					}
 				}
-		} 
+		}
 		if (!shapesOn || (shapesValue[i][0] != 1 && shapesValue[i][0] != 0.5 && shapesValue[i][0] != 1/3 && shapesValue[i][0] != 2/3 && shapesValue[i][0] != 1/6 && shapesValue[i][0] != 5/6)) {
 			for (var i = 0; i<shapes.length; i++) {
 				if (shapes[i] === 0) {
@@ -884,7 +886,7 @@ function update() {
 					}
 				}
 			}
-		} 
+		}
 		if (shapesVY[i] === 0) {
 			for (var j = 0; j < shapes.length; j++) {
 				if (shapesVY[j] === 0 && shapesVX[j] === 0 && j != i && !xDone) {
@@ -894,7 +896,7 @@ function update() {
 							console.log("problem");
 						} else {
 							shapesY[j] -= shapesH[i];
-							console.log("problem");						
+							console.log("problem");
 						}
 					}
 				}
