@@ -38,6 +38,8 @@ var shapesOn = false;
 var highestShapeValue = 0;
 var highestShapeEx = 0;
 var scaleFill = "#000000";
+var holdingEnter = false;
+var holdingShift = false;
 
 
 function consoleLog() {
@@ -1091,3 +1093,119 @@ document.addEventListener('mousedown', function(event) {
 		selected = -1;
 	}
 });
+
+document.addEventListener('keyup', function(event) {
+	var code = event.keyCode;
+	if (code == 83) {
+		switchShapesAndText();
+	} else if (code == 68) {
+		darkMode();
+	} else if (code == 67) {
+		clearCanvas();
+	} else if (code == 13) {
+		holdingEnter = false;
+	} else if (code == 16) {
+		holdingShift = false;
+	} else if (holdingEnter && holdingShift) {
+		if (code == 49) {
+			newShape("1");
+		} else if (code == 50) {
+			newShape("1/2");
+		} else if (code == 51) {
+			newShape("1/3");
+		} else if (code == 52) {
+			newShape("1/4");
+		} else if (code == 53) {
+			newShape("1/5");
+		} else if (code == 54) {
+			newShape("1/6");
+		} else if (code == 55) {
+			newShape("1/7");
+		} else if (code == 56) {
+			newShape("1/8");
+		} else if (code == 57) {
+			newShape("1/9");
+		}
+	} else if (holdingEnter) {
+		if (code == 49) {
+			newShape("1");
+		} else if (code == 50) {
+			newShape("2");
+		} else if (code == 51) {
+			newShape("3");
+		} else if (code == 52) {
+			newShape("4");
+		} else if (code == 53) {
+			newShape("5");
+		} else if (code == 54) {
+			newShape("6");
+		} else if (code == 55) {
+			newShape("7");
+		} else if (code == 56) {
+			newShape("8");
+		} else if (code == 57) {
+			newShape("9");
+		}
+	}
+});
+
+document.addEventListener('keydown', function(event) {
+	var code = event.keyCode;
+	if (code == 13) {
+		holdingEnter = true;
+	} else if (code == 16) {
+		holdingShift = true;
+	}
+});
+
+function newShape(value) {
+		shapes.push(1);
+		shapesX.push(200);
+		shapesY.push(100);
+		shapesVX.push(0);
+		shapesVY.push(0);
+		shapesH.push(30);
+		shapesW.push(value.length * 15);
+		shapesText.push(value);
+		if (contains(value, "'")) {
+			shapesValue.push(0);
+			shapes[shapes.length-1] = 0;
+			console.log("comment");
+			shapesText[shapesText.length-1] = value;
+		} else {
+			shapesTermLength.push(0);
+			shapesValue.push(findValueOfString(value)[0]);
+			shapesEx.push(findValueOfString(value)[1]);
+			console.log(shapesEx[shapesEx.length-1]);
+			shapesValueType.push([0]);
+			shapesValueTypeNoEx.push([0]);
+			// For each term
+			for (var i = 0; i < shapesValue[shapesValue.length-1].length; i++) {
+				shapesValueType[shapesValueType.length-1][i] = findTypeOfString(value)[0][i];
+				shapesValueTypeNoEx[shapesValueTypeNoEx.length-1][i] = findTypeOfString(value)[0][i];
+				// console.log(shapesValueType[shapes.length-1][i]);
+				/*if (shapesValue[shapes.length-1][i] == 0 && shapesValueType[shapesValueType.length-1][i] != "constant") {
+					shapesValue[shapes.length-1][i] = 1;
+				}*/
+			}
+			shapesTermLength[shapesTermLength.length-1] = (findTypeOfString(leftinput)[1]);
+			console.log("Shape Term Length: " + shapesTermLength[shapes.length-1]);
+		}
+		
+		console.log(shapesValue[shapesValue.length-1]);
+		console.log(shapesValueType[shapesValue.length-1]);
+
+
+	if (shapesOn) {
+		shapesOn = false;
+		switchShapesAndText();
+	}
+	if (eval(leftinput) == eval(rightinput)) {
+		document.getElementById("status").style.backgroundColor = "green";
+		document.getElementById("status").innerHTML = "Equal";
+	} else {
+		document.getElementById("status").style.backgroundColor = "red";
+		document.getElementById("status").innerHTML = "Not Equal";
+	}
+
+}
