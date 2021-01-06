@@ -1116,13 +1116,7 @@ document.addEventListener('mousedown', function(event) {
 
 document.addEventListener('keyup', function(event) {
 	var code = event.keyCode;
-	if (code == 83) {
-		switchShapesAndText();
-	} else if (code == 68) {
-		darkMode();
-	} else if (code == 67) {
-		clearCanvas();
-	} else if (code == 13) {
+	else if (code == 13) {
 		holdingEnter = false;
 	} else if (code == 16) {
 		holdingShift = false;
@@ -1165,7 +1159,13 @@ document.addEventListener('keyup', function(event) {
 			newShape("8");
 		} else if (code == 57) {
 			newShape("9");
-		}
+		} else if (code == 83) {
+			switchShapesAndText();
+		} else if (code == 68) {
+			darkMode();
+		} else if (code == 67) {
+			clearCanvas();
+		} 
 	}
 });
 
