@@ -119,8 +119,19 @@ function switchShapesAndText() {
 	shapesOn = !shapesOn;
 	if (shapesOn) {
 		for (var i = 0; i < shapes.length; i++) {
-			shapesW[i] = 40;
-			shapesH[i] = 40;
+			if (shapesValue[i][0] == 1 ||shapesValue[i][0] == 2/3 || shapesValue[i][0] == 5/6) {
+				shapesW[i] = 40;
+				shapesH[i] = 40;
+			} else if (shapesValue[i][0] == 0.5) {
+				shapesW[i] = 40;
+				shapesH[i] = 20;
+			} else if (shapesValue[i][0] == 1/3) {
+				shapesW[i] = 25;
+				shapesH[i] = 20;
+			} else if (shapesValue[i][0] == 1/6) {
+				shapesW[i] = 20;
+				shapesH[i] = 20;
+			}
 		}
 		/*sizes = [20];     // Reset sizes array
 		for (var i = 1; i < weightVarsNoEx.length; i++) {
@@ -212,7 +223,7 @@ function switchShapesAndText() {
 									shapesH.push(((sizes[j] * (shapesEx[shapes.length-1][0] * 0.5))/scaleEx) * shapesTermLength[i][0]);
 									shapesW.push(((sizes[j] * shapesValue[shapes.length-1][0])/scale)/shapesEx[i][k]);
 								}
-							} else {
+							} else { 
 								console.log("Shapes Value Type " + shapesValueTypeNoEx[i][0]);
 								console.log("Shapes Exponet " + shapesEx[i][0]);
 								if (shapesValueTypeNoEx[i][0] === "constant") { // for constants
@@ -383,7 +394,7 @@ function findValueOfString(string) {
 				exponets[exponets.length-1] += string.charAt(i+k);
 				val[i+k] = "exponetNum";
 				k++;
-			}
+			} 
 		} else if (val[i] === "decimal") {
 			console.log("decimal");
 			containsDecimal[containsDecimal.length-1] = 1;
@@ -393,14 +404,14 @@ function findValueOfString(string) {
 		if (fractions[i] != "no") {
 			terms[i] = terms[i]/fractions[i];
 		}
-		terms[i] *= negative[i];
+		terms[i] *= negative[i];	
 		if (terms[i] === 0 && termsType[i] != "constant" && negative[i] === -1) {
 			terms[i] = -1;
 		} else if (terms[i] === 0 && termsType[i] != "constant" && negative[i] === 1) {
 			terms[i] = 1;
 		}
 	}
-
+	
 	if (terms.length > 1) {
 		for (var i = 0; i < terms.length; i++) {
 			if (terms[i] === 0 && termsType[i] != "constant") {
@@ -511,7 +522,7 @@ function findTypeOfString(string) {
 				exponets[exponets.length-1] += string.charAt(i+k);
 				val[i+k] = "exponetNum";
 				k++;
-			}
+			} 
 		} else if (val[i] === "decimal") {
 			// console.log("decimal");
 			containsDecimal[containsDecimal.length-1] = 1;
@@ -618,7 +629,7 @@ function send() {
 			shapesTermLength[shapesTermLength.length-1] = (findTypeOfString(leftinput)[1]);
 			console.log("Shape Term Length: " + shapesTermLength[shapes.length-1]);
 		}
-
+		
 		console.log(shapesValue[shapesValue.length-1]);
 		console.log(shapesValueType[shapesValue.length-1]);
 
@@ -674,11 +685,9 @@ function send() {
 	if (eval(leftinput) == eval(rightinput)) {
 		document.getElementById("status").style.backgroundColor = "green";
 		document.getElementById("status").innerHTML = "Equal";
-		document.getElementById("status").title = "Our JS Function thinks these two equations are equal";
 	} else {
 		document.getElementById("status").style.backgroundColor = "red";
 		document.getElementById("status").innerHTML = "Not Equal";
-		document.getElementById("status").title = "Our JS Function thinks these two equations are not equal";
 	}
 
 }
@@ -735,77 +744,89 @@ function render() {
 				if (shapes[i] === 0) {
 					d.fillStyle = "#008800";
 					d.beginPath();
-					d.moveTo(shapesX[i] + (shapesW[i]/4), shapesY[i]);
-					d.lineTo(shapesX[i] + ((shapesW[i]/4)*3), shapesY[i]);
-					d.lineTo(shapesX[i] + shapesW[i], shapesY[i]+(shapesH[i]/2));
-					d.lineTo(shapesX[i] + ((shapesW[i]/4)*3), shapesY[i]+shapesH[i]);
-					d.lineTo(shapesX[i] + (shapesW[i]/4), shapesY[i]+shapesH[i]);
-					d.lineTo(shapesX[i], shapesY[i]+(shapesH[i]/2));
-					d.lineTo(shapesX[i] + (shapesW[i]/4), shapesY[i]);
+					d.moveTo(shapesX[i] + (40/4), shapesY[i]);
+					d.lineTo(shapesX[i] + ((40/4)*3), shapesY[i]);
+					d.lineTo(shapesX[i] + 40, shapesY[i]+(40/2));
+					d.lineTo(shapesX[i] + ((40/4)*3), shapesY[i]+40);
+					d.lineTo(shapesX[i] + (40/4), shapesY[i]+40);
+					d.lineTo(shapesX[i], shapesY[i]+(40/2));
+					d.lineTo(shapesX[i] + (40/4), shapesY[i]);
 					d.fill();
 					d.font = "30px Arial";
 					d.fillStyle = "#000000";
-					d.fillText(shapesText[i], shapesX[i], shapesY[i] + shapesH[i]);
+					d.fillText(shapesText[i], shapesX[i], shapesY[i] + 40);
 				} else if (shapes[i] === 1) {
 					d.fillStyle = "#000088";
 					if (shapesValue[i][0] === 1) {
 						d.beginPath();
-						d.moveTo(shapesX[i] + (shapesW[i]/4), shapesY[i]);
-						d.lineTo(shapesX[i] + ((shapesW[i]/4)*3), shapesY[i]);
-						d.lineTo(shapesX[i] + shapesW[i], shapesY[i]+(shapesH[i]/2));
-						d.lineTo(shapesX[i] + ((shapesW[i]/4)*3), shapesY[i]+shapesH[i]);
-						d.lineTo(shapesX[i] + (shapesW[i]/4), shapesY[i]+shapesH[i]);
-						d.lineTo(shapesX[i], shapesY[i]+(shapesH[i]/2));
-						d.lineTo(shapesX[i] + (shapesW[i]/4), shapesY[i]);
-						d.fill();
+						d.moveTo(shapesX[i] + (40/4), shapesY[i]);
+						d.lineTo(shapesX[i] + ((40/4)*3), shapesY[i]);
+						d.lineTo(shapesX[i] + 40, shapesY[i]+(40/2));
+						d.lineTo(shapesX[i] + ((40/4)*3), shapesY[i]+40);
+						d.lineTo(shapesX[i] + (40/4), shapesY[i]+40);
+						d.lineTo(shapesX[i], shapesY[i]+(40/2));
+						d.lineTo(shapesX[i] + (40/4), shapesY[i]);
+						d.fill();			
 					} else if (shapesValue[i][0] === 0.5) {
 						d.beginPath();
-						d.moveTo(shapesX[i], shapesY[i]+(shapesH[i]/2));
-						d.lineTo(shapesX[i] + shapesW[i], shapesY[i]+(shapesH[i]/2));
-						d.lineTo(shapesX[i] + ((shapesW[i]/4)*3), shapesY[i]+shapesH[i]);
-						d.lineTo(shapesX[i] + (shapesW[i]/4), shapesY[i]+shapesH[i]);
-						d.lineTo(shapesX[i], shapesY[i]+(shapesH[i]/2));
-						d.fill();
+						d.moveTo(shapesX[i], shapesY[i]+(40/2)-20);
+						d.lineTo(shapesX[i] + 40, shapesY[i]+(40/2)-20);
+						d.lineTo(shapesX[i] + ((40/4)*3), shapesY[i]+40-20);
+						d.lineTo(shapesX[i] + (40/4), shapesY[i]+40-20);
+						d.lineTo(shapesX[i], shapesY[i]+(40/2)-20);
+						d.fill();		
 					} else if (shapesValue[i][0] === 1/3) {
 						d.beginPath();
-						d.moveTo(shapesX[i] + (shapesW[i]/2), shapesY[i]+(shapesH[i]/2));
-						d.lineTo(shapesX[i] + ((shapesW[i]/4)*3), shapesY[i]+shapesH[i]);
-						d.lineTo(shapesX[i] + (shapesW[i]/4), shapesY[i]+shapesH[i]);
-						d.lineTo(shapesX[i], shapesY[i]+(shapesH[i]/2));
-						d.lineTo(shapesX[i] + (shapesW[i]/2), shapesY[i]+(shapesH[i]/2));
-						d.fill();
+						d.moveTo(shapesX[i] + (40/2), shapesY[i]);
+						d.lineTo(shapesX[i] + ((40/4)*3), shapesY[i]+20);
+						d.lineTo(shapesX[i] + (40/4), shapesY[i]+20);
+						d.lineTo(shapesX[i], shapesY[i]);
+						d.lineTo(shapesX[i] + (40/2), shapesY[i]);
+						d.fill();			
 					} else if (shapesValue[i][0] === 1/6) {
 						d.beginPath();
-						d.moveTo(shapesX[i] + (shapesW[i]/2), shapesY[i]+(shapesH[i]/2));
-						d.lineTo(shapesX[i] + ((shapesW[i]/4)*3), shapesY[i]+shapesH[i]);
-						d.lineTo(shapesX[i] + (shapesW[i]/4), shapesY[i]+shapesH[i]);
-						d.lineTo(shapesX[i] + (shapesW[i]/2), shapesY[i]+(shapesH[i]/2));
-						d.fill();
+						d.moveTo(shapesX[i] + (40/2)-7, shapesY[i]);
+						d.lineTo(shapesX[i] + ((40/4)*3)-7, shapesY[i]+20);
+						d.lineTo(shapesX[i] + (40/4)-7, shapesY[i]+20);
+						d.lineTo(shapesX[i] + (40/2)-7, shapesY[i]);
+						d.fill();			
 					} else if (shapesValue[i][0] === 5/6) {
 						d.beginPath();
-						d.moveTo(shapesX[i] + (shapesW[i]/4), shapesY[i]);
-						d.lineTo(shapesX[i]+(shapesW[i]/2), shapesY[i]+shapesH[i]/2);
-						d.lineTo(shapesX[i] + ((shapesW[i]/4)*3), shapesY[i]);
-						d.lineTo(shapesX[i] + shapesW[i], shapesY[i]+(shapesH[i]/2));
-						d.lineTo(shapesX[i] + ((shapesW[i]/4)*3), shapesY[i]+shapesH[i]);
-						d.lineTo(shapesX[i] + (shapesW[i]/4), shapesY[i]+shapesH[i]);
-						d.lineTo(shapesX[i], shapesY[i]+(shapesH[i]/2));
-						d.lineTo(shapesX[i] + (shapesW[i]/4), shapesY[i]);
-						d.fill();
+						d.moveTo(shapesX[i] + (40/4), shapesY[i]);
+						d.lineTo(shapesX[i]+(40/2), shapesY[i]+40/2);
+						d.lineTo(shapesX[i] + ((40/4)*3), shapesY[i]);
+						d.lineTo(shapesX[i] + 40, shapesY[i]+(40/2));
+						d.lineTo(shapesX[i] + ((40/4)*3), shapesY[i]+40);
+						d.lineTo(shapesX[i] + (40/4), shapesY[i]+40);
+						d.lineTo(shapesX[i], shapesY[i]+(40/2));
+						d.lineTo(shapesX[i] + (40/4), shapesY[i]);
+						d.fill();						
 					} else if (shapesValue[i][0] === 2/3) {
 						d.beginPath();
-						d.moveTo(shapesX[i] + (shapesW[i]/4), shapesY[i]);
-						d.lineTo(shapesX[i]+(shapesW[i]/2), shapesY[i]+shapesH[i]/2);
-						d.lineTo(shapesX[i] + shapesW[i], shapesY[i]+(shapesH[i]/2));
-						d.lineTo(shapesX[i] + ((shapesW[i]/4)*3), shapesY[i]+shapesH[i]);
-						d.lineTo(shapesX[i] + (shapesW[i]/4), shapesY[i]+shapesH[i]);
-						d.lineTo(shapesX[i], shapesY[i]+(shapesH[i]/2));
-						d.lineTo(shapesX[i] + (shapesW[i]/4), shapesY[i]);
-						d.fill();
+						d.moveTo(shapesX[i] + (40/4), shapesY[i]);
+						d.lineTo(shapesX[i]+(40/2), shapesY[i]+40/2);
+						d.lineTo(shapesX[i] + 40, shapesY[i]+(40/2));
+						d.lineTo(shapesX[i] + ((40/4)*3), shapesY[i]+40);
+						d.lineTo(shapesX[i] + (40/4), shapesY[i]+40);
+						d.lineTo(shapesX[i], shapesY[i]+(40/2));
+						d.lineTo(shapesX[i] + (40/4), shapesY[i]);
+						d.fill();						
+					} else {
+						if (shapes[i] === 0) {
+							d.fillStyle = "#008800";
+							d.fillRect(shapesX[i], shapesY[i], shapesW[i], shapesH[i]);
+							d.font = "30px Arial";
+							d.fillStyle = "#000000";
+							d.fillText(shapesText[i], shapesX[i], shapesY[i] + shapesH[i]);
+						} else if (shapes[i] === 1) {
+							d.font = "30px Arial";
+							d.fillStyle = "#555555";
+							d.fillText(shapesText[i], shapesX[i], shapesY[i] + shapesH[i]);
+						}
 					}
 				}
-		}
-		if (!shapesOn || (shapesValue[i][0] != 1 && shapesValue[i][0] != 0.5 && shapesValue[i][0] != 1/3 && shapesValue[i][0] != 2/3 && shapesValue[i][0] != 1/6 && shapesValue[i][0] != 5/6)) {
+		} 
+		if (!shapesOn) {
 			for (var i = 0; i<shapes.length; i++) {
 				if (shapes[i] === 0) {
 					d.fillStyle = "#008800";
@@ -886,7 +907,7 @@ function update() {
 					}
 				}
 			}
-		}
+		} 
 		if (shapesVY[i] === 0) {
 			for (var j = 0; j < shapes.length; j++) {
 				if (shapesVY[j] === 0 && shapesVX[j] === 0 && j != i && !xDone) {
@@ -896,7 +917,7 @@ function update() {
 							console.log("problem");
 						} else {
 							shapesY[j] -= shapesH[i];
-							console.log("problem");
+							console.log("problem");						
 						}
 					}
 				}
