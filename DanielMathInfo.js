@@ -47,12 +47,15 @@ function darkModeOn() {
   document.getElementById("subHeader3").style.color = "white";
   document.getElementById("subHeader4").style.color = "white";
   document.getElementById("subHeader5").style.color = "white";
+  document.getElementById("subHeader6").style.color = "white";
   document.getElementById("content").style.color = "white";
   document.getElementById("content2").style.color = "white";
   document.getElementById("content3").style.color = "white";
   document.getElementById("content4").style.color = "white";
   document.getElementById("content5").style.color = "white";
   document.getElementById("content6").style.color = "white";
+  document.getElementById("content7").style.color = "white";
+  document.getElementById("list").style.color = "white";
   document.getElementById("leftinput").style.backgroundColor = "black";
   document.getElementById("leftinput").style.border = "3px solid transparent";
   document.getElementById("leftinput").style.color = "white";
