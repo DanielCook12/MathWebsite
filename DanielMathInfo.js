@@ -59,6 +59,7 @@ function darkModeOn() {
   document.getElementById("rightinput").style.backgroundColor = "black";
   document.getElementById("rightinput").style.border = "3px solid transparent";
   document.getElementById("rightinput").style.color = "white";
+  document.getElementById("validpng").src = "invertvalid.png"
 };
 
 function darkModeOff() {
