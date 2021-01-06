@@ -40,6 +40,8 @@ var highestShapeEx = 0;
 var scaleFill = "#000000";
 var holdingEnter = false;
 var holdingShift = false;
+var colors = ["#000088", "#880000", "#008800", "#008888", "#888800", "#880088", "#004488", "#884400", "#448800", "#448888", "#888844", "#884488", "#440088", "#880044", "#008844", "#008844", "#880044", "#440088", "#444488", "#884444", "#448844", "#888888", "#444444", "#aa44aa"];
+var variables = ["constant"];
 
 
 function consoleLog() {
@@ -117,9 +119,21 @@ function switchShapesAndText() {
 			console.log(noExponetString);
 		}
 	}
-*/
+	*/	
+	variables = ["constant"];
 	shapesOn = !shapesOn;
 	if (shapesOn) {
+		for (var i = 0; i < shapes.length; i++) {
+			var found = false;
+			for (var j = 0; j < variables.length; j++) {
+				if (shapesValueType[i][0] == variables[j]) {
+					found = true;
+				}
+			}
+			if (!found) {
+				variables.push(shapesValueType[i][0]);
+			}
+		}
 		for (var i = 0; i < shapes.length; i++) {
 			if (shapesValue[i][0] == 1 ||shapesValue[i][0] == 2/3 || shapesValue[i][0] == 5/6) {
 				shapesW[i] = 40;
@@ -743,8 +757,14 @@ function render() {
 	//Render Shapes
 	for (var i = 0; i<shapes.length; i++) {
 		if (shapesOn) {
+				var color = 0;
+				for (var j = 0; j < variables.length; j++) {
+					if (variables[j] == shapesValueType[i][0]) {
+						color = j;
+					}
+				}
 				if (shapes[i] === 0) {
-					d.fillStyle = "#008800";
+					d.fillStyle = colors[color];
 					d.beginPath();
 					d.moveTo(shapesX[i] + (40/4), shapesY[i]);
 					d.lineTo(shapesX[i] + ((40/4)*3), shapesY[i]);
@@ -758,7 +778,7 @@ function render() {
 					d.fillStyle = "#000000";
 					d.fillText(shapesText[i], shapesX[i], shapesY[i] + 40);
 				} else if (shapes[i] === 1) {
-					d.fillStyle = "#000088";
+					d.fillStyle = colors[color];
 					if (shapesValue[i][0] === 1) {
 						d.beginPath();
 						d.moveTo(shapesX[i] + (40/4), shapesY[i]);
