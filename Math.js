@@ -90,7 +90,7 @@ function switchShapesAndText() {
 				} else if (shapesValue[i][0] == 1/6) {
 					shapesW[i] = 20;
 					shapesH[i] = 20;
-			}
+				}
 			} else {
 					for (var k = 0; k < shapesValue[i].length; k++) {
 						console.log(k);
@@ -124,7 +124,7 @@ function switchShapesAndText() {
 									shapesW.push(20);
 									shapesH.push(20);
 								}
-							} else {
+							} else { 
 								if (shapesValue[i][0] == 1 ||shapesValue[i][0] == 2/3 || shapesValue[i][0] == 5/6) {
 									shapesW[i] = 40;
 									shapesH[i] = 40;
@@ -141,7 +141,7 @@ function switchShapesAndText() {
 							}
 						}
 					}
-
+				
 
 			}
 			if (shapes[i] === 1) {
@@ -157,7 +157,7 @@ function switchShapesAndText() {
 				}
 			}
 		}
-
+		
 	} else {
 		for (var i = 0; i < shapes.length; i++) {
 			if (shapes[i] === 1) {
@@ -167,6 +167,7 @@ function switchShapesAndText() {
 			}
 		}
 	}
+	
 }
 
 function contains(string, value) {
@@ -290,7 +291,7 @@ function findValueOfString(string) {
 				k++;
 				console.log("exponentNum");
 				console.log(exponents[0]);
-			}
+			} 
 		} else if (val[i] === "decimal") {
 			console.log("decimal");
 			containsDecimal[containsDecimal.length-1] = 1;
@@ -300,14 +301,14 @@ function findValueOfString(string) {
 		if (fractions[i] != "no") {
 			terms[i] = terms[i]/fractions[i];
 		}
-		terms[i] *= negative[i];
+		terms[i] *= negative[i];	
 		if (terms[i] === 0 && termsType[i] != "constant" && negative[i] === -1) {
 			terms[i] = -1;
 		} else if (terms[i] === 0 && termsType[i] != "constant" && negative[i] === 1) {
 			terms[i] = 1;
 		}
 	}
-
+	
 	if (terms.length > 1) {
 		for (var i = 0; i < terms.length; i++) {
 			if (terms[i] === 0 && termsType[i] != "constant") {
@@ -413,13 +414,19 @@ function findTypeOfString(string) {
 				termLength[termLength.length-1]++;
 			}
 		} else if (val[i] === "exponent") {
-			exponents[exponents.length-1] = string.charAt(i+1);
-			var k = 2;
+			console.log("exponent");
+			exponents[exponents.length-1] = 0;
+			var k = 1;
 			while (string.charAt(i+k) == "1" || string.charAt(i+k) == "2"|| string.charAt(i+k) == "3" || string.charAt(i+k) == "4" || string.charAt(i+k) == "5" || string.charAt(i+k) == "6" || string.charAt(i+k) == "7" || string.charAt(i+k) == "8" || string.charAt(i+k) == "9" || string.charAt(i+k) == "0") {
-				exponents[exponents.length-1] += string.charAt(i+k);
+				if (k != 1) {
+					exponents[exponents.length-1] += string.charAt(i+k);
+				} else {
+					exponents[exponents.length-1] = string.charAt(i+k);
+
+				}
 				val[i+k] = "exponentNum";
 				k++;
-			}
+			}  
 		} else if (val[i] === "decimal") {
 			// console.log("decimal");
 			containsDecimal[containsDecimal.length-1] = 1;
@@ -444,22 +451,22 @@ function findTypeOfString(string) {
 				terms[i] = 1;
 			}
 		}
-		for (var i = 0; i < terms.length; i++) {
-			for (var j = 0; j < terms.length; j++) {
-				if (j != i && termsType[i] === termsType[j] && (val[i] === "letter" || val[i] === "num")) {
-					if (operators[i] === "+" || "-") {
-						terms[i] += terms[j];
-					} else if (operators[i] === "*") {
-						terms[i] *= terms[j];
-					} else if (operators[i] === "/") {
-						terms[i] /= terms[j];
-					}
-					terms.splice(j, 1);
-					termsType.splice(j, 1);
-				}
-			}
+		// for (var i = 0; i < terms.length; i++) {
+			// for (var j = 0; j < terms.length; j++) {
+				// if (j != i && termsType[i] === termsType[j] && (val[i] === "letter" || val[i] === "num")) {
+					// if (operators[i] === "+" || "-") {
+						// terms[i] += terms[j];
+					// } else if (operators[i] === "*") {
+						// terms[i] *= terms[j];
+					// } else if (operators[i] === "/") {
+						// terms[i] /= terms[j];
+					// }
+					// terms.splice(j, 1);
+					// termsType.splice(j, 1);
+				// }
+			// }
 
-		}
+		// }
 		var isConstant = true;
 		for (var i = 0; i<terms.length; i++) {
 			if (termsType[i] != "constant") {
@@ -510,9 +517,9 @@ function send() {
 			for (var i = 0; i < shapesValue[shapesValue.length-1].length; i++) {
 				console.log(shapesEx[shapesEx.length-1][i]);
 				if (shapesEx[shapesEx.length-1][i] != 0 && shapesEx[shapesEx.length-1][i] != 1) { // If there is an exponent
-					shapesValueType[shapesValueType.length-1][i] = findTypeOfString(leftinput)[0][i] + "^" + shapesEx[shapesEx.length-1][0];
+					shapesValueType[shapesValueType.length-1][i] = findTypeOfString(leftinput)[0][i] + "^" + shapesEx[shapesEx.length-1][i];
 					console.log("ex");
-					console.log(findTypeOfString(leftinput)[0][i] + "^" + shapesEx[shapesEx.length-1][0]);
+					console.log(findTypeOfString(leftinput)[0][i] + "^" + shapesEx[shapesEx.length-1][i]);
 					shapesValueTypeNoEx[shapesValueTypeNoEx.length-1][i] = findTypeOfString(leftinput)[0][i];
 				} else {
 					shapesValueType[shapesValueType.length-1][i] = findTypeOfString(leftinput)[0][i];
@@ -526,7 +533,7 @@ function send() {
 			shapesTermLength[shapesTermLength.length-1] = (findTypeOfString(leftinput)[1]);
 			console.log("Shape Term Length: " + shapesTermLength[shapes.length-1]);
 		}
-
+		
 		console.log(shapesValue[shapesValue.length-1]);
 		console.log(shapesValueType[shapesValue.length-1]);
 
@@ -556,9 +563,9 @@ function send() {
 			for (var i = 0; i < shapesValue[shapesValue.length-1].length; i++) {
 				console.log(shapesEx[shapesEx.length-1][i]);
 				if (shapesEx[shapesEx.length-1][i] != 0 && shapesEx[shapesEx.length-1][i] != 1) {
-					shapesValueType[shapesValueType.length-1][i] = findTypeOfString(rightinput)[0][i] + "^" + shapesEx[shapesEx.length-1][0];
+					shapesValueType[shapesValueType.length-1][i] = findTypeOfString(rightinput)[0][i] + "^" + shapesEx[shapesEx.length-1][i];
 					console.log("ex");
-					console.log(findTypeOfString(rightinput)[0][i] + "^" + shapesEx[shapesEx.length-1][0]);
+					console.log(findTypeOfString(rightinput)[0][i] + "^" + shapesEx[shapesEx.length-1][i]);
 					shapesValueTypeNoEx[shapesValueType.length-1][i] = findTypeOfString(rightinput)[0][i];
 				} else {
 					shapesValueType[shapesValueType.length-1][i] = findTypeOfString(rightinput)[0][i];
@@ -671,7 +678,7 @@ function render() {
 						d.lineTo(shapesX[i] + (40/4), shapesY[i]+40);
 						d.lineTo(shapesX[i], shapesY[i]+(40/2));
 						d.lineTo(shapesX[i] + (40/4), shapesY[i]);
-						d.fill();
+						d.fill();			
 					} else if (shapesValue[i][0] === 0.5) {
 						d.beginPath();
 						d.moveTo(shapesX[i], shapesY[i]+(40/2)-20);
@@ -679,7 +686,7 @@ function render() {
 						d.lineTo(shapesX[i] + ((40/4)*3), shapesY[i]+40-20);
 						d.lineTo(shapesX[i] + (40/4), shapesY[i]+40-20);
 						d.lineTo(shapesX[i], shapesY[i]+(40/2)-20);
-						d.fill();
+						d.fill();		
 					} else if (shapesValue[i][0] === 1/3) {
 						d.beginPath();
 						d.moveTo(shapesX[i] + (40/2), shapesY[i]);
@@ -687,14 +694,14 @@ function render() {
 						d.lineTo(shapesX[i] + (40/4), shapesY[i]+20);
 						d.lineTo(shapesX[i], shapesY[i]);
 						d.lineTo(shapesX[i] + (40/2), shapesY[i]);
-						d.fill();
+						d.fill();			
 					} else if (shapesValue[i][0] === 1/6) {
 						d.beginPath();
 						d.moveTo(shapesX[i] + (40/2)-7, shapesY[i]);
 						d.lineTo(shapesX[i] + ((40/4)*3)-7, shapesY[i]+20);
 						d.lineTo(shapesX[i] + (40/4)-7, shapesY[i]+20);
 						d.lineTo(shapesX[i] + (40/2)-7, shapesY[i]);
-						d.fill();
+						d.fill();			
 					} else if (shapesValue[i][0] === 5/6) {
 						d.beginPath();
 						d.moveTo(shapesX[i] + (40/4), shapesY[i]);
@@ -705,7 +712,7 @@ function render() {
 						d.lineTo(shapesX[i] + (40/4), shapesY[i]+40);
 						d.lineTo(shapesX[i], shapesY[i]+(40/2));
 						d.lineTo(shapesX[i] + (40/4), shapesY[i]);
-						d.fill();
+						d.fill();						
 					} else if (shapesValue[i][0] === 2/3) {
 						d.beginPath();
 						d.moveTo(shapesX[i] + (40/4), shapesY[i]);
@@ -715,7 +722,7 @@ function render() {
 						d.lineTo(shapesX[i] + (40/4), shapesY[i]+40);
 						d.lineTo(shapesX[i], shapesY[i]+(40/2));
 						d.lineTo(shapesX[i] + (40/4), shapesY[i]);
-						d.fill();
+						d.fill();						
 					} else {
 						if (shapes[i] === 0) {
 							d.fillStyle = "#008800";
@@ -730,7 +737,7 @@ function render() {
 						}
 					}
 				}
-		}
+		} 
 		if (!shapesOn) {
 			for (var i = 0; i<shapes.length; i++) {
 				if (shapes[i] === 0) {
@@ -812,7 +819,7 @@ function update() {
 					}
 				}
 			}
-		}
+		} 
 		if (shapesVY[i] === 0) {
 			for (var j = 0; j < shapes.length; j++) {
 				if (shapesVY[j] === 0 && shapesVX[j] === 0 && j != i && !xDone) {
@@ -822,7 +829,7 @@ function update() {
 							console.log("problem");
 						} else {
 							shapesY[j] -= shapesH[i];
-							console.log("problem");
+							console.log("problem");						
 						}
 					}
 				}
@@ -1048,7 +1055,7 @@ document.addEventListener('keyup', function(event) {
 			darkMode();
 		} else if (code == 67) {
 			clearCanvas();
-		}
+		} 
 	}
 });
 
@@ -1094,7 +1101,7 @@ function newShape(value) {
 			shapesTermLength[shapesTermLength.length-1] = (findTypeOfString(leftinput)[1]);
 			console.log("Shape Term Length: " + shapesTermLength[shapes.length-1]);
 		}
-
+		
 		console.log(shapesValue[shapesValue.length-1]);
 		console.log(shapesValueType[shapesValue.length-1]);
 
