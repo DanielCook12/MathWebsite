@@ -151,7 +151,12 @@ function switchShapesAndText() {
 				shapesTermLength[i] = [shapesTermLength[i][0]];
 				shapesEx[i] = [shapesEx[i][0]];
 				if (shapesValueType[i] != "constant") {
-					shapesText[i] = shapesValue[i][0]+shapesValueType[i][0];
+					if (shapesValue[i][0] != 1) {
+						shapesText[i] = shapesValue[i][0]+shapesValueType[i][0];
+					} else {
+						shapesText[i] = shapesValueType[i][0];
+
+					}
 				} else {
 					shapesText[i] = shapesValue[i][0];
 				}
