@@ -25,6 +25,9 @@ function darkMode() {
       break;
   }
 }
+function secret() {
+  alert("You found a secret!");
+}
 
 function darkModeOn() {
   console.log("Dark Mode disabled, enabling...");

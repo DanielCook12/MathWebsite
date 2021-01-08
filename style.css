@@ -210,3 +210,12 @@ p.content {
 	margin-bottom: 100px;
 	width:65%;
 }
+button.secret {
+	background-color: transparent;
+	font-size: 5px;
+	float: right;
+	transition: background-color 0.5s;
+}
+button.secret:hover {
+	background-color: red;
+}
