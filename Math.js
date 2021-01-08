@@ -110,7 +110,7 @@ function switchShapesAndText() {
 								shapesText.push(shapesValue[shapesValue.length-1] + shapesValueType[shapesValueType.length-1]);
 								// console.log("Shapes Value Type " + shapesValueTypeNoEx[shapes.length-1]);
 								// console.log(shapesValueTypeNoEx);
-								// console.log("Shapes Exponet " + shapesEx[shapes.length-1]);
+								// console.log("Shapes exponent " + shapesEx[shapes.length-1]);
 								if (shapesValue[i][0] == 1 ||shapesValue[i][0] == 2/3 || shapesValue[i][0] == 5/6) {
 									shapesW.push(40);
 									shapesH.push(40);
@@ -190,7 +190,7 @@ function findTypeFromString(string, start, end) {
 			if (string.charAt(i) == "0" || string.charAt(i) == "1" || string.charAt(i) == "2" || string.charAt(i) == "3" || string.charAt(i) == "4" || string.charAt(i) == "5" || string.charAt(i) == "6" || string.charAt(i) == "7" || string.charAt(i) == "8" || string.charAt(i) == "9") {
 				returnV[i] = "num";
 			} else if (string.charAt(i) == "^" && (string.charAt(i-1) == "a" || string.charAt(i-1) == "b" || string.charAt(i-1) == "c" || string.charAt(i-1) == "d" || string.charAt(i-1) == "e" || string.charAt(i-1) == "f" || string.charAt(i-1) == "g" || string.charAt(i-1) == "h" || string.charAt(i-1) == "i" || string.charAt(i-1) == "j" || string.charAt(i-1) == "k" || string.charAt(i-1) == "l" || string.charAt(i-1) == "m" || string.charAt(i-1) == "n" || string.charAt(i-1) == "o" || string.charAt(i-1) == "p" || string.charAt(i-1) == "q" || string.charAt(i-1) == "r" || string.charAt(i-1) == "s" || string.charAt(i-1) == "t" || string.charAt(i-1) == "u" || string.charAt(i-1) == "v" || string.charAt(i-1) == "w" || string.charAt(i-1) == "x" || string.charAt(i-1) == "y" || string.charAt(i-1) == "z")) {
-				returnV[i] = "exponet";
+				returnV[i] = "exponent";
 			} else if (string.charAt(i) == "+" || string.charAt(i) == "-" || string.charAt(i) == "*" || string.charAt(i) == "/" || string.charAt(i) == "^") {
 				returnV[i] = "op";
 			} else if (string.charAt(i) == "(" || string.charAt(i) == ")" || string.charAt(i) == "{" || string.charAt(i) == "}" || string.charAt(i) == "[" || array [i] == "]") {
@@ -208,7 +208,7 @@ function findTypeFromString(string, start, end) {
 			if (string.charAt(i) == "0" || string.charAt(i) == "1" || string.charAt(i) == "2" || string.charAt(i) == "3" || string.charAt(i) == "4" || string.charAt(i) == "5" || string.charAt(i) == "6" || string.charAt(i) == "7" || string.charAt(i) == "8" || string.charAt(i) == "9") {
 				returnV[i] = "num";
 			} else if (string.charAt(i) == "^" && (string.charAt(i-1) == "a" || string.charAt(i-1) == "b" || string.charAt(i-1) == "c" || string.charAt(i-1) == "d" || string.charAt(i-1) == "e" || string.charAt(i-1) == "f" || string.charAt(i-1) == "g" || string.charAt(i-1) == "h" || string.charAt(i-1) == "i" || string.charAt(i-1) == "j" || string.charAt(i-1) == "k" || string.charAt(i-1) == "l" || string.charAt(i-1) == "m" || string.charAt(i-1) == "n" || string.charAt(i-1) == "o" || string.charAt(i-1) == "p" || string.charAt(i-1) == "q" || string.charAt(i-1) == "r" || string.charAt(i-1) == "s" || string.charAt(i-1) == "t" || string.charAt(i-1) == "u" || string.charAt(i-1) == "v" || string.charAt(i-1) == "w" || string.charAt(i-1) == "x" || string.charAt(i-1) == "y" || string.charAt(i-1) == "z")) {
-				returnV[i] = "exponet";
+				returnV[i] = "exponent";
 			} else if (string.charAt(i) == "+" || string.charAt(i) == "-" || string.charAt(i) == "*" || string.charAt(i) == "/" || string.charAt(i) == "^") {
 				returnV[i] = "op";
 			} else if (string.charAt(i) == "(" || string.charAt(i) == ")" || string.charAt(i) == "{" || string.charAt(i) == "}" || string.charAt(i) == "[" || string.charAt(i) == "]") {
@@ -231,11 +231,11 @@ function findValueOfString(string) {
 	var termsType = ["constant"];
 	var operators = [];
 	var negative = [1];
-	var exponets = [0];
+	var exponents = [0];
 	var containsDecimal = [0];
 	var fractions = ["no"];
 	for (var i = 0; i < string.length; i++) {
-		if (val[i] === "num" && val[i-1] != "exponetNum") {
+		if (val[i] === "num" && val[i-1] != "exponentNum") {
 			if (fractions[fractions.length-1] != "no") {
 				fractions[fractions.length-1] *= 10;
 				console.log("frac");
@@ -262,27 +262,34 @@ function findValueOfString(string) {
 			if (string.charAt(i) === "-") {
 				negative[negative.length-1] = -1;
 			}
-			exponets.push(0);
+			exponents.push(0);
 			console.log("sym");
 			termsType.push("constant");
 			operators.push(string.charAt(i));
 			containsDecimal.push(0);
 		} else if (val[i] === "letter") {
 			console.log("var");
-			exponets[exponets.length-1] = 1;
+			exponents[exponents.length-1] = 1;
 			if (termsType[termsType.length-1] === "constant") {
 				termsType[termsType.length-1] = string.charAt(i);
 			} else {
 				termsType[termsType.length-1] = termsType[termsType.length-1] + string.charAt(i);
 			}
-		} else if (val[i] === "exponet") {
-			console.log("exponet");
-			exponets[exponets.length-1] = string.charAt(i+1);
-			var k = 2;
+		} else if (val[i] === "exponent") {
+			console.log("exponent");
+			exponents[exponents.length-1] = 0;
+			var k = 1;
 			while (string.charAt(i+k) == "1" || string.charAt(i+k) == "2"|| string.charAt(i+k) == "3" || string.charAt(i+k) == "4" || string.charAt(i+k) == "5" || string.charAt(i+k) == "6" || string.charAt(i+k) == "7" || string.charAt(i+k) == "8" || string.charAt(i+k) == "9" || string.charAt(i+k) == "0") {
-				exponets[exponets.length-1] += string.charAt(i+k);
-				val[i+k] = "exponetNum";
+				if (k != 1) {
+					exponents[exponents.length-1] += string.charAt(i+k);
+				} else {
+					exponents[exponents.length-1] = string.charAt(i+k);
+
+				}
+				val[i+k] = "exponentNum";
 				k++;
+				console.log("exponentNum");
+				console.log(exponents[0]);
 			} 
 		} else if (val[i] === "decimal") {
 			console.log("decimal");
@@ -330,13 +337,14 @@ function findValueOfString(string) {
 			}
 		}
 		if (isConstant) {
+			console.log("constant");
 			terms[0] = eval(string);
 			termsType[0] = "constant";
-			exponets[0] = 0;
+			exponents[0] = 0;
 			while (terms.length > 1) {
 				terms.splice(1, 1);
 				termsType.splice(1, 1);
-				exponets.splice(1, 1);
+				exponents.splice(1, 1);
 			}
 		}
 	}
@@ -348,8 +356,8 @@ function findValueOfString(string) {
 	console.log(terms);
 	console.log("terms type: ");
 	console.log(termsType);
-	console.log("Exponets: " + exponets);
-	return [terms, exponets];
+	console.log("exponents: " + exponents);
+	return [terms, exponents];
 }
 
 
@@ -358,13 +366,13 @@ function findTypeOfString(string) {
 	var terms = [0];
 	var termsType = ["constant"];
 	var negative = [1];
-	var exponets = [0];
+	var exponents = [0];
 	var operators = [];
 	var termLength = [1];
 	var containsDecimal = [0];
 	var fractions = ["no"];
 	for (var i = 0; i < string.length; i++) {
-		if (val[i] === "num" && val[i-1] != "exponetNum") {
+		if (val[i] === "num" && val[i-1] != "exponentNum") {
 			if (fractions[fractions.length-1] != "no") {
 				fractions[fractions.length-1] *= 10;
 				console.log("frac");
@@ -391,7 +399,7 @@ function findTypeOfString(string) {
 			if (string.charAt(i) === "-") {
 				negative[negative.length-1] = -1;
 			}
-			exponets.push(0);
+			exponents.push(0);
 			// console.log("sym");
 			termsType.push("constant");
 			operators.push(string.charAt(i));
@@ -404,12 +412,12 @@ function findTypeOfString(string) {
 				termsType[termsType.length-1] = termsType[termsType.length-1] + string.charAt(i);
 				termLength[termLength.length-1]++;
 			}
-		} else if (val[i] === "exponet") {
-			exponets[exponets.length-1] = string.charAt(i+1);
+		} else if (val[i] === "exponent") {
+			exponents[exponents.length-1] = string.charAt(i+1);
 			var k = 2;
 			while (string.charAt(i+k) == "1" || string.charAt(i+k) == "2"|| string.charAt(i+k) == "3" || string.charAt(i+k) == "4" || string.charAt(i+k) == "5" || string.charAt(i+k) == "6" || string.charAt(i+k) == "7" || string.charAt(i+k) == "8" || string.charAt(i+k) == "9" || string.charAt(i+k) == "0") {
-				exponets[exponets.length-1] += string.charAt(i+k);
-				val[i+k] = "exponetNum";
+				exponents[exponents.length-1] += string.charAt(i+k);
+				val[i+k] = "exponentNum";
 				k++;
 			} 
 		} else if (val[i] === "decimal") {
@@ -461,11 +469,11 @@ function findTypeOfString(string) {
 		if (isConstant) {
 			terms[0] = eval(string);
 			termsType[0] = "constant";
-			exponets[0] = 0;
+			exponents[0] = 0;
 			while (terms.length > 1) {
 				terms.splice(1, 1);
 				termsType.splice(1, 1);
-				exponets.splice(1, 1);
+				exponents.splice(1, 1);
 			}
 		}
 	}
@@ -501,7 +509,7 @@ function send() {
 			// For each term
 			for (var i = 0; i < shapesValue[shapesValue.length-1].length; i++) {
 				console.log(shapesEx[shapesEx.length-1][i]);
-				if (shapesEx[shapesEx.length-1][i] != 0 && shapesEx[shapesEx.length-1][i] != 1) { // If there is an exponet
+				if (shapesEx[shapesEx.length-1][i] != 0 && shapesEx[shapesEx.length-1][i] != 1) { // If there is an exponent
 					shapesValueType[shapesValueType.length-1][i] = findTypeOfString(leftinput)[0][i] + "^" + shapesEx[shapesEx.length-1][0];
 					console.log("ex");
 					console.log(findTypeOfString(leftinput)[0][i] + "^" + shapesEx[shapesEx.length-1][0]);
