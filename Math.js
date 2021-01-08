@@ -62,64 +62,6 @@ function consoleLog() {
 }
 
 function switchShapesAndText() {
-	/*highestShapeValue = 0;
-	for (var j=0; j < shapes.length; j++) {
-		for (var i=0; i < shapesValue[j].length; i++) {
-			if (shapesEx[j][i] != 0) {
-				if (shapesValue[j][i]/parseInt(shapesEx[j][i]) > highestShapeValue) {
-					highestShapeValue = shapesValue[j][i]/parseInt(shapesEx[j][i]);
-				}
-			} else {
-				if (shapesValue[j][i] > highestShapeValue) {
-					highestShapeValue = shapesValue[j][i];
-				}
-			}
-		}
-	}
-	var scale = 1;
-	if (highestShapeValue >= 6) {
-		console.log("Highest Shape Value" + highestShapeValue);
-		scale *= highestShapeValue/3;
-	}
-	highestShapeEx = 0;
-	for (var j=0; j < shapes.length; j++) {
-		for (var i=0; i < shapesEx[j].length; i++) {
-			if (parseInt(shapesEx[j][i]) > highestShapeEx) {
-				highestShapeEx = parseInt(shapesEx[j][i]);
-			}
-		}
-	}
-	var scaleEx = 1;
-	if (highestShapeEx >= 6) {
-		scaleEx *= highestShapeEx/3;
-	}
-	shapesOn = !shapesOn;
-	var weightVarsNoEx = [];
-	for (var i = 0; i < weightVars.length; i++) {
-		if (!contains(weightVars[i], "^")) {
-			weightVarsNoEx.push(weightVars[i]);
-		} else {
-			var noExponetString = "";
-			var newString = true;
-			for (var j = 0; j < weightVars[i].length; j++) {
-				if (weightVars[i].charAt(j) === "^") {
-					break;
-				} else {
-					noExponetString = noExponetString + weightVars[i].charAt(j);
-				}
-			}
-			for (var j = 0; j < weightVarsNoEx.length; j++) {
-				if (noExponetString === weightVarsNoEx[j]) {
-					newString = false;
-				}
-			}
-			if (newString) {
-				weightVarsNoEx.push(noExponetString);
-			}
-			console.log(noExponetString);
-		}
-	}
-	*/	
 	variables = ["constant"];
 	shapesOn = !shapesOn;
 	if (shapesOn) {
@@ -136,6 +78,19 @@ function switchShapesAndText() {
 		}
 		for (var i = 0; i < shapes.length; i++) {
 			if (shapesValue[i].length < 2) {
+				if (shapesValue[i][0] == 1 ||shapesValue[i][0] == 2/3 || shapesValue[i][0] == 5/6) {
+					shapesW[i] = 40;
+					shapesH[i] = 40;
+				} else if (shapesValue[i][0] == 0.5) {
+					shapesW[i] = 40;
+					shapesH[i] = 20;
+				} else if (shapesValue[i][0] == 1/3) {
+					shapesW[i] = 25;
+					shapesH[i] = 20;
+				} else if (shapesValue[i][0] == 1/6) {
+					shapesW[i] = 20;
+					shapesH[i] = 20;
+			}
 			} else {
 					for (var k = 0; k < shapesValue[i].length; k++) {
 						console.log(k);
@@ -156,58 +111,32 @@ function switchShapesAndText() {
 								// console.log("Shapes Value Type " + shapesValueTypeNoEx[shapes.length-1]);
 								// console.log(shapesValueTypeNoEx);
 								// console.log("Shapes Exponet " + shapesEx[shapes.length-1]);
-								if (shapesValueTypeNoEx[shapes.length-1][0] === "constant") { // for constants
-									shapesH.push(20/scaleEx);
-									shapesW.push((20*shapesValue[shapes.length-1][0])/shapesEx[i][k]);
-									console.log("constant");
-								} else if (shapesEx[shapes.length-1][0] === 1) { // for variables without exponets
-									var j;
-									console.log("Exponet of 1");
-									for (j = 1; j < weightVarsNoEx.length; j++) {   // find which size it should be
-										if (shapesValueTypeNoEx[shapes.length-1][0] == weightVarsNoEx[j]) {
-											break;
-										}
-									}
-									shapesH.push((20/scaleEx) * shapesTermLength[i]);
-									shapesW.push(((sizes[j]*shapesValue[shapes.length-1])/scale)/shapesEx[i][k]);
-								} else if (shapesEx[shapes.length-1][0] > 1) { // for variables with exponets
-									var j;
-									console.log("Exponet of more than 1");
-									for (j = 1; j < weightVarsNoEx.length; j++) {   // find which size it should be
-										if (shapesValueTypeNoEx[shapes.length-1][0] == weightVarsNoEx[j]) {
-											break;
-										}
-									}
-									shapesH.push(((sizes[j] * (shapesEx[shapes.length-1][0] * 0.5))/scaleEx) * shapesTermLength[i][0]);
-									shapesW.push(((sizes[j] * shapesValue[shapes.length-1][0])/scale)/shapesEx[i][k]);
+								if (shapesValue[i][0] == 1 ||shapesValue[i][0] == 2/3 || shapesValue[i][0] == 5/6) {
+									shapesW.push(40);
+									shapesH.push(40);
+								} else if (shapesValue[i][0] == 0.5) {
+									shapesW.push(40);
+									shapesH.push(20);
+								} else if (shapesValue[i][0] == 1/3) {
+									shapesW.push(25);
+									shapesH.push(20);
+								} else if (shapesValue[i][0] == 1/6) {
+									shapesW.push(20);
+									shapesH.push(20);
 								}
 							} else { 
-								console.log("Shapes Value Type " + shapesValueTypeNoEx[i][0]);
-								console.log("Shapes Exponet " + shapesEx[i][0]);
-								if (shapesValueTypeNoEx[i][0] === "constant") { // for constants
-									shapesH[i][0] = 20/scaleEx;
-									shapesW[i][0] = ((20*shapesValue[i][0])/scale)/shapesEx[i][0];
-									console.log("constant");
-								} else if (shapesEx[i][0] === 1) { // for variables without exponets
-									var j;
-									console.log("Exponet of 1");
-									for (j = 1; j < weightVarsNoEx.length; j++) {   // find which size it should be
-										if (shapesValueTypeNoEx[i][0] == weightVarsNoEx[j][0]) {
-											break;
-										}
-									}
-									shapesH[i] = (20/scaleEx) * shapesTermLength[i][0];
-									shapesW[i] = ((sizes[j]*shapesValue[i][0])/scale)/shapesEx[i][0];
-								} else if (shapesEx[i][0] > 1) { // for variables with exponets
-									var j;
-									console.log("Exponet of more than 1");
-									for (j = 1; j < weightVarsNoEx.length; j++) {   // find which size it should be
-										if (shapesValueTypeNoEx[i][0] == weightVarsNoEx[j]) {
-											break;
-										}
-									}
-									shapesH[i] = ((sizes[j] * (shapesEx[i][0] * 0.5))/scaleEx) * shapesTermLength[i][0];
-									shapesW[i] = ((sizes[j]*shapesValue[i][0])/scale)/shapesEx[i][0];
+								if (shapesValue[i][0] == 1 ||shapesValue[i][0] == 2/3 || shapesValue[i][0] == 5/6) {
+									shapesW[i] = 40;
+									shapesH[i] = 40;
+								} else if (shapesValue[i][0] == 0.5) {
+									shapesW[i] = 40;
+									shapesH[i] = 20;
+								} else if (shapesValue[i][0] == 1/3) {
+									shapesW[i] = 25;
+									shapesH[i] = 20;
+								} else if (shapesValue[i][0] == 1/6) {
+									shapesW[i] = 20;
+									shapesH[i] = 20;
 								}
 							}
 						}
@@ -215,156 +144,20 @@ function switchShapesAndText() {
 				
 
 			}
-			if (shapesValue[i][0] == 1 ||shapesValue[i][0] == 2/3 || shapesValue[i][0] == 5/6) {
-				shapesW[i] = 40;
-				shapesH[i] = 40;
-			} else if (shapesValue[i][0] == 0.5) {
-				shapesW[i] = 40;
-				shapesH[i] = 20;
-			} else if (shapesValue[i][0] == 1/3) {
-				shapesW[i] = 25;
-				shapesH[i] = 20;
-			} else if (shapesValue[i][0] == 1/6) {
-				shapesW[i] = 20;
-				shapesH[i] = 20;
-			}
-		}
-		/*sizes = [20];     // Reset sizes array
-		for (var i = 1; i < weightVarsNoEx.length; i++) {
-			sizes.push(20+((20/weightVarsNoEx.length)*i));    // Add a different number to the array for each type of variable used
-		}
-		console.log(sizes);
-		oldShapesLength = shapes.length;
-		for (var i = 0; i < oldShapesLength; i++) {
-				if (shapesValue[i].length < 2) {
-					if (shapes[i] === 1) { // If the shape has a value
-						console.log("Shapes Value Type " + shapesValueTypeNoEx[i][0]);
-						console.log("Shapes Exponet " + shapesEx[i]);
-						if (shapesValueTypeNoEx[i][0] === "constant") { // for constants
-							shapesH[i] = 20/scaleEx;
-							shapesW[i] = (20*shapesValue[i])/scale;
-							console.log("constant");
-						} else if (shapesEx[i][0] === 1) { // for variables without exponets
-							var j;
-							console.log("Exponet of 1");
-							for (j = 1; j < weightVarsNoEx.length; j++) {   // find which size it should be
-								if (shapesValueTypeNoEx[i] == weightVarsNoEx[j]) {
-									break;
-								}
-							}
-							if (shapesTermLength[i][0] >= 1) {
-							    shapesH[i] = (20 * shapesTermLength[i][0])/scaleEx;
-							} else {
-							    shapesH[i] = 20/scaleEx;
-							}
-							shapesW[i] = (sizes[j]*shapesValue[i])/scale;
-						} else if (shapesEx[i][0] > 1) { // for variables with exponets
-							var j;
-							console.log("Exponet of more than 1");
-							for (j = 1; j < weightVarsNoEx.length; j++) {   // find which size it should be
-								if (shapesValueTypeNoEx[i] == weightVarsNoEx[j]) {
-									break;
-								}
-							}
-							if (shapesTermLength[i][0] >= 1) {
-								shapesH[i] = ((sizes[j] * (shapesEx[i][0] * 0.5))/scaleEx) * shapesTermLength[i][0];
-							} else {
-							shapesH[i] = ((sizes[j] * (shapesEx[i][0] * 0.5))/scaleEx);
-							}
-							shapesW[i] = ((sizes[j]*shapesValue[i])/shapesEx[i][0])/scale;
-						}
-					}
+			if (shapes[i] === 1) {
+				shapesValue[i] = [shapesValue[i][0]];
+				shapesValueType[i] = [shapesValueType[i][0]];
+				shapesValueTypeNoEx[i] = [shapesValueTypeNoEx[i][0]];
+				shapesTermLength[i] = [shapesTermLength[i][0]];
+				shapesEx[i] = [shapesEx[i][0]];
+				if (shapesValueType[i] != "constant") {
+					shapesText[i] = shapesValue[i][0]+shapesValueType[i][0];
 				} else {
-					for (var k = 0; k < shapesValue[i].length; k++) {
-						console.log(k);
-						if (shapes[i] === 1) { // If the shape has a value
-							if (k >= 1) {
-								console.log("k > 1");
-								shapes.push(shapes[i]);
-								shapesX.push(shapesX[i]+shapesW[i]+20);
-								shapesY.push(shapesY[i]+10);
-								shapesVX.push(0);
-								shapesVY.push(0);
-								shapesValue.push([shapesValue[i][k]]);
-								shapesValueType.push([shapesValueType[i][k]]);
-								shapesValueTypeNoEx.push([shapesValueTypeNoEx[i][k]]);
-								shapesTermLength.push([shapesTermLength[i][k]]);
-								shapesEx.push([shapesEx[i][k]]);
-								shapesText.push(shapesValue[shapesValue.length-1] + shapesValueType[shapesValueType.length-1]);
-								// console.log("Shapes Value Type " + shapesValueTypeNoEx[shapes.length-1]);
-								// console.log(shapesValueTypeNoEx);
-								// console.log("Shapes Exponet " + shapesEx[shapes.length-1]);
-								if (shapesValueTypeNoEx[shapes.length-1][0] === "constant") { // for constants
-									shapesH.push(20/scaleEx);
-									shapesW.push((20*shapesValue[shapes.length-1][0])/shapesEx[i][k]);
-									console.log("constant");
-								} else if (shapesEx[shapes.length-1][0] === 1) { // for variables without exponets
-									var j;
-									console.log("Exponet of 1");
-									for (j = 1; j < weightVarsNoEx.length; j++) {   // find which size it should be
-										if (shapesValueTypeNoEx[shapes.length-1][0] == weightVarsNoEx[j]) {
-											break;
-										}
-									}
-									shapesH.push((20/scaleEx) * shapesTermLength[i]);
-									shapesW.push(((sizes[j]*shapesValue[shapes.length-1])/scale)/shapesEx[i][k]);
-								} else if (shapesEx[shapes.length-1][0] > 1) { // for variables with exponets
-									var j;
-									console.log("Exponet of more than 1");
-									for (j = 1; j < weightVarsNoEx.length; j++) {   // find which size it should be
-										if (shapesValueTypeNoEx[shapes.length-1][0] == weightVarsNoEx[j]) {
-											break;
-										}
-									}
-									shapesH.push(((sizes[j] * (shapesEx[shapes.length-1][0] * 0.5))/scaleEx) * shapesTermLength[i][0]);
-									shapesW.push(((sizes[j] * shapesValue[shapes.length-1][0])/scale)/shapesEx[i][k]);
-								}
-							} else { 
-								console.log("Shapes Value Type " + shapesValueTypeNoEx[i][0]);
-								console.log("Shapes Exponet " + shapesEx[i][0]);
-								if (shapesValueTypeNoEx[i][0] === "constant") { // for constants
-									shapesH[i][0] = 20/scaleEx;
-									shapesW[i][0] = ((20*shapesValue[i][0])/scale)/shapesEx[i][0];
-									console.log("constant");
-								} else if (shapesEx[i][0] === 1) { // for variables without exponets
-									var j;
-									console.log("Exponet of 1");
-									for (j = 1; j < weightVarsNoEx.length; j++) {   // find which size it should be
-										if (shapesValueTypeNoEx[i][0] == weightVarsNoEx[j][0]) {
-											break;
-										}
-									}
-									shapesH[i] = (20/scaleEx) * shapesTermLength[i][0];
-									shapesW[i] = ((sizes[j]*shapesValue[i][0])/scale)/shapesEx[i][0];
-								} else if (shapesEx[i][0] > 1) { // for variables with exponets
-									var j;
-									console.log("Exponet of more than 1");
-									for (j = 1; j < weightVarsNoEx.length; j++) {   // find which size it should be
-										if (shapesValueTypeNoEx[i][0] == weightVarsNoEx[j]) {
-											break;
-										}
-									}
-									shapesH[i] = ((sizes[j] * (shapesEx[i][0] * 0.5))/scaleEx) * shapesTermLength[i][0];
-									shapesW[i] = ((sizes[j]*shapesValue[i][0])/scale)/shapesEx[i][0];
-								}
-							}
-						}
-					}
-				if (shapes[i] === 1) {
-						shapesValue[i] = [shapesValue[i][0]];
-						shapesValueType[i] = [shapesValueType[i][0]];
-						shapesValueTypeNoEx[i] = [shapesValueTypeNoEx[i][0]];
-						shapesTermLength[i] = [shapesTermLength[i][0]];
-						shapesEx[i] = [shapesEx[i][0]];
-						if (shapesValueType[i] != "constant") {
-							shapesText[i] = shapesValue[i][0]+shapesValueType[i][0];
-						} else {
-							shapesText[i] = shapesValue[i][0];
-						}
+					shapesText[i] = shapesValue[i][0];
 				}
-
 			}
-		}*/
+		}
+		
 	} else {
 		for (var i = 0; i < shapes.length; i++) {
 			if (shapes[i] === 1) {
