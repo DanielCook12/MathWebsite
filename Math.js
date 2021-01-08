@@ -124,7 +124,7 @@ function switchShapesAndText() {
 									shapesW.push(20);
 									shapesH.push(20);
 								}
-							} else { 
+							} else {
 								if (shapesValue[i][0] == 1 ||shapesValue[i][0] == 2/3 || shapesValue[i][0] == 5/6) {
 									shapesW[i] = 40;
 									shapesH[i] = 40;
@@ -141,7 +141,7 @@ function switchShapesAndText() {
 							}
 						}
 					}
-				
+
 
 			}
 			if (shapes[i] === 1) {
@@ -157,7 +157,7 @@ function switchShapesAndText() {
 				}
 			}
 		}
-		
+
 	} else {
 		for (var i = 0; i < shapes.length; i++) {
 			if (shapes[i] === 1) {
@@ -290,7 +290,7 @@ function findValueOfString(string) {
 				k++;
 				console.log("exponentNum");
 				console.log(exponents[0]);
-			} 
+			}
 		} else if (val[i] === "decimal") {
 			console.log("decimal");
 			containsDecimal[containsDecimal.length-1] = 1;
@@ -300,14 +300,14 @@ function findValueOfString(string) {
 		if (fractions[i] != "no") {
 			terms[i] = terms[i]/fractions[i];
 		}
-		terms[i] *= negative[i];	
+		terms[i] *= negative[i];
 		if (terms[i] === 0 && termsType[i] != "constant" && negative[i] === -1) {
 			terms[i] = -1;
 		} else if (terms[i] === 0 && termsType[i] != "constant" && negative[i] === 1) {
 			terms[i] = 1;
 		}
 	}
-	
+
 	if (terms.length > 1) {
 		for (var i = 0; i < terms.length; i++) {
 			if (terms[i] === 0 && termsType[i] != "constant") {
@@ -419,7 +419,7 @@ function findTypeOfString(string) {
 				exponents[exponents.length-1] += string.charAt(i+k);
 				val[i+k] = "exponentNum";
 				k++;
-			} 
+			}
 		} else if (val[i] === "decimal") {
 			// console.log("decimal");
 			containsDecimal[containsDecimal.length-1] = 1;
@@ -526,7 +526,7 @@ function send() {
 			shapesTermLength[shapesTermLength.length-1] = (findTypeOfString(leftinput)[1]);
 			console.log("Shape Term Length: " + shapesTermLength[shapes.length-1]);
 		}
-		
+
 		console.log(shapesValue[shapesValue.length-1]);
 		console.log(shapesValueType[shapesValue.length-1]);
 
@@ -582,9 +582,11 @@ function send() {
 	if (eval(leftinput) == eval(rightinput)) {
 		document.getElementById("status").style.backgroundColor = "green";
 		document.getElementById("status").innerHTML = "Equal";
+		document.getElementById("status").title = "Our JS function believes these two equations are equal"
 	} else {
 		document.getElementById("status").style.backgroundColor = "red";
 		document.getElementById("status").innerHTML = "Not Equal";
+		document.getElementById("status").title = "Our JS function believes these two equations are not equal"
 	}
 
 }
@@ -669,7 +671,7 @@ function render() {
 						d.lineTo(shapesX[i] + (40/4), shapesY[i]+40);
 						d.lineTo(shapesX[i], shapesY[i]+(40/2));
 						d.lineTo(shapesX[i] + (40/4), shapesY[i]);
-						d.fill();			
+						d.fill();
 					} else if (shapesValue[i][0] === 0.5) {
 						d.beginPath();
 						d.moveTo(shapesX[i], shapesY[i]+(40/2)-20);
@@ -677,7 +679,7 @@ function render() {
 						d.lineTo(shapesX[i] + ((40/4)*3), shapesY[i]+40-20);
 						d.lineTo(shapesX[i] + (40/4), shapesY[i]+40-20);
 						d.lineTo(shapesX[i], shapesY[i]+(40/2)-20);
-						d.fill();		
+						d.fill();
 					} else if (shapesValue[i][0] === 1/3) {
 						d.beginPath();
 						d.moveTo(shapesX[i] + (40/2), shapesY[i]);
@@ -685,14 +687,14 @@ function render() {
 						d.lineTo(shapesX[i] + (40/4), shapesY[i]+20);
 						d.lineTo(shapesX[i], shapesY[i]);
 						d.lineTo(shapesX[i] + (40/2), shapesY[i]);
-						d.fill();			
+						d.fill();
 					} else if (shapesValue[i][0] === 1/6) {
 						d.beginPath();
 						d.moveTo(shapesX[i] + (40/2)-7, shapesY[i]);
 						d.lineTo(shapesX[i] + ((40/4)*3)-7, shapesY[i]+20);
 						d.lineTo(shapesX[i] + (40/4)-7, shapesY[i]+20);
 						d.lineTo(shapesX[i] + (40/2)-7, shapesY[i]);
-						d.fill();			
+						d.fill();
 					} else if (shapesValue[i][0] === 5/6) {
 						d.beginPath();
 						d.moveTo(shapesX[i] + (40/4), shapesY[i]);
@@ -703,7 +705,7 @@ function render() {
 						d.lineTo(shapesX[i] + (40/4), shapesY[i]+40);
 						d.lineTo(shapesX[i], shapesY[i]+(40/2));
 						d.lineTo(shapesX[i] + (40/4), shapesY[i]);
-						d.fill();						
+						d.fill();
 					} else if (shapesValue[i][0] === 2/3) {
 						d.beginPath();
 						d.moveTo(shapesX[i] + (40/4), shapesY[i]);
@@ -713,7 +715,7 @@ function render() {
 						d.lineTo(shapesX[i] + (40/4), shapesY[i]+40);
 						d.lineTo(shapesX[i], shapesY[i]+(40/2));
 						d.lineTo(shapesX[i] + (40/4), shapesY[i]);
-						d.fill();						
+						d.fill();
 					} else {
 						if (shapes[i] === 0) {
 							d.fillStyle = "#008800";
@@ -728,7 +730,7 @@ function render() {
 						}
 					}
 				}
-		} 
+		}
 		if (!shapesOn) {
 			for (var i = 0; i<shapes.length; i++) {
 				if (shapes[i] === 0) {
@@ -810,7 +812,7 @@ function update() {
 					}
 				}
 			}
-		} 
+		}
 		if (shapesVY[i] === 0) {
 			for (var j = 0; j < shapes.length; j++) {
 				if (shapesVY[j] === 0 && shapesVX[j] === 0 && j != i && !xDone) {
@@ -820,7 +822,7 @@ function update() {
 							console.log("problem");
 						} else {
 							shapesY[j] -= shapesH[i];
-							console.log("problem");						
+							console.log("problem");
 						}
 					}
 				}
@@ -1046,7 +1048,7 @@ document.addEventListener('keyup', function(event) {
 			darkMode();
 		} else if (code == 67) {
 			clearCanvas();
-		} 
+		}
 	}
 });
 
@@ -1092,7 +1094,7 @@ function newShape(value) {
 			shapesTermLength[shapesTermLength.length-1] = (findTypeOfString(leftinput)[1]);
 			console.log("Shape Term Length: " + shapesTermLength[shapes.length-1]);
 		}
-		
+
 		console.log(shapesValue[shapesValue.length-1]);
 		console.log(shapesValueType[shapesValue.length-1]);
 
