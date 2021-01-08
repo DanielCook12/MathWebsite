@@ -84,6 +84,7 @@ p.status {
 	padding-top: 0.75vw;
 	padding-bottom: 0.75vw;
 	transition: background-color 0.65s, color 0.65s;
+	cursor: help;
 }
 button.submit {
 	background-color: white;
@@ -96,6 +97,7 @@ button.submit {
 	padding-top: 1vw;
 	padding-bottom: 1vw;
 	transition: background-color 0.65s,padding 0.65s, font-size 0.65s;
+	cursor: pointer;
 }
 button.submit:hover {
 	background-color: lightgray;
@@ -113,6 +115,7 @@ button.dark {
 	padding-top: 1vw;
 	padding-bottom: 1vw;
 	transition: background-color 0.65s,padding 0.65s,font-size 0.65s;
+	cursor: pointer;
 }
 button.dark:hover {
 	background-color: lightgray;
@@ -129,6 +132,7 @@ button.submit2 {
 	padding-left:10px;
 	padding: 20px;
 	transition: background-color 0.65s,padding-top 0.65s,padding-bottom 0.65s;
+	cursor: pointer;
 }
 button.submit2:hover {
 	background-color: lightgray;
