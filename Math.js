@@ -185,6 +185,7 @@ function switchShapesAndText() {
 		for (var i = 0; i < shapes.length; i++) {
 			if (shapes[i] === 1) {
 				shapesH[i] = 30;
+				shapesText[i] = shapesText[i].toString();
 				shapesW[i] = shapesText[i].length * 15;
 				console.log("TEXT");
 			}
