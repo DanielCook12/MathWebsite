@@ -151,14 +151,32 @@ function switchShapesAndText() {
 				shapesTermLength[i] = [shapesTermLength[i][0]];
 				shapesEx[i] = [shapesEx[i][0]];
 				if (shapesValueType[i] != "constant") {
-					if (shapesValue[i][0] != 1) {
+					if (shapesValue[i][0] === 1/6) {
+						shapesText[i] = "1/6" + shapesValueType[i][0];
+					} else if (shapesValue[i][0] === 2/6) {
+						shapesText[i] = "1/3" + shapesValueType[i][0];
+					} else if (shapesValue[i][0] === 4/6) {
+						shapesText[i] = "2/3" + shapesValueType[i][0];
+					} else if (shapesValue[i][0] === 5/6) {
+						shapesText[i] = "5/6" + shapesValueType[i][0];
+					} else if (shapesValue[i][0] != 1) {
 						shapesText[i] = shapesValue[i][0]+shapesValueType[i][0];
 					} else {
 						shapesText[i] = shapesValueType[i][0];
 
 					}
 				} else {
-					shapesText[i] = shapesValue[i][0];
+					if (shapesValue[i][0] === 1/6) {
+						shapesText[i] = "1/6";
+					} else if (shapesValue[i][0] === 2/6) {
+						shapesText[i] = "1/3";
+					} else if (shapesValue[i][0] === 4/6) {
+						shapesText[i] = "2/3";
+					} else if (shapesValue[i][0] === 5/6) {
+						shapesText[i] = "5/6";
+					} else {
+						shapesText[i] = shapesValue[i][0];
+					}
 				}
 			}
 		}
